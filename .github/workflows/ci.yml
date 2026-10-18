@@ -2,7 +2,7 @@ name: CI & Security Scan
 
 on:
   push:
-    branches: [main, 'feature/**', 'fix/**']
+    branches: [main]
     paths-ignore:
       - '**.md'
       - 'docs/**'
