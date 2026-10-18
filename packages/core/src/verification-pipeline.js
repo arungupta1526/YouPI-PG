@@ -123,7 +123,7 @@ export class PaymentVerificationPipeline {
     // Bank credit notifications are a few hundred bytes. Capping the text bounds the cost of
     // the reference-extraction regexes below, which are scanned from every start offset and
     // would otherwise let one oversized "observation" block the event loop (ReDoS / DoS).
-    const MAX_SCAN_CHARS = 4096;
+    const MAX_SCAN_CHARS = 8192;
     const rawText = (input.rawText || '').toString().slice(0, MAX_SCAN_CHARS);
 
     // =========================================================================
@@ -225,12 +225,12 @@ export class PaymentVerificationPipeline {
     };
 
     // Invariant Guard: Bounded rawText boundary to prevent ReDoS (CWE-400)
-    if (input.rawText && typeof input.rawText === 'string' && input.rawText.length > 8192) {
+    if (input.rawText && typeof input.rawText === 'string' && input.rawText.length > MAX_SCAN_CHARS) {
       return buildResult({
         finalStatus: 'REJECTED',
         failingStage: 1,
         failingCondition: 'PAYLOAD_TOO_LARGE',
-        failingReason: `Transaction notification payload exceeds maximum allowable length of 8192 characters (received ${input.rawText.length}).`
+        failingReason: `Transaction notification payload exceeds maximum allowable length of ${MAX_SCAN_CHARS} characters (received ${input.rawText.length}).`
       });
     }
 

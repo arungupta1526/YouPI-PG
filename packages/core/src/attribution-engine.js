@@ -209,7 +209,7 @@ export class AttributionEngine {
 
       // Invariant Check 0a: Transaction Reference Already Used Check
       let isUtrAlreadyUsed = false;
-      if (normalizedObs.bankReferenceNumber) {
+      if (normalizedObs.bankReferenceNumber && typeof normalizedObs.bankReferenceNumber === 'string' && normalizedObs.bankReferenceNumber.trim().length > 0) {
         const priorUsedSession = this.sessionRepo.db.queryOne(`
           SELECT ps.id, ps.order_id
           FROM payment_sessions ps
@@ -218,7 +218,7 @@ export class AttributionEngine {
             AND ps.id != ?
             AND po.bank_reference_number = ?
           LIMIT 1
-        `, [currentSession.id, normalizedObs.bankReferenceNumber]);
+        `, [currentSession.id, normalizedObs.bankReferenceNumber.trim()]);
 
         if (priorUsedSession) {
           isUtrAlreadyUsed = true;
