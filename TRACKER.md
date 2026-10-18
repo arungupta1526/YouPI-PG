@@ -55,9 +55,9 @@ This tracker monitors all audit items, active bugs, security remediations, Andro
 
 ### Phase 4: Monorepo Deduplication & Hygiene
 - [x] Delete temporary agent recovery files (`scripts/recovered-chunks.json`, `dump-chunks.cjs`, `scratch-check-db.js`).
-- [ ] Remove duplicate `qr-lib.js` & `qr.js` from `apps/checkout-portal/src/` (import from `@youpi/core`).
-- [ ] Remove duplicate `youpi.js` & `youpi-checkout.js` from `apps/checkout-portal/src/sdk/`.
-- [ ] Purge hardcoded `gauravtesting.online` hacks and personal paths in scripts.
+- [x] Remove duplicate `qr-lib.js` & `qr.js` from `apps/checkout-portal/src/` (imported canonically from `@youpi/core`).
+- [x] Purge hardcoded `gauravtesting.online` hacks and personal paths in observers and SDK scripts.
+- [ ] Evaluate PR #29 modularization and zero-CDN Tailwind migration for merchant admin.
 
 ---
 
