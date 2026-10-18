@@ -97,12 +97,25 @@ export class CheckoutServer {
     }
   }
 
-  renderHtml(paymentId, state) {
+  loadTemplateWithPartials() {
     try {
-      this.template = fs.readFileSync(this.htmlTemplatePath, 'utf8');
-    } catch {}
+      let content = fs.readFileSync(this.htmlTemplatePath, 'utf8');
+      const partialsDir = path.join(__dirname, 'views', 'partials');
+      content = content.replace(/<!--\s*include:partials\/([a-zA-Z0-9_\-.]+)\s*-->/g, (match, filename) => {
+        const partialPath = path.join(partialsDir, filename);
+        if (fs.existsSync(partialPath)) {
+          return fs.readFileSync(partialPath, 'utf8');
+        }
+        return match;
+      });
+      return content;
+    } catch {
+      return this.template || '';
+    }
+  }
 
-    let html = this.template;
+  renderHtml(paymentId, state) {
+    let html = this.loadTemplateWithPartials();
 
     const appName = state?.branding?.appName || 'YouPI PG';
     const primaryColor = state?.branding?.primaryColor || '#0b63e5';
@@ -256,6 +269,36 @@ export class CheckoutServer {
             'Access-Control-Allow-Origin': '*'
           });
           fs.createReadStream(iconPath).pipe(res);
+          return;
+        }
+      }
+
+      // Static CSS: GET /css/:filename
+      if (pathname.startsWith('/css/')) {
+        const cssName = path.basename(pathname);
+        const cssPath = path.join(__dirname, '..', 'public', 'css', cssName);
+        if (fs.existsSync(cssPath)) {
+          res.writeHead(200, {
+            'Content-Type': 'text/css; charset=utf-8',
+            'Cache-Control': 'public, max-age=86400',
+            'Access-Control-Allow-Origin': '*'
+          });
+          fs.createReadStream(cssPath).pipe(res);
+          return;
+        }
+      }
+
+      // Static JS: GET /js/:filename
+      if (pathname.startsWith('/js/')) {
+        const jsName = path.basename(pathname);
+        const jsPath = path.join(__dirname, '..', 'public', 'js', jsName);
+        if (fs.existsSync(jsPath)) {
+          res.writeHead(200, {
+            'Content-Type': 'application/javascript; charset=utf-8',
+            'Cache-Control': 'public, max-age=86400',
+            'Access-Control-Allow-Origin': '*'
+          });
+          fs.createReadStream(jsPath).pipe(res);
           return;
         }
       }
