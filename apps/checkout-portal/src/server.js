@@ -258,11 +258,14 @@ export class CheckoutServer {
         return;
       }
 
-      // Static icons: GET /icons/:filename
+      // Static icons: GET /icons/:filename with path traversal protection
       if (pathname.startsWith('/icons/')) {
         const iconName = path.basename(pathname);
-        const iconPath = path.join(__dirname, '..', 'public', 'icons', iconName);
-        if (fs.existsSync(iconPath)) {
+        const iconDir = path.resolve(__dirname, '..', 'public', 'icons');
+        const iconPath = path.resolve(iconDir, iconName);
+        const relative = path.relative(iconDir, iconPath);
+        const isSecure = relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+        if (isSecure && fs.existsSync(iconPath)) {
           const ext = path.extname(iconName).toLowerCase();
           const contentType = ext === '.png' ? 'image/png' : ext === '.svg' ? 'image/svg+xml' : 'image/jpeg';
           res.writeHead(200, {
@@ -275,34 +278,24 @@ export class CheckoutServer {
         }
       }
 
-      // Static CSS: GET /css/:filename
-      if (pathname.startsWith('/css/')) {
-        const cssName = path.basename(pathname);
-        const cssDir = path.resolve(__dirname, '..', 'public', 'css');
-        const cssPath = path.resolve(cssDir, cssName);
-        if (cssPath.startsWith(cssDir) && fs.existsSync(cssPath)) {
-          res.writeHead(200, {
-            'Content-Type': 'text/css; charset=utf-8',
-            'Cache-Control': 'public, max-age=86400',
-            'Access-Control-Allow-Origin': '*'
-          });
-          fs.createReadStream(cssPath).pipe(res);
-          return;
-        }
-      }
+      // Static CSS & JS Asset Handler with Secure Path Traversal Prevention
+      if (pathname.startsWith('/css/') || pathname.startsWith('/js/')) {
+        const assetFolder = pathname.startsWith('/css/') ? 'css' : 'js';
+        const assetName = path.basename(pathname);
+        const assetDir = path.resolve(__dirname, '..', 'public', assetFolder);
+        const assetPath = path.resolve(assetDir, assetName);
 
-      // Static JS: GET /js/:filename
-      if (pathname.startsWith('/js/')) {
-        const jsName = path.basename(pathname);
-        const jsDir = path.resolve(__dirname, '..', 'public', 'js');
-        const jsPath = path.resolve(jsDir, jsName);
-        if (jsPath.startsWith(jsDir) && fs.existsSync(jsPath)) {
+        const relative = path.relative(assetDir, assetPath);
+        const isSecure = relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+
+        if (isSecure && fs.existsSync(assetPath)) {
+          const contentType = assetFolder === 'css' ? 'text/css; charset=utf-8' : 'application/javascript; charset=utf-8';
           res.writeHead(200, {
-            'Content-Type': 'application/javascript; charset=utf-8',
+            'Content-Type': contentType,
             'Cache-Control': 'public, max-age=86400',
             'Access-Control-Allow-Origin': '*'
           });
-          fs.createReadStream(jsPath).pipe(res);
+          fs.createReadStream(assetPath).pipe(res);
           return;
         }
       }
