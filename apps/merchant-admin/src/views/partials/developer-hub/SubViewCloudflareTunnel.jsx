@@ -16,7 +16,7 @@ export default function SubViewCloudflareTunnel() {
     
               {/*  Mode Segmented Switch  */}
               <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1.5rem"}}>
-                <div id="btnEnvLocalhost" onClick={(e) => { try { (new Function('e', "setEnvMode('localhost')"))(e); } catch(err) { console.error(err); } }}
+                <div id="btnEnvLocalhost" onClick={(e) => { try { (window.setEnvMode('localhost')); } catch(err) { console.error(err); } }}
                   style={{"background":"#0f172a","border":"2px solid #38bdf8","borderRadius":"0.75rem","padding":"1.2rem","cursor":"pointer","transition":"all 0.2s"}}>
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.4rem"}}>
                     <strong style={{"fontSize":"1rem","color":"#f1f5f9"}}>💻 Localhost Mode (Development)</strong>
@@ -28,7 +28,7 @@ export default function SubViewCloudflareTunnel() {
                   </p>
                 </div>
     
-                <div id="btnEnvProduction" onClick={(e) => { try { (new Function('e', "setEnvMode('production')"))(e); } catch(err) { console.error(err); } }}
+                <div id="btnEnvProduction" onClick={(e) => { try { (window.setEnvMode('production')); } catch(err) { console.error(err); } }}
                   style={{"background":"#0b1120","border":"1px solid var(--border)","borderRadius":"0.75rem","padding":"1.2rem","cursor":"pointer","transition":"all 0.2s"}}>
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.4rem"}}>
                     <strong style={{"fontSize":"1rem","color":"#f1f5f9"}}>🌍 Production Mode (Cloudflare Tunnel)</strong>
@@ -53,18 +53,18 @@ export default function SubViewCloudflareTunnel() {
                       style={{"display":"block","fontSize":"0.8rem","fontWeight":"700","color":"var(--text-muted)","marginBottom":"0.35rem"}}>1.
                       Cloudflare Domain</label>
                     <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingDomainTld" type="text" placeholder="example.com" defaultValue=""
-                      onInput={(e) => { try { (new Function('e', "updateCloudflarePreview()"))(e); } catch(err) { console.error(err); } }} style={{"width":"100%"}} />
+                      onInput={(e) => { try { (window.updateCloudflarePreview()); } catch(err) { console.error(err); } }} style={{"width":"100%"}} />
                   </div>
                   <div>
                     <label
                       style={{"display":"block","fontSize":"0.8rem","fontWeight":"700","color":"var(--text-muted)","marginBottom":"0.35rem"}}>2.
                       Deployment Prefix</label>
                     <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingDomainPrefix" type="text" placeholder="pay" defaultValue="pay"
-                      onInput={(e) => { try { (new Function('e', "updateCloudflarePreview()"))(e); } catch(err) { console.error(err); } }} style={{"width":"100%"}} />
+                      onInput={(e) => { try { (window.updateCloudflarePreview()); } catch(err) { console.error(err); } }} style={{"width":"100%"}} />
                   </div>
                   <div>
                     <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"width":"100%","padding":"0.65rem","justifyContent":"center"}}
-                      onClick={(e) => { try { (new Function('e', "saveDomainSettings()"))(e); } catch(err) { console.error(err); } }}>💾 SAVE CONFIGURATION</button>
+                      onClick={(e) => { try { (window.saveDomainSettings()); } catch(err) { console.error(err); } }}>💾 SAVE CONFIGURATION</button>
                   </div>
                 </div>
               </div>
@@ -77,7 +77,7 @@ export default function SubViewCloudflareTunnel() {
                     <div style={{"fontSize":"0.78rem","color":"var(--text-muted)"}}>Exact routes to create in Cloudflare Dashboard.
                       All ports and roles are system-defined.</div>
                   </div>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.75rem"}} onClick={(e) => { try { (new Function('e', "copyAllMappings()"))(e); } catch(err) { console.error(err); } }}>📋 COPY ALL
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.75rem"}} onClick={(e) => { try { (window.copyAllMappings()); } catch(err) { console.error(err); } }}>📋 COPY ALL
                     MAPPINGS</button>
                 </div>
                 <div id="cloudflareRoutesContainer" style={{"display":"flex","flexDirection":"column","gap":"0.75rem"}}>

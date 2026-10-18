@@ -336,7 +336,7 @@ function Header() {
       id: "headerThemeBadge",
       onClick: (e) => {
         try {
-          new Function("e", "toggleThemeManual()")(e);
+          window.toggleThemeManual();
         } catch (err) {
           console.error(err);
         }
@@ -352,7 +352,7 @@ function Header() {
       id: "headerStoreBadge",
       onClick: (e) => {
         try {
-          new Function("e", "toggleYoupiStore()")(e);
+          window.toggleYoupiStore();
         } catch (err) {
           console.error(err);
         }
@@ -368,7 +368,7 @@ function Header() {
       id: "accountVpaDisplay",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('storeSettings', 'subTabVpa')")(e);
+          window.switchSection("storeSettings", "subTabVpa");
         } catch (err) {
           console.error(err);
         }
@@ -381,7 +381,7 @@ function Header() {
       className: "flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 cursor-pointer",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('developerHub', 'subViewDevCloudflare')")(e);
+          window.switchSection("developerHub", "subViewDevCloudflare");
         } catch (err) {
           console.error(err);
         }
@@ -403,7 +403,7 @@ function Header() {
       id: "mainNavOperations",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('operations')")(e);
+          window.switchSection("operations");
         } catch (err) {
           console.error(err);
         }
@@ -418,7 +418,7 @@ function Header() {
       id: "mainNavStoreSettings",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('storeSettings')")(e);
+          window.switchSection("storeSettings");
         } catch (err) {
           console.error(err);
         }
@@ -433,7 +433,7 @@ function Header() {
       id: "mainNavDeveloperHub",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('developerHub')")(e);
+          window.switchSection("developerHub");
         } catch (err) {
           console.error(err);
         }
@@ -448,7 +448,7 @@ function Header() {
       id: "mainNavSecurity",
       onClick: (e) => {
         try {
-          new Function("e", "switchSection('security')")(e);
+          window.switchSection("security");
         } catch (err) {
           console.error(err);
         }
@@ -473,13 +473,13 @@ var import_react3 = __toESM(require_react(), 1);
 function SubViewLiveQueue() {
   return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, /* @__PURE__ */ import_react3.default.createElement("div", { id: "subViewOpsLive" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F534} Real-Time Receiving Account Slot Ownership (UPI Invariant)"), /* @__PURE__ */ import_react3.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Guarantees zero payment collision by rotating dynamic slots per receiving UPI VPA.")), /* @__PURE__ */ import_react3.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem" } }, /* @__PURE__ */ import_react3.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchLiveData()")(e);
+      window.fetchLiveData();
     } catch (err) {
       console.error(err);
     }
   } }, "Force Refresh"), /* @__PURE__ */ import_react3.default.createElement("button", { className: "btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "promptClearAllQueue()")(e);
+      window.promptClearAllQueue();
     } catch (err) {
       console.error(err);
     }
@@ -491,13 +491,13 @@ var import_react4 = __toESM(require_react(), 1);
 function SubViewCounterDesk() {
   return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null, /* @__PURE__ */ import_react4.default.createElement("div", { id: "subViewOpsCounter", hidden: true }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "counterDeskOfflineCard" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3EA} Cash & Card Billing Counter Desk (Live Counter Payment Requests)"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Real-time incoming payment requests from checkout screens. Verify banknotes or POS slips and approve immediately.")), /* @__PURE__ */ import_react4.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "gap": "0.6rem" } }, /* @__PURE__ */ import_react4.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "operatorDisplay" }, "Cashier Desk #1"), /* @__PURE__ */ import_react4.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchCounterPayments()")(e);
+      window.fetchCounterPayments();
     } catch (err) {
       console.error(err);
     }
   } }, "Refresh"))), /* @__PURE__ */ import_react4.default.createElement("div", { style: { "overflowX": "auto" } }, /* @__PURE__ */ import_react4.default.createElement("table", { className: "w-full border-collapse text-sm" }, /* @__PURE__ */ import_react4.default.createElement("thead", null, /* @__PURE__ */ import_react4.default.createElement("tr", null, /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Order ID"), /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Payment ID"), /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Amount"), /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Counter Method"), /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Requested At"), /* @__PURE__ */ import_react4.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Cashier Actions"))), /* @__PURE__ */ import_react4.default.createElement("tbody", { id: "counterTableBody" }, /* @__PURE__ */ import_react4.default.createElement("tr", null, /* @__PURE__ */ import_react4.default.createElement("td", { colSpan: "6", style: { "textAlign": "center", "color": "var(--text-muted)", "padding": "1.5rem" } }, "No pending counter payments right now.")))))), /* @__PURE__ */ import_react4.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "counterDeskCodCard", style: { "display": "none" } }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react4.default.createElement("div", null, /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4E6} Cash on Delivery (COD) Verified Orders"), /* @__PURE__ */ import_react4.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Orders placed with Cash on Delivery payment confirmation. Ready for fulfillment and dispatch.")), /* @__PURE__ */ import_react4.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchCodOrders()")(e);
+      window.fetchCodOrders();
     } catch (err) {
       console.error(err);
     }
@@ -509,7 +509,7 @@ var import_react5 = __toESM(require_react(), 1);
 function SubViewTransactionsLedger() {
   return /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, /* @__PURE__ */ import_react5.default.createElement("div", { id: "subViewOpsTransactions", hidden: true }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react5.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react5.default.createElement("div", null, /* @__PURE__ */ import_react5.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4B3} Payment Transactions Ledger"), /* @__PURE__ */ import_react5.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Comprehensive transaction audit history with automated bank observer attribution & verification tiers.")), /* @__PURE__ */ import_react5.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchPaymentsLedger()")(e);
+      window.fetchPaymentsLedger();
     } catch (err) {
       console.error(err);
     }
@@ -539,7 +539,7 @@ function SubViewPaymentObservers() {
         style: { "fontSize": "0.7rem", "padding": "0.2rem 0.5rem", "marginLeft": "0.5rem" },
         onClick: (e) => {
           try {
-            new Function("e", "copySmsToken()")(e);
+            window.copySmsToken();
           } catch (err) {
             console.error(err);
           }
@@ -549,7 +549,7 @@ function SubViewPaymentObservers() {
     )
   ), /* @__PURE__ */ import_react6.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem" } }, /* @__PURE__ */ import_react6.default.createElement("a", { className: "btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", href: "/youpi-sms-gateway.apk", download: "youpi-sms-gateway.apk" }, "\u{1F4F2} Download Companion APK"), /* @__PURE__ */ import_react6.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "switchSection('developerHub', 'subTabAndroid')")(e);
+      window.switchSection("developerHub", "subTabAndroid");
     } catch (err) {
       console.error(err);
     }
@@ -561,7 +561,7 @@ function SubViewPaymentObservers() {
     /* @__PURE__ */ import_react6.default.createElement("div", { style: { "fontSize": "0.8rem", "color": "var(--text-muted)", "lineHeight": "1.5" } }, "Dual-verification engine matches transactions across both SMS and Gmail channels for 100% fraud immunity.")
   ), /* @__PURE__ */ import_react6.default.createElement("button", { className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "switchSection('developerHub', 'subTabGmail')")(e);
+      window.switchSection("developerHub", "subTabGmail");
     } catch (err) {
       console.error(err);
     }
@@ -594,7 +594,7 @@ function SubViewBrandCustomizer() {
         style: { "width": "100%" },
         onInput: (e) => {
           try {
-            new Function("e", "updateLiveWhiteLabelPreview()")(e);
+            window.updateLiveWhiteLabelPreview();
           } catch (err) {
             console.error(err);
           }
@@ -611,7 +611,7 @@ function SubViewBrandCustomizer() {
         style: { "width": "100%" },
         onInput: (e) => {
           try {
-            new Function("e", "updateLiveWhiteLabelPreview()")(e);
+            window.updateLiveWhiteLabelPreview();
           } catch (err) {
             console.error(err);
           }
@@ -627,7 +627,7 @@ function SubViewBrandCustomizer() {
         style: { "width": "100%" },
         onInput: (e) => {
           try {
-            new Function("e", "updateLiveWhiteLabelPreview()")(e);
+            window.updateLiveWhiteLabelPreview();
           } catch (err) {
             console.error(err);
           }
@@ -649,7 +649,7 @@ function SubViewBrandCustomizer() {
         style: { "width": "44px", "height": "40px", "border": "none", "background": "transparent", "cursor": "pointer", "padding": "0" },
         onInput: (e) => {
           try {
-            new Function("e", "syncColorPickerToText(e.currentTarget.value)")(e);
+            window.syncColorPickerToText(e.currentTarget.value);
           } catch (err) {
             console.error(err);
           }
@@ -665,7 +665,7 @@ function SubViewBrandCustomizer() {
         style: { "flex": "1", "fontFamily": "monospace", "fontWeight": "700" },
         onInput: (e) => {
           try {
-            new Function("e", "syncTextColorToPicker(e.currentTarget.value)")(e);
+            window.syncTextColorToPicker(e.currentTarget.value);
           } catch (err) {
             console.error(err);
           }
@@ -673,7 +673,7 @@ function SubViewBrandCustomizer() {
       }
     ))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Header Styling Theme"), /* @__PURE__ */ import_react8.default.createElement("select", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingHeaderTheme", style: { "width": "100%" }, onChange: (e) => {
       try {
-        new Function("e", "updateLiveWhiteLabelPreview()")(e);
+        window.updateLiveWhiteLabelPreview();
       } catch (err) {
         console.error(err);
       }
@@ -691,7 +691,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#0b63e5', 'gradient')")(e);
+            window.applyQuickPalette("#0b63e5", "gradient");
           } catch (err) {
             console.error(err);
           }
@@ -706,7 +706,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#10b981', 'gradient')")(e);
+            window.applyQuickPalette("#10b981", "gradient");
           } catch (err) {
             console.error(err);
           }
@@ -721,7 +721,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#8b5cf6', 'gradient')")(e);
+            window.applyQuickPalette("#8b5cf6", "gradient");
           } catch (err) {
             console.error(err);
           }
@@ -736,7 +736,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#f43f5e', 'gradient')")(e);
+            window.applyQuickPalette("#f43f5e", "gradient");
           } catch (err) {
             console.error(err);
           }
@@ -751,7 +751,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#d97706', 'gradient')")(e);
+            window.applyQuickPalette("#d97706", "gradient");
           } catch (err) {
             console.error(err);
           }
@@ -766,7 +766,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
         onClick: (e) => {
           try {
-            new Function("e", "applyQuickPalette('#0f172a', 'dark')")(e);
+            window.applyQuickPalette("#0f172a", "dark");
           } catch (err) {
             console.error(err);
           }
@@ -780,7 +780,7 @@ function SubViewBrandCustomizer() {
       },
       /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideSubbanner", onChange: (e) => {
         try {
-          new Function("e", "updateLiveWhiteLabelPreview()")(e);
+          window.updateLiveWhiteLabelPreview();
         } catch (err) {
           console.error(err);
         }
@@ -796,7 +796,7 @@ function SubViewBrandCustomizer() {
         style: { "width": "100%" },
         onInput: (e) => {
           try {
-            new Function("e", "updateLiveWhiteLabelPreview()")(e);
+            window.updateLiveWhiteLabelPreview();
           } catch (err) {
             console.error(err);
           }
@@ -809,7 +809,7 @@ function SubViewBrandCustomizer() {
       },
       /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideTimeSavingBanner", onChange: (e) => {
         try {
-          new Function("e", "updateLiveWhiteLabelPreview()")(e);
+          window.updateLiveWhiteLabelPreview();
         } catch (err) {
           console.error(err);
         }
@@ -817,13 +817,13 @@ function SubViewBrandCustomizer() {
       /* @__PURE__ */ import_react8.default.createElement("span", null, "Hide Psychological Time-Saving Banner")
     ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F6E1}\uFE0F 4. Guarantees & Conversion Notices"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Sidebar Trust Notice"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingSidebarNotice", type: "text", placeholder: "e.g. Fast & Secure 256-Bit Encrypted Payments", style: { "width": "100%" }, onInput: (e) => {
       try {
-        new Function("e", "updateLiveWhiteLabelPreview()")(e);
+        window.updateLiveWhiteLabelPreview();
       } catch (err) {
         console.error(err);
       }
     } })), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Footer Guarantee Text"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingFooterGuarantee", type: "text", placeholder: "e.g. 100% Payment Protection Guaranteed", style: { "width": "100%" }, onInput: (e) => {
       try {
-        new Function("e", "updateLiveWhiteLabelPreview()")(e);
+        window.updateLiveWhiteLabelPreview();
       } catch (err) {
         console.error(err);
       }
@@ -870,7 +870,7 @@ function SubViewBrandCustomizer() {
         style: { "padding": "0.85rem 1.75rem", "fontSize": "0.95rem", "width": "100%", "justifyContent": "center" },
         onClick: (e) => {
           try {
-            new Function("e", "saveMerchantBrandingAndToggles()")(e);
+            window.saveMerchantBrandingAndToggles();
           } catch (err) {
             console.error(err);
           }
@@ -1086,7 +1086,7 @@ function SubViewReceivingVpa() {
     /* @__PURE__ */ import_react9.default.createElement("span", null, "Set as active VPA for customer checkout immediately")
   ), /* @__PURE__ */ import_react9.default.createElement("button", { className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "addNewUpiAccount()")(e);
+      window.addNewUpiAccount();
     } catch (err) {
       console.error(err);
     }
@@ -1098,13 +1098,13 @@ var import_react10 = __toESM(require_react(), 1);
 function SubViewSellingModes() {
   return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("div", { id: "subViewStoreModes", hidden: true }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3EA} Store Selling Mode & Payment Modalities"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Toggle between ", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Online Selling Mode"), " (E-Commerce) or", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Offline Selling Mode"), " (Physical till/POS desk). Reflects instantly on checkout.")), /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "currentSellingModeBadge" }, "ONLINE SELLING MODE")), /* @__PURE__ */ import_react10.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", { id: "cardModeOnline", onClick: (e) => {
     try {
-      new Function("e", "setSellingMode('ONLINE', true)")(e);
+      window.setSellingMode("ONLINE", true);
     } catch (err) {
       console.error(err);
     }
   }, className: "selling-mode-card mode-selected-online" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.5rem" } }, /* @__PURE__ */ import_react10.default.createElement("strong", { style: { "fontSize": "1rem", "color": "var(--text-heading)" } }, "\u{1F310} Online Selling Mode"), /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge badge-primary", id: "badgeOnlineActive" }, "ACTIVE")), /* @__PURE__ */ import_react10.default.createElement("p", { style: { "fontSize": "0.82rem", "color": "var(--text-muted)", "lineHeight": "1.45", "margin": "0" } }, "For websites and courier deliveries. Supports ", /* @__PURE__ */ import_react10.default.createElement("strong", null, "UPI QR"), " (always on) and optional", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Cash on Delivery (COD)"), ".")), /* @__PURE__ */ import_react10.default.createElement("div", { id: "cardModeOffline", onClick: (e) => {
     try {
-      new Function("e", "setSellingMode('OFFLINE', true)")(e);
+      window.setSellingMode("OFFLINE", true);
     } catch (err) {
       console.error(err);
     }
@@ -1168,7 +1168,7 @@ function SubViewSellingModes() {
       style: { "width": "100%", "padding": "0.75rem" },
       onClick: (e) => {
         try {
-          new Function("e", "saveMerchantBrandingAndToggles()")(e);
+          window.saveMerchantBrandingAndToggles();
         } catch (err) {
           console.error(err);
         }
@@ -1223,7 +1223,7 @@ function SubViewPaymentSimulator() {
           className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "simQuickEnableTestMode()")(e);
+              window.simQuickEnableTestMode();
             } catch (err) {
               console.error(err);
             }
@@ -1239,7 +1239,7 @@ function SubViewPaymentSimulator() {
       className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
       onClick: (e) => {
         try {
-          new Function("e", "simFetchCustomers()")(e);
+          window.simFetchCustomers();
         } catch (err) {
           console.error(err);
         }
@@ -1256,7 +1256,7 @@ function SubViewPaymentSimulator() {
       placeholder: "Search customer (Name, Mobile, Email)...",
       onInput: (e) => {
         try {
-          new Function("e", "simFilterCustomers(e.currentTarget.value)")(e);
+          window.simFilterCustomers(e.currentTarget.value);
         } catch (err) {
           console.error(err);
         }
@@ -1272,7 +1272,7 @@ function SubViewPaymentSimulator() {
       defaultValue: "",
       onChange: (e) => {
         try {
-          new Function("e", "simSelectCustomer(e.currentTarget.value)")(e);
+          window.simSelectCustomer(e.currentTarget.value);
         } catch (err) {
           console.error(err);
         }
@@ -1295,7 +1295,7 @@ function SubViewPaymentSimulator() {
       className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
       onClick: (e) => {
         try {
-          new Function("e", "simReloadSessions()")(e);
+          window.simReloadSessions();
         } catch (err) {
           console.error(err);
         }
@@ -1378,7 +1378,7 @@ function SubViewPaymentSimulator() {
         id: "simSmsTimeType",
         onChange: (e) => {
           try {
-            new Function("e", "simToggleTimeInput('SMS')")(e);
+            window.simToggleTimeInput("SMS");
           } catch (err) {
             console.error(err);
           }
@@ -1403,7 +1403,7 @@ function SubViewPaymentSimulator() {
         className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
         onClick: (e) => {
           try {
-            new Function("e", "simInjectObservation('SMS')")(e);
+            window.simInjectObservation("SMS");
           } catch (err) {
             console.error(err);
           }
@@ -1446,7 +1446,7 @@ function SubViewPaymentSimulator() {
         id: "simGmailTimeType",
         onChange: (e) => {
           try {
-            new Function("e", "simToggleTimeInput('GMAIL')")(e);
+            window.simToggleTimeInput("GMAIL");
           } catch (err) {
             console.error(err);
           }
@@ -1471,7 +1471,7 @@ function SubViewPaymentSimulator() {
         className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
         onClick: (e) => {
           try {
-            new Function("e", "simInjectObservation('GMAIL')")(e);
+            window.simInjectObservation("GMAIL");
           } catch (err) {
             console.error(err);
           }
@@ -1543,7 +1543,7 @@ function SubViewPaymentSimulator() {
       className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
       onClick: (e) => {
         try {
-          new Function("e", "simFetchHistory()")(e);
+          window.simFetchHistory();
         } catch (err) {
           console.error(err);
         }
@@ -1588,7 +1588,7 @@ function SubViewSystemSupervisor() {
           className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "closeTestModeModal()")(e);
+              window.closeTestModeModal();
             } catch (err) {
               console.error(err);
             }
@@ -1602,7 +1602,7 @@ function SubViewSystemSupervisor() {
           className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "confirmEnableTestMode()")(e);
+              window.confirmEnableTestMode();
             } catch (err) {
               console.error(err);
             }
@@ -1655,7 +1655,7 @@ function SubViewSystemSupervisor() {
           id: "toggleTestModeSwitch",
           onChange: (e) => {
             try {
-              new Function("e", "handleTestModeToggle(e.currentTarget)")(e);
+              window.handleTestModeToggle(e.currentTarget);
             } catch (err) {
               console.error(err);
             }
@@ -1699,7 +1699,7 @@ function SubViewSystemSupervisor() {
             className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
             onClick: (e) => {
               try {
-                new Function("e", "generateFakeSmsTemplate()")(e);
+                window.generateFakeSmsTemplate();
               } catch (err) {
                 console.error(err);
               }
@@ -1713,7 +1713,7 @@ function SubViewSystemSupervisor() {
             className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
             onClick: (e) => {
               try {
-                new Function("e", "generateFakeGmailTemplate()")(e);
+                window.generateFakeGmailTemplate();
               } catch (err) {
                 console.error(err);
               }
@@ -1736,7 +1736,7 @@ function SubViewSystemSupervisor() {
             id: "selectTestTimestampControl",
             onChange: (e) => {
               try {
-                new Function("e", "handleTestTimestampChange(e.currentTarget.value)")(e);
+                window.handleTestTimestampChange(e.currentTarget.value);
               } catch (err) {
                 console.error(err);
               }
@@ -1790,7 +1790,7 @@ function SubViewSystemSupervisor() {
             id: "btnInjectSms",
             onClick: (e) => {
               try {
-                new Function("e", "injectTestMessage('SMS')")(e);
+                window.injectTestMessage("SMS");
               } catch (err) {
                 console.error(err);
               }
@@ -1825,7 +1825,7 @@ function SubViewSystemSupervisor() {
             id: "btnInjectGmail",
             onClick: (e) => {
               try {
-                new Function("e", "injectTestMessage('GMAIL')")(e);
+                window.injectTestMessage("GMAIL");
               } catch (err) {
                 console.error(err);
               }
@@ -1889,7 +1889,7 @@ function SubViewSystemSupervisor() {
           className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "fetchTestModeAuditLog()")(e);
+              window.fetchTestModeAuditLog();
             } catch (err) {
               console.error(err);
             }
@@ -1947,7 +1947,7 @@ function SubViewSystemSupervisor() {
         id: "btnNarrativeGreen",
         onClick: (e) => {
           try {
-            new Function("e", "handleFalseNarrativeSelect('GREEN')")(e);
+            window.handleFalseNarrativeSelect("GREEN");
           } catch (err) {
             console.error(err);
           }
@@ -1962,7 +1962,7 @@ function SubViewSystemSupervisor() {
         id: "btnNarrativeYellow",
         onClick: (e) => {
           try {
-            new Function("e", "handleFalseNarrativeSelect('YELLOW')")(e);
+            window.handleFalseNarrativeSelect("YELLOW");
           } catch (err) {
             console.error(err);
           }
@@ -1977,7 +1977,7 @@ function SubViewSystemSupervisor() {
         id: "btnNarrativeRed",
         onClick: (e) => {
           try {
-            new Function("e", "handleFalseNarrativeSelect('RED')")(e);
+            window.handleFalseNarrativeSelect("RED");
           } catch (err) {
             console.error(err);
           }
@@ -1992,7 +1992,7 @@ function SubViewSystemSupervisor() {
         id: "btnNarrativeOff",
         onClick: (e) => {
           try {
-            new Function("e", "handleFalseNarrativeSelect('OFF')")(e);
+            window.handleFalseNarrativeSelect("OFF");
           } catch (err) {
             console.error(err);
           }
@@ -2041,7 +2041,7 @@ function SubViewSystemSupervisor() {
         style: { "fontSize": "0.88rem", "padding": "0.65rem 1.4rem" },
         onClick: (e) => {
           try {
-            new Function("e", "toggleYoupiStore()")(e);
+            window.toggleYoupiStore();
           } catch (err) {
             console.error(err);
           }
@@ -2051,25 +2051,25 @@ function SubViewSystemSupervisor() {
     )))
   ), /* @__PURE__ */ import_react13.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F5A5}\uFE0F Managed Host Processes (Unified Control Center)"), /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Native child process supervisor. Zero external container dependencies. Start, stop, or restart any gateway service independently.")), /* @__PURE__ */ import_react13.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "alignItems": "center" } }, /* @__PURE__ */ import_react13.default.createElement("button", { className: "btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "startAllServices()")(e);
+      window.startAllServices();
     } catch (err) {
       console.error(err);
     }
   } }, "\u25B6 Start All"), /* @__PURE__ */ import_react13.default.createElement("button", { className: "btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "stopAllServices()")(e);
+      window.stopAllServices();
     } catch (err) {
       console.error(err);
     }
   } }, "\u23F9 Stop All"), /* @__PURE__ */ import_react13.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "loadServices()")(e);
+      window.loadServices();
     } catch (err) {
       console.error(err);
     }
   } }, "\u{1F504} Refresh"))), /* @__PURE__ */ import_react13.default.createElement("div", { style: { "overflowX": "auto" } }, /* @__PURE__ */ import_react13.default.createElement("table", { className: "w-full border-collapse text-sm" }, /* @__PURE__ */ import_react13.default.createElement("thead", null, /* @__PURE__ */ import_react13.default.createElement("tr", null, /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Service Name & ID"), /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Port"), /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "PID"), /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Status"), /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Uptime"), /* @__PURE__ */ import_react13.default.createElement("th", { className: "text-left py-3 px-4 font-extrabold uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400" }, "Process Controls"))), /* @__PURE__ */ import_react13.default.createElement("tbody", { id: "servicesTableBody" }, /* @__PURE__ */ import_react13.default.createElement("tr", null, /* @__PURE__ */ import_react13.default.createElement("td", { colSpan: "6", style: { "textAlign": "center", "color": "var(--text-muted)", "padding": "1.5rem" } }, "Loading managed processes...")))))), /* @__PURE__ */ import_react13.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react13.default.createElement("div", null, /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4DC} Real-Time Aggregate Terminal Console"), /* @__PURE__ */ import_react13.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Live SSE stdout/stderr broadcast stream from all active processes.")), /* @__PURE__ */ import_react13.default.createElement("div", { style: { "display": "flex", "gap": "0.6rem", "alignItems": "center" } }, /* @__PURE__ */ import_react13.default.createElement("select", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "logServiceFilter", style: { "padding": "0.4rem 0.75rem", "fontSize": "0.78rem" }, onChange: (e) => {
     try {
-      new Function("e", "filterLogs()")(e);
+      window.filterLogs();
     } catch (err) {
       console.error(err);
     }
@@ -2080,7 +2080,7 @@ function SubViewSystemSupervisor() {
       style: { "padding": "0.4rem 0.75rem", "fontSize": "0.78rem" },
       onClick: (e) => {
         try {
-          new Function("e", "clearLogsConsole()")(e);
+          window.clearLogsConsole();
         } catch (err) {
           console.error(err);
         }
@@ -2099,7 +2099,7 @@ function SubViewCloudflareTunnel() {
       id: "btnEnvLocalhost",
       onClick: (e) => {
         try {
-          new Function("e", "setEnvMode('localhost')")(e);
+          window.setEnvMode("localhost");
         } catch (err) {
           console.error(err);
         }
@@ -2114,7 +2114,7 @@ function SubViewCloudflareTunnel() {
       id: "btnEnvProduction",
       onClick: (e) => {
         try {
-          new Function("e", "setEnvMode('production')")(e);
+          window.setEnvMode("production");
         } catch (err) {
           console.error(err);
         }
@@ -2150,7 +2150,7 @@ function SubViewCloudflareTunnel() {
           defaultValue: "",
           onInput: (e) => {
             try {
-              new Function("e", "updateCloudflarePreview()")(e);
+              window.updateCloudflarePreview();
             } catch (err) {
               console.error(err);
             }
@@ -2174,7 +2174,7 @@ function SubViewCloudflareTunnel() {
           defaultValue: "pay",
           onInput: (e) => {
             try {
-              new Function("e", "updateCloudflarePreview()")(e);
+              window.updateCloudflarePreview();
             } catch (err) {
               console.error(err);
             }
@@ -2189,7 +2189,7 @@ function SubViewCloudflareTunnel() {
           style: { "width": "100%", "padding": "0.65rem", "justifyContent": "center" },
           onClick: (e) => {
             try {
-              new Function("e", "saveDomainSettings()")(e);
+              window.saveDomainSettings();
             } catch (err) {
               console.error(err);
             }
@@ -2200,7 +2200,7 @@ function SubViewCloudflareTunnel() {
     )
   ), /* @__PURE__ */ import_react14.default.createElement("div", { style: { "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", { style: { "fontSize": "0.95rem", "fontWeight": "800", "color": "#f1f5f9" } }, "\u{1F6E3}\uFE0F CLOUDFLARE TUNNEL ROUTES"), /* @__PURE__ */ import_react14.default.createElement("div", { style: { "fontSize": "0.78rem", "color": "var(--text-muted)" } }, "Exact routes to create in Cloudflare Dashboard. All ports and roles are system-defined.")), /* @__PURE__ */ import_react14.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "fontSize": "0.75rem" }, onClick: (e) => {
     try {
-      new Function("e", "copyAllMappings()")(e);
+      window.copyAllMappings();
     } catch (err) {
       console.error(err);
     }
@@ -2259,7 +2259,7 @@ function SubViewWebhooksSecrets() {
       style: { "width": "auto", "alignSelf": "flex-start" },
       onClick: (e) => {
         try {
-          new Function("e", "saveMerchantBrandingAndToggles()")(e);
+          window.saveMerchantBrandingAndToggles();
         } catch (err) {
           console.error(err);
         }
@@ -2293,7 +2293,7 @@ function SubViewAndroidGateway() {
         style: { "fontSize": "0.7rem", "padding": "0.2rem 0.5rem", "marginLeft": "0.5rem" },
         onClick: (e) => {
           try {
-            new Function("e", "copySmsToken()")(e);
+            window.copySmsToken();
           } catch (err) {
             console.error(err);
           }
@@ -2303,7 +2303,7 @@ function SubViewAndroidGateway() {
     )),
     /* @__PURE__ */ import_react16.default.createElement("div", { style: { "display": "flex", "justifyContent": "center", "gap": "0.5rem" } }, /* @__PURE__ */ import_react16.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
       try {
-        new Function("e", "fetchSmsPairQr()")(e);
+        window.fetchSmsPairQr();
       } catch (err) {
         console.error(err);
       }
@@ -2330,7 +2330,7 @@ function SubViewAndroidGateway() {
     }
   ), /* @__PURE__ */ import_react16.default.createElement("button", { className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "sendTestBankSms()")(e);
+      window.sendTestBankSms();
     } catch (err) {
       console.error(err);
     }
@@ -2366,7 +2366,7 @@ function SubViewGmailWhatsAppProtocols() {
           className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "startAutomatedGoogleAuth()")(e);
+              window.startAutomatedGoogleAuth();
             } catch (err) {
               console.error(err);
             }
@@ -2407,7 +2407,7 @@ function SubViewGmailWhatsAppProtocols() {
           className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
           onClick: (e) => {
             try {
-              new Function("e", "disconnectGmailAccount()")(e);
+              window.disconnectGmailAccount();
             } catch (err) {
               console.error(err);
             }
@@ -2472,19 +2472,19 @@ function SubViewGmailWhatsAppProtocols() {
     ))
   ), /* @__PURE__ */ import_react17.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react17.default.createElement("button", { type: "button", className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "testGmailConnection()")(e);
+      window.testGmailConnection();
     } catch (err) {
       console.error(err);
     }
   } }, "\u{1F511} Test Live Connection"), /* @__PURE__ */ import_react17.default.createElement("button", { type: "button", className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "startAutomatedGoogleAuth()")(e);
+      window.startAutomatedGoogleAuth();
     } catch (err) {
       console.error(err);
     }
   } }, "\u{1F504} Re-authorize Account"), /* @__PURE__ */ import_react17.default.createElement("button", { type: "button", className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "openGmailGuideModal()")(e);
+      window.openGmailGuideModal();
     } catch (err) {
       console.error(err);
     }
@@ -2523,7 +2523,7 @@ function SubViewGmailWhatsAppProtocols() {
         style: { "fontSize": "0.68rem", "padding": "0.1rem 0.4rem" },
         onClick: (e) => {
           try {
-            new Function("e", "toggleSecretVisibility()")(e);
+            window.toggleSecretVisibility();
           } catch (err) {
             console.error(err);
           }
@@ -2547,7 +2547,7 @@ function SubViewGmailWhatsAppProtocols() {
         style: { "fontSize": "0.68rem", "padding": "0.1rem 0.4rem" },
         onClick: (e) => {
           try {
-            new Function("e", "copyGmailRedirectUri()")(e);
+            window.copyGmailRedirectUri();
           } catch (err) {
             console.error(err);
           }
@@ -2586,7 +2586,7 @@ function SubViewGmailWhatsAppProtocols() {
         style: { "fontSize": "0.8rem", "padding": "0.4rem 0.8rem" },
         onClick: (e) => {
           try {
-            new Function("e", "saveGmailCredentials()")(e);
+            window.saveGmailCredentials();
           } catch (err) {
             console.error(err);
           }
@@ -2616,14 +2616,19 @@ function SubViewGmailWhatsAppProtocols() {
     ),
     /* @__PURE__ */ import_react17.default.createElement("img", { id: "waQrImg", src: "", alt: "WhatsApp Pairing QR", style: { "width": "240px", "height": "240px", "display": "none", "imageRendering": "pixelated" }, onError: (e) => {
       try {
-        new Function("e", "e.currentTarget.style.display='none'; if(document.getElementById('waQrPlaceholder')){ document.getElementById('waQrPlaceholder').style.display='flex'; document.getElementById('waQrPlaceholder').innerText='QR preview unavailable. Click Refresh QR.'; }")(e);
+        e.currentTarget.style.display = "none";
+        const ph = document.getElementById("waQrPlaceholder");
+        if (ph) {
+          ph.style.display = "flex";
+          ph.innerText = "QR preview unavailable. Click Refresh QR.";
+        }
       } catch (err) {
         console.error(err);
       }
     } })
   ), /* @__PURE__ */ import_react17.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap" } }, /* @__PURE__ */ import_react17.default.createElement("button", { className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", id: "btnWaConnect", onClick: (e) => {
     try {
-      new Function("e", "reconnectWhatsApp()")(e);
+      window.reconnectWhatsApp();
     } catch (err) {
       console.error(err);
     }
@@ -2634,7 +2639,7 @@ function SubViewGmailWhatsAppProtocols() {
       id: "btnWaDisconnect",
       onClick: (e) => {
         try {
-          new Function("e", "disconnectWhatsApp()")(e);
+          window.disconnectWhatsApp();
         } catch (err) {
           console.error(err);
         }
@@ -2644,7 +2649,7 @@ function SubViewGmailWhatsAppProtocols() {
     "\u{1F50C} Disconnect"
   ), /* @__PURE__ */ import_react17.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchWhatsAppStatus(true)")(e);
+      window.fetchWhatsAppStatus(true);
     } catch (err) {
       console.error(err);
     }
@@ -2672,7 +2677,7 @@ function SubViewBannedUsers() {
       style: { "width": "240px", "fontSize": "0.82rem", "padding": "0.45rem 0.75rem" },
       onInput: (e) => {
         try {
-          new Function("e", "filterBannedUsers(e.currentTarget.value)")(e);
+          window.filterBannedUsers(e.currentTarget.value);
         } catch (err) {
           console.error(err);
         }
@@ -2680,13 +2685,13 @@ function SubViewBannedUsers() {
     }
   ), /* @__PURE__ */ import_react19.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchBannedUsers()")(e);
+      window.fetchBannedUsers();
     } catch (err) {
       console.error(err);
     }
   } }, "\u{1F504} Refresh"), /* @__PURE__ */ import_react19.default.createElement("button", { className: "btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "openManualBanModal()")(e);
+      window.openManualBanModal();
     } catch (err) {
       console.error(err);
     }
@@ -2698,7 +2703,7 @@ var import_react20 = __toESM(require_react(), 1);
 function SubViewSecurityEvents() {
   return /* @__PURE__ */ import_react20.default.createElement(import_react20.default.Fragment, null, /* @__PURE__ */ import_react20.default.createElement("div", { id: "subViewSecEvents", hidden: true }, /* @__PURE__ */ import_react20.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react20.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react20.default.createElement("div", null, /* @__PURE__ */ import_react20.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F6A8} Security & Forensic Events Log"), /* @__PURE__ */ import_react20.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Real-time immutable security event records preserved with exact raw evidence verbatim.")), /* @__PURE__ */ import_react20.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchSecurityEvents()")(e);
+      window.fetchSecurityEvents();
     } catch (err) {
       console.error(err);
     }
@@ -2710,7 +2715,7 @@ var import_react21 = __toESM(require_react(), 1);
 function SubViewBanHistory() {
   return /* @__PURE__ */ import_react21.default.createElement(import_react21.default.Fragment, null, /* @__PURE__ */ import_react21.default.createElement("div", { id: "subViewSecHistory", hidden: true }, /* @__PURE__ */ import_react21.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react21.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react21.default.createElement("div", null, /* @__PURE__ */ import_react21.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4DC} Ban & Unban History Audit Trail"), /* @__PURE__ */ import_react21.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Historical chronological audit trail of all automatic bans, unbans, manual bans, and re-bans.")), /* @__PURE__ */ import_react21.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "fetchSecurityHistory()")(e);
+      window.fetchSecurityHistory();
     } catch (err) {
       console.error(err);
     }
@@ -2736,7 +2741,7 @@ function GmailGuideModal() {
     /* @__PURE__ */ import_react23.default.createElement("h3", { style: { "color": "#fff", "margin": "0", "fontSize": "1.15rem" } }, "\u{1F4D6} Official Gmail API & Refresh Token Guide"),
     /* @__PURE__ */ import_react23.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "padding": "0.25rem 0.5rem" }, onClick: (e) => {
       try {
-        new Function("e", "closeGmailGuideModal()")(e);
+        window.closeGmailGuideModal();
       } catch (err) {
         console.error(err);
       }
@@ -2791,7 +2796,7 @@ function GmailGuideModal() {
     ' and the OAuth consent screen publishing status is set to "Testing" with your Gmail added as a Test User.'
   )), /* @__PURE__ */ import_react23.default.createElement("div", { style: { "marginTop": "1.25rem", "textAlign": "right" } }, /* @__PURE__ */ import_react23.default.createElement("button", { className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
-      new Function("e", "closeGmailGuideModal()")(e);
+      window.closeGmailGuideModal();
     } catch (err) {
       console.error(err);
     }
@@ -2815,7 +2820,7 @@ function BanDetailsModal() {
       /* @__PURE__ */ import_react24.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "gap": "0.6rem" } }, /* @__PURE__ */ import_react24.default.createElement("span", { style: { "fontSize": "1.5rem" } }, "\u{1F6A8}"), /* @__PURE__ */ import_react24.default.createElement("div", null, /* @__PURE__ */ import_react24.default.createElement("h3", { style: { "color": "#f87171", "margin": "0", "fontSize": "1.25rem", "fontWeight": "800", "letterSpacing": "-0.02em" } }, "Forensic Security & Ban Evidence Dossier"), /* @__PURE__ */ import_react24.default.createElement("div", { style: { "color": "#94a3b8", "fontSize": "0.78rem" } }, "Immutable tamper-proof record of fraudulent payment injection attempt"))),
       /* @__PURE__ */ import_react24.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "padding": "0.35rem 0.65rem" }, onClick: (e) => {
         try {
-          new Function("e", "closeBanDetailsModal()")(e);
+          window.closeBanDetailsModal();
         } catch (err) {
           console.error(err);
         }
@@ -2830,7 +2835,7 @@ function BanDetailsModal() {
       /* @__PURE__ */ import_react24.default.createElement("div", { style: { "fontSize": "0.75rem", "color": "#64748b" } }, "Security Engine v2 \u2022 YOUPI PG"),
       /* @__PURE__ */ import_react24.default.createElement("div", { style: { "display": "flex", "gap": "0.75rem" } }, /* @__PURE__ */ import_react24.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
         try {
-          new Function("e", "closeBanDetailsModal()")(e);
+          window.closeBanDetailsModal();
         } catch (err) {
           console.error(err);
         }
@@ -2842,7 +2847,7 @@ function BanDetailsModal() {
           style: { "background": "#059669", "borderColor": "#059669", "fontWeight": "700" },
           onClick: (e) => {
             try {
-              new Function("e", "handleModalUnbanClick()")(e);
+              window.handleModalUnbanClick();
             } catch (err) {
               console.error(err);
             }
@@ -2871,7 +2876,7 @@ function UnbanConfirmModal() {
       /* @__PURE__ */ import_react25.default.createElement("h3", { style: { "color": "#34d399", "margin": "0", "display": "flex", "alignItems": "center", "gap": "0.5rem", "fontSize": "1.15rem" } }, /* @__PURE__ */ import_react25.default.createElement("span", null, "\u{1F513}"), " Restore Customer Access (Unban)"),
       /* @__PURE__ */ import_react25.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "padding": "0.25rem 0.5rem" }, onClick: (e) => {
         try {
-          new Function("e", "closeUnbanModal()")(e);
+          window.closeUnbanModal();
         } catch (err) {
           console.error(err);
         }
@@ -2892,7 +2897,7 @@ function UnbanConfirmModal() {
         style: { "width": "100%", "marginBottom": "0.5rem", "background": "#020617", "border": "1px solid #334155", "color": "#f8fafc", "borderRadius": "6px", "padding": "0.55rem", "fontSize": "0.85rem" },
         onChange: (e) => {
           try {
-            new Function("e", "handleUnbanReasonChange()")(e);
+            window.handleUnbanReasonChange();
           } catch (err) {
             console.error(err);
           }
@@ -2920,7 +2925,7 @@ function UnbanConfirmModal() {
       },
       /* @__PURE__ */ import_react25.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
         try {
-          new Function("e", "closeUnbanModal()")(e);
+          window.closeUnbanModal();
         } catch (err) {
           console.error(err);
         }
@@ -2933,7 +2938,7 @@ function UnbanConfirmModal() {
           style: { "background": "#059669", "borderColor": "#059669", "fontWeight": "700" },
           onClick: (e) => {
             try {
-              new Function("e", "executeUnbanCustomer()")(e);
+              window.executeUnbanCustomer();
             } catch (err) {
               console.error(err);
             }
@@ -2962,7 +2967,7 @@ function ManualBanModal() {
       /* @__PURE__ */ import_react26.default.createElement("h3", { style: { "color": "#f87171", "margin": "0", "display": "flex", "alignItems": "center", "gap": "0.5rem", "fontSize": "1.15rem" } }, /* @__PURE__ */ import_react26.default.createElement("span", null, "\u{1F6AB}"), " Manually Ban Abusive Customer"),
       /* @__PURE__ */ import_react26.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "padding": "0.25rem 0.5rem" }, onClick: (e) => {
         try {
-          new Function("e", "closeManualBanModal()")(e);
+          window.closeManualBanModal();
         } catch (err) {
           console.error(err);
         }
@@ -2976,7 +2981,7 @@ function ManualBanModal() {
         style: { "width": "100%", "background": "#020617", "border": "1px solid #334155", "color": "#f8fafc", "borderRadius": "6px", "padding": "0.55rem", "fontSize": "0.85rem" },
         onChange: (e) => {
           try {
-            new Function("e", "handleManualBanCustomerChange()")(e);
+            window.handleManualBanCustomerChange();
           } catch (err) {
             console.error(err);
           }
@@ -3017,7 +3022,7 @@ function ManualBanModal() {
     )),
     /* @__PURE__ */ import_react26.default.createElement("div", { style: { "display": "flex", "justifyContent": "flex-end", "gap": "0.75rem", "borderTop": "1px solid #1e293b", "paddingTop": "1rem" } }, /* @__PURE__ */ import_react26.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
       try {
-        new Function("e", "closeManualBanModal()")(e);
+        window.closeManualBanModal();
       } catch (err) {
         console.error(err);
       }
@@ -3028,7 +3033,7 @@ function ManualBanModal() {
         style: { "background": "#dc2626", "borderColor": "#dc2626", "fontWeight": "700" },
         onClick: (e) => {
           try {
-            new Function("e", "executeManualBan()")(e);
+            window.executeManualBan();
           } catch (err) {
             console.error(err);
           }

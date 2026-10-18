@@ -11,7 +11,7 @@ export default function SubViewBanHistory() {
                   <div className="card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Historical chronological audit trail of all automatic bans, unbans, manual bans,
                     and re-bans.</div>
                 </div>
-                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchSecurityHistory()"))(e); } catch(err) { console.error(err); } }}>🔄 Refresh</button>
+                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchSecurityHistory()); } catch(err) { console.error(err); } }}>🔄 Refresh</button>
               </div>
     
               <div style={{"overflowX":"auto"}}>

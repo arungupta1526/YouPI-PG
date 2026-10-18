@@ -8,7 +8,7 @@ export default function GmailGuideModal() {
           <div
             style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"1rem","borderBottom":"1px solid #1e293b","paddingBottom":"0.75rem"}}>
             <h3 style={{"color":"#fff","margin":"0","fontSize":"1.15rem"}}>📖 Official Gmail API &amp; Refresh Token Guide</h3>
-            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.25rem 0.5rem"}} onClick={(e) => { try { (new Function('e', "closeGmailGuideModal()"))(e); } catch(err) { console.error(err); } }}>✕</button>
+            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.25rem 0.5rem"}} onClick={(e) => { try { (window.closeGmailGuideModal()); } catch(err) { console.error(err); } }}>✕</button>
           </div>
           <div style={{"fontSize":"0.82rem","color":"#cbd5e1","lineHeight":"1.6"}}>
     
@@ -80,7 +80,7 @@ export default function GmailGuideModal() {
             </div>
           </div>
           <div style={{"marginTop":"1.25rem","textAlign":"right"}}>
-            <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "closeGmailGuideModal()"))(e); } catch(err) { console.error(err); } }}>Got It</button>
+            <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.closeGmailGuideModal()); } catch(err) { console.error(err); } }}>Got It</button>
           </div>
         </div>
       </div>

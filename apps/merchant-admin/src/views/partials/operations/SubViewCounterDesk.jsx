@@ -14,7 +14,7 @@ export default function SubViewCounterDesk() {
                 </div>
                 <div style={{"display":"flex","alignItems":"center","gap":"0.6rem"}}>
                   <span className="badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20" id="operatorDisplay">Cashier Desk #1</span>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchCounterPayments()"))(e); } catch(err) { console.error(err); } }}>Refresh</button>
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchCounterPayments()); } catch(err) { console.error(err); } }}>Refresh</button>
                 </div>
               </div>
     
@@ -48,7 +48,7 @@ export default function SubViewCounterDesk() {
                   <div className="card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Orders placed with Cash on Delivery payment confirmation. Ready for fulfillment
                     and dispatch.</div>
                 </div>
-                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchCodOrders()"))(e); } catch(err) { console.error(err); } }}>Refresh Orders</button>
+                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchCodOrders()); } catch(err) { console.error(err); } }}>Refresh Orders</button>
               </div>
     
               <div style={{"overflowX":"auto"}}>

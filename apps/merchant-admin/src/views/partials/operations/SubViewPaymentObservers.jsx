@@ -24,12 +24,12 @@ export default function SubViewPaymentObservers() {
                     Secret:</div>
                   <code id="smsTokenVal" style={{"color":"var(--info)","fontWeight":"700","fontSize":"0.85rem"}}>Loading...</code>
                   <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.7rem","padding":"0.2rem 0.5rem","marginLeft":"0.5rem"}}
-                    onClick={(e) => { try { (new Function('e', "copySmsToken()"))(e); } catch(err) { console.error(err); } }}>📋 Copy</button>
+                    onClick={(e) => { try { (window.copySmsToken()); } catch(err) { console.error(err); } }}>📋 Copy</button>
                 </div>
                 <div style={{"display":"flex","gap":"0.5rem"}}>
                   <a className="btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" href="/youpi-sms-gateway.apk" download="youpi-sms-gateway.apk">📲 Download
                     Companion APK</a>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "switchSection('developerHub', 'subTabAndroid')"))(e); } catch(err) { console.error(err); } }}>Configure
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.switchSection('developerHub', 'subTabAndroid')); } catch(err) { console.error(err); } }}>Configure
                     Pairing ↗</button>
                 </div>
               </div>
@@ -50,7 +50,7 @@ export default function SubViewPaymentObservers() {
                     immunity.
                   </div>
                 </div>
-                <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "switchSection('developerHub', 'subTabGmail')"))(e); } catch(err) { console.error(err); } }}>Configure Gmail API
+                <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.switchSection('developerHub', 'subTabGmail')); } catch(err) { console.error(err); } }}>Configure Gmail API
                   ↗</button>
               </div>
             </div>

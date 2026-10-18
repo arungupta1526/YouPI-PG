@@ -29,20 +29,20 @@ export default function SubViewBrandCustomizer() {
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Merchant
                           Store / Business Name</label>
                         <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingBusinessName" type="text" placeholder="e.g. YOUPI Store or MSPCARE"
-                          style={{"width":"100%"}} onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                          style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                       </div>
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Gateway
                           Title / App Name</label>
                         <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingAppName" type="text" defaultValue="YOUPI PG" placeholder="e.g. YOUPI Pay"
-                          style={{"width":"100%"}} onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                          style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                       </div>
                     </div>
                     <div>
                       <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Brand Logo
                         Image URL</label>
                       <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingLogoUrl" type="url" placeholder="https://yourbrand.com/logo.png" style={{"width":"100%"}}
-                        onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                        onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                       <span
                         style={{"fontSize":"0.72rem","color":"var(--text-muted)","display":"block","marginTop":"0.25rem"}}>Transparent
                         PNG or SVG recommended. When left blank, your store initial letter is used.</span>
@@ -61,16 +61,16 @@ export default function SubViewBrandCustomizer() {
                         <div style={{"display":"flex","gap":"0.5rem","alignItems":"center"}}>
                           <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingColorPicker" type="color" defaultValue="#0b63e5"
                             style={{"width":"44px","height":"40px","border":"none","background":"transparent","cursor":"pointer","padding":"0"}}
-                            onInput={(e) => { try { (new Function('e', "syncColorPickerToText(e.currentTarget.value)"))(e); } catch(err) { console.error(err); } }} />
+                            onInput={(e) => { try { (window.syncColorPickerToText(e.currentTarget.value)); } catch(err) { console.error(err); } }} />
                           <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingPrimaryColor" type="text" defaultValue="#0b63e5"
                             style={{"flex":"1","fontFamily":"monospace","fontWeight":"700"}}
-                            onInput={(e) => { try { (new Function('e', "syncTextColorToPicker(e.currentTarget.value)"))(e); } catch(err) { console.error(err); } }} />
+                            onInput={(e) => { try { (window.syncTextColorToPicker(e.currentTarget.value)); } catch(err) { console.error(err); } }} />
                         </div>
                       </div>
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Header
                           Styling Theme</label>
-                        <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingHeaderTheme" style={{"width":"100%"}} onChange={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }}>
+                        <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingHeaderTheme" style={{"width":"100%"}} onChange={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }}>
                           <option value="gradient">Dynamic Gradient (Brand to Deep Accent)</option>
                           <option value="solid">Solid Brand Color</option>
                           <option value="dark">Obsidian Dark Navy (#0b1329)</option>
@@ -83,17 +83,17 @@ export default function SubViewBrandCustomizer() {
                         FinTech Brand Palettes:</span>
                       <div style={{"display":"flex","gap":"0.5rem","flexWrap":"wrap"}}>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#0b63e5', 'gradient')"))(e); } catch(err) { console.error(err); } }}>🔵 Sapphire Blue</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#0b63e5', 'gradient')); } catch(err) { console.error(err); } }}>🔵 Sapphire Blue</button>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#10b981', 'gradient')"))(e); } catch(err) { console.error(err); } }}>🟢 Emerald Green</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#10b981', 'gradient')); } catch(err) { console.error(err); } }}>🟢 Emerald Green</button>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#8b5cf6', 'gradient')"))(e); } catch(err) { console.error(err); } }}>🟣 Violet Purple</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#8b5cf6', 'gradient')); } catch(err) { console.error(err); } }}>🟣 Violet Purple</button>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#f43f5e', 'gradient')"))(e); } catch(err) { console.error(err); } }}>🔴 Rose Crimson</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#f43f5e', 'gradient')); } catch(err) { console.error(err); } }}>🔴 Rose Crimson</button>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#d97706', 'gradient')"))(e); } catch(err) { console.error(err); } }}>🟡 Amber Gold</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#d97706', 'gradient')); } catch(err) { console.error(err); } }}>🟡 Amber Gold</button>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.3rem 0.65rem","fontSize":"0.75rem"}}
-                          onClick={(e) => { try { (new Function('e', "applyQuickPalette('#0f172a', 'dark')"))(e); } catch(err) { console.error(err); } }}>⚫ Obsidian Dark</button>
+                          onClick={(e) => { try { (window.applyQuickPalette('#0f172a', 'dark')); } catch(err) { console.error(err); } }}>⚫ Obsidian Dark</button>
                       </div>
                     </div>
                   </div>
@@ -111,17 +111,17 @@ export default function SubViewBrandCustomizer() {
                         <label style={{"fontSize":"0.82rem","fontWeight":"700"}}>Header Sub-banner Text</label>
                         <label
                           style={{"fontSize":"0.78rem","color":"var(--text-muted)","display":"flex","alignItems":"center","gap":"0.35rem","cursor":"pointer"}}>
-                          <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="settingHideSubbanner" onChange={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                          <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="settingHideSubbanner" onChange={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                           <span>Hide Sub-banner</span>
                         </label>
                       </div>
                       <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingSubbannerText" type="text" placeholder="e.g. ⚡ 5-Second Instant UPI Activation"
-                        style={{"width":"100%"}} onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                        style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                     </div>
                     <div>
                       <label
                         style={{"fontSize":"0.78rem","color":"var(--text-muted)","display":"flex","alignItems":"center","gap":"0.35rem","cursor":"pointer"}}>
-                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="settingHideTimeSavingBanner" onChange={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="settingHideTimeSavingBanner" onChange={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                         <span>Hide Psychological Time-Saving Banner</span>
                       </label>
                     </div>
@@ -135,11 +135,11 @@ export default function SubViewBrandCustomizer() {
                     <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem"}}>
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Sidebar Trust Notice</label>
-                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingSidebarNotice" type="text" placeholder="e.g. Fast & Secure 256-Bit Encrypted Payments" style={{"width":"100%"}} onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingSidebarNotice" type="text" placeholder="e.g. Fast & Secure 256-Bit Encrypted Payments" style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                       </div>
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Footer Guarantee Text</label>
-                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingFooterGuarantee" type="text" placeholder="e.g. 100% Payment Protection Guaranteed" style={{"width":"100%"}} onInput={(e) => { try { (new Function('e', "updateLiveWhiteLabelPreview()"))(e); } catch(err) { console.error(err); } }} />
+                        <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingFooterGuarantee" type="text" placeholder="e.g. 100% Payment Protection Guaranteed" style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
                       </div>
                     </div>
                   </div>
@@ -181,7 +181,7 @@ export default function SubViewBrandCustomizer() {
     
                   <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{"padding":"0.85rem 1.75rem","fontSize":"0.95rem","width":"100%","justifyContent":"center"}}
-                    onClick={(e) => { try { (new Function('e', "saveMerchantBrandingAndToggles()"))(e); } catch(err) { console.error(err); } }}>
+                    onClick={(e) => { try { (window.saveMerchantBrandingAndToggles()); } catch(err) { console.error(err); } }}>
                     💾 Save &amp; Apply All White-Label Settings
                   </button>
                 </div>

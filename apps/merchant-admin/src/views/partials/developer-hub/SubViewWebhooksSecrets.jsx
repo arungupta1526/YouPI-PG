@@ -31,7 +31,7 @@ export default function SubViewWebhooksSecrets() {
                 </div>
     
                 <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"width":"auto","alignSelf":"flex-start"}}
-                  onClick={(e) => { try { (new Function('e', "saveMerchantBrandingAndToggles()"))(e); } catch(err) { console.error(err); } }}>
+                  onClick={(e) => { try { (window.saveMerchantBrandingAndToggles()); } catch(err) { console.error(err); } }}>
                   💾 Save Webhook Settings
                 </button>
               </div>

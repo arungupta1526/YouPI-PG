@@ -31,7 +31,7 @@ export default function SubViewPaymentSimulator() {
                     <div style={{"color":"#94a3b8","fontSize":"0.72rem","textTransform":"uppercase"}}>Test Mode Status</div>
                     <strong id="simTestModeStatus" style={{"color":"#f59e0b"}}>Checking...</strong>
                   </div>
-                  <button id="simBtnEnableTestMode" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simQuickEnableTestMode()"))(e); } catch(err) { console.error(err); } }}
+                  <button id="simBtnEnableTestMode" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simQuickEnableTestMode()); } catch(err) { console.error(err); } }}
                     style={{"fontSize":"0.78rem","padding":"0.4rem 0.8rem","background":"#f59e0b","borderColor":"#d97706","color":"#0f172a","fontWeight":"700"}}>
                     Enable Test Mode
                   </button>
@@ -49,17 +49,17 @@ export default function SubViewPaymentSimulator() {
                     <strong style={{"color":"#ffffff","fontSize":"0.95rem","display":"flex","alignItems":"center","gap":"0.5rem"}}>
                       <span>👤</span> Target Customer
                     </strong>
-                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simFetchCustomers()"))(e); } catch(err) { console.error(err); } }}
+                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simFetchCustomers()); } catch(err) { console.error(err); } }}
                       style={{"fontSize":"0.72rem","padding":"0.25rem 0.6rem"}}>
                       ↻ Reload
                     </button>
                   </div>
                   <div style={{"marginBottom":"0.75rem"}}>
                     <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="text" id="simCustomerSearchInput" placeholder="Search customer (Name, Mobile, Email)..."
-                      onInput={(e) => { try { (new Function('e', "simFilterCustomers(e.currentTarget.value)"))(e); } catch(err) { console.error(err); } }}
+                      onInput={(e) => { try { (window.simFilterCustomers(e.currentTarget.value)); } catch(err) { console.error(err); } }}
                       style={{"width":"100%","boxSizing":"border-box","background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.5rem 0.75rem","borderRadius":"6px","fontSize":"0.84rem"}} />
                   </div>
-                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simCustomerSelect" size="4" defaultValue="" onChange={(e) => { try { (new Function('e', "simSelectCustomer(e.currentTarget.value)"))(e); } catch(err) { console.error(err); } }}
+                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simCustomerSelect" size="4" defaultValue="" onChange={(e) => { try { (window.simSelectCustomer(e.currentTarget.value)); } catch(err) { console.error(err); } }}
                     style={{"width":"100%","boxSizing":"border-box","background":"#020617","color":"#f8fafc","border":"1px solid #334155","borderRadius":"6px","padding":"0.5rem","fontSize":"0.82rem","minHeight":"110px"}}>
                     <option value="" disabled>Loading existing customers...</option>
                   </select>
@@ -83,7 +83,7 @@ export default function SubViewPaymentSimulator() {
                     <strong style={{"color":"#ffffff","fontSize":"0.95rem","display":"flex","alignItems":"center","gap":"0.5rem"}}>
                       <span>💳</span> Active Payment Sessions
                     </strong>
-                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simReloadSessions()"))(e); } catch(err) { console.error(err); } }}
+                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simReloadSessions()); } catch(err) { console.error(err); } }}
                       style={{"fontSize":"0.72rem","padding":"0.25rem 0.6rem"}}>
                       ↻ Refresh Sessions
                     </button>
@@ -163,7 +163,7 @@ export default function SubViewPaymentSimulator() {
                     Received Time
                   </label>
                   <div style={{"display":"flex","gap":"0.5rem","marginBottom":"0.4rem"}}>
-                    <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simSmsTimeType" onChange={(e) => { try { (new Function('e', "simToggleTimeInput('SMS')"))(e); } catch(err) { console.error(err); } }}
+                    <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simSmsTimeType" onChange={(e) => { try { (window.simToggleTimeInput('SMS')); } catch(err) { console.error(err); } }}
                       style={{"background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.4rem 0.65rem","borderRadius":"6px","fontSize":"0.82rem"}}>
                       <option value="CURRENT">Current Server Time</option>
                       <option value="CUSTOM">Custom Timestamp</option>
@@ -174,7 +174,7 @@ export default function SubViewPaymentSimulator() {
                     style={{"display":"none","width":"100%","boxSizing":"border-box","background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.45rem 0.75rem","borderRadius":"6px","fontSize":"0.82rem","fontFamily":"monospace"}} />
                 </div>
     
-                <button id="simBtnPushSms" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simInjectObservation('SMS')"))(e); } catch(err) { console.error(err); } }}
+                <button id="simBtnPushSms" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simInjectObservation('SMS')); } catch(err) { console.error(err); } }}
                   style={{"width":"100%","background":"#2563eb","borderColor":"#1d4ed8","padding":"0.65rem","fontSize":"0.92rem","fontWeight":"800","display":"flex","justifyContent":"center","alignItems":"center","gap":"0.5rem"}}>
                   <span>🚀</span> PUSH SMS TO STREAM
                 </button>
@@ -216,7 +216,7 @@ export default function SubViewPaymentSimulator() {
                     Received Time
                   </label>
                   <div style={{"display":"flex","gap":"0.5rem","marginBottom":"0.4rem"}}>
-                    <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simGmailTimeType" onChange={(e) => { try { (new Function('e', "simToggleTimeInput('GMAIL')"))(e); } catch(err) { console.error(err); } }}
+                    <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="simGmailTimeType" onChange={(e) => { try { (window.simToggleTimeInput('GMAIL')); } catch(err) { console.error(err); } }}
                       style={{"background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.4rem 0.65rem","borderRadius":"6px","fontSize":"0.82rem"}}>
                       <option value="CURRENT">Current Server Time</option>
                       <option value="CUSTOM">Custom Timestamp</option>
@@ -227,7 +227,7 @@ export default function SubViewPaymentSimulator() {
                     style={{"display":"none","width":"100%","boxSizing":"border-box","background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.45rem 0.75rem","borderRadius":"6px","fontSize":"0.82rem","fontFamily":"monospace"}} />
                 </div>
     
-                <button id="simBtnPushGmail" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simInjectObservation('GMAIL')"))(e); } catch(err) { console.error(err); } }}
+                <button id="simBtnPushGmail" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simInjectObservation('GMAIL')); } catch(err) { console.error(err); } }}
                   style={{"width":"100%","background":"#db2777","borderColor":"#be185d","padding":"0.65rem","fontSize":"0.92rem","fontWeight":"800","display":"flex","justifyContent":"center","alignItems":"center","gap":"0.5rem"}}>
                   <span>🚀</span> PUSH GMAIL TO STREAM
                 </button>
@@ -300,7 +300,7 @@ export default function SubViewPaymentSimulator() {
                 <strong style={{"color":"#ffffff","fontSize":"0.95rem","display":"flex","alignItems":"center","gap":"0.5rem"}}>
                   <span>📜</span> Simulation History
                 </strong>
-                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "simFetchHistory()"))(e); } catch(err) { console.error(err); } }}
+                <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.simFetchHistory()); } catch(err) { console.error(err); } }}
                   style={{"fontSize":"0.74rem","padding":"0.25rem 0.65rem"}}>
                   ↻ Refresh History
                 </button>

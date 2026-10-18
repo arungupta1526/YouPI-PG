@@ -54,7 +54,7 @@ export default function SubViewReceivingVpa() {
                     <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="newUpiActivateNow" defaultChecked style={{"width":"16px","height":"16px"}} />
                     <span>Set as active VPA for customer checkout immediately</span>
                   </label>
-                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "addNewUpiAccount()"))(e); } catch(err) { console.error(err); } }}>➕ Save &amp; Add UPI Account</button>
+                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.addNewUpiAccount()); } catch(err) { console.error(err); } }}>➕ Save &amp; Add UPI Account</button>
                 </div>
               </div>
     

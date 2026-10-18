@@ -18,11 +18,11 @@ export default function SubViewSystemSupervisor() {
                   Test Mode disables automatic banning for 10 minutes and is intended only for development and testing.
                 </p>
                 <div style={{"display":"flex","justifyContent":"flex-end","gap":"0.75rem"}}>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "closeTestModeModal()"))(e); } catch(err) { console.error(err); } }}
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.closeTestModeModal()); } catch(err) { console.error(err); } }}
                     style={{"fontSize":"0.88rem","padding":"0.55rem 1.1rem"}}>
                     Cancel
                   </button>
-                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "confirmEnableTestMode()"))(e); } catch(err) { console.error(err); } }}
+                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.confirmEnableTestMode()); } catch(err) { console.error(err); } }}
                     style={{"background":"#f59e0b","borderColor":"#d97706","color":"#0f172a","fontWeight":"800","fontSize":"0.88rem","padding":"0.55rem 1.25rem"}}>
                     Enable Test Mode
                   </button>
@@ -60,7 +60,7 @@ export default function SubViewSystemSupervisor() {
                 <div style={{"display":"flex","alignItems":"center","gap":"1rem"}}>
                   <label
                     style={{"display":"flex","alignItems":"center","gap":"0.6rem","cursor":"pointer","background":"#1c1917","padding":"0.6rem 1.1rem","borderRadius":"0.5rem","border":"1px solid #d97706"}}>
-                    <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="toggleTestModeSwitch" onChange={(e) => { try { (new Function('e', "handleTestModeToggle(e.currentTarget)"))(e); } catch(err) { console.error(err); } }}
+                    <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="checkbox" id="toggleTestModeSwitch" onChange={(e) => { try { (window.handleTestModeToggle(e.currentTarget)); } catch(err) { console.error(err); } }}
                       style={{"width":"20px","height":"20px","accentColor":"#f59e0b","cursor":"pointer"}} />
                     <span style={{"fontSize":"0.88rem","fontWeight":"700","color":"#fef3c7"}} id="testModeLabelText">Test Mode</span>
                   </label>
@@ -92,11 +92,11 @@ export default function SubViewSystemSupervisor() {
                       canonical 6-stage production verification flow.</span>
                   </div>
                   <div style={{"display":"flex","gap":"0.5rem","flexWrap":"wrap"}}>
-                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "generateFakeSmsTemplate()"))(e); } catch(err) { console.error(err); } }}
+                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.generateFakeSmsTemplate()); } catch(err) { console.error(err); } }}
                       style={{"fontSize":"0.8rem","padding":"0.4rem 0.85rem","borderColor":"#d97706","color":"#fde68a"}}>
                       📱 Create Fake SMS
                     </button>
-                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "generateFakeGmailTemplate()"))(e); } catch(err) { console.error(err); } }}
+                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.generateFakeGmailTemplate()); } catch(err) { console.error(err); } }}
                       style={{"fontSize":"0.8rem","padding":"0.4rem 0.85rem","borderColor":"#d97706","color":"#fde68a"}}>
                       ✉️ Create Fake Gmail
                     </button>
@@ -107,7 +107,7 @@ export default function SubViewSystemSupervisor() {
                 <div
                   style={{"background":"#0b0f19","padding":"0.85rem","borderRadius":"8px","border":"1px solid #1e293b","marginBottom":"1.25rem","display":"flex","alignItems":"center","gap":"1rem","flexWrap":"wrap"}}>
                   <span style={{"fontSize":"0.82rem","color":"#94a3b8","fontWeight":"600"}}>⏱ Test Timestamp Control:</span>
-                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="selectTestTimestampControl" onChange={(e) => { try { (new Function('e', "handleTestTimestampChange(e.currentTarget.value)"))(e); } catch(err) { console.error(err); } }}
+                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="selectTestTimestampControl" onChange={(e) => { try { (window.handleTestTimestampChange(e.currentTarget.value)); } catch(err) { console.error(err); } }}
                     style={{"background":"#1e293b","color":"#f8fafc","border":"1px solid #475569","padding":"0.35rem 0.75rem","borderRadius":"6px","fontSize":"0.82rem"}}>
                     <option value="CURRENT">Current Server Timestamp (Normal)</option>
                     <option value="BEFORE_SESSION">Message received before session creation (-5 mins)</option>
@@ -135,7 +135,7 @@ export default function SubViewSystemSupervisor() {
                       placeholder="Enter custom SMS content here...&#10;e.g. A/C XX1234 credited by Rs 499.00 CR. Ref 123456789012."></textarea>
                     <div style={{"marginTop":"0.75rem","display":"flex","justifyContent":"space-between","alignItems":"center"}}>
                       <span style={{"fontSize":"0.72rem","color":"#64748b"}}>Preserved verbatim as <code>raw</code></span>
-                      <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnInjectSms" onClick={(e) => { try { (new Function('e', "injectTestMessage('SMS')"))(e); } catch(err) { console.error(err); } }}
+                      <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnInjectSms" onClick={(e) => { try { (window.injectTestMessage('SMS')); } catch(err) { console.error(err); } }}
                         style={{"background":"#2563eb","borderColor":"#1d4ed8","fontSize":"0.82rem","padding":"0.45rem 1rem"}}>
                         🚀 Inject Test SMS
                       </button>
@@ -157,7 +157,7 @@ export default function SubViewSystemSupervisor() {
                       placeholder="Enter custom email content here...&#10;e.g. Dear Customer, your account has been credited with INR 499.00 via UPI. UPI Ref No: 123456789012."></textarea>
                     <div style={{"marginTop":"0.75rem","display":"flex","justifyContent":"space-between","alignItems":"center"}}>
                       <span style={{"fontSize":"0.72rem","color":"#64748b"}}>Preserved verbatim as <code>raw</code></span>
-                      <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnInjectGmail" onClick={(e) => { try { (new Function('e', "injectTestMessage('GMAIL')"))(e); } catch(err) { console.error(err); } }}
+                      <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnInjectGmail" onClick={(e) => { try { (window.injectTestMessage('GMAIL')); } catch(err) { console.error(err); } }}
                         style={{"background":"#db2777","borderColor":"#be185d","fontSize":"0.82rem","padding":"0.45rem 1rem"}}>
                         🚀 Inject Test Gmail
                       </button>
@@ -216,7 +216,7 @@ export default function SubViewSystemSupervisor() {
                     <strong style={{"color":"#ffffff","fontSize":"0.88rem","display":"flex","alignItems":"center","gap":"0.4rem"}}>
                       📜 Test Mode Audit Log
                     </strong>
-                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchTestModeAuditLog()"))(e); } catch(err) { console.error(err); } }}
+                    <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchTestModeAuditLog()); } catch(err) { console.error(err); } }}
                       style={{"fontSize":"0.72rem","padding":"0.25rem 0.6rem"}}>
                       ↻ Refresh Audit
                     </button>
@@ -276,19 +276,19 @@ export default function SubViewSystemSupervisor() {
                     style={{"fontSize":"0.75rem","fontWeight":"700","color":"#c4b5fd","textTransform":"uppercase","letterSpacing":"0.04em"}}>
                     Select Narrative to Test:</div>
                   <div style={{"display":"flex","gap":"6px","flexWrap":"wrap"}}>
-                    <button type="button" id="btnNarrativeGreen" onClick={(e) => { try { (new Function('e', "handleFalseNarrativeSelect('GREEN')"))(e); } catch(err) { console.error(err); } }}
+                    <button type="button" id="btnNarrativeGreen" onClick={(e) => { try { (window.handleFalseNarrativeSelect('GREEN')); } catch(err) { console.error(err); } }}
                       style={{"background":"#064e3b","border":"1px solid #059669","color":"#6ee7b7","fontSize":"0.8rem","fontWeight":"700","padding":"6px 12px","borderRadius":"6px","cursor":"pointer","display":"inline-flex","alignItems":"center","gap":"5px","transition":"all 0.15s"}}>
                       🟢 Green
                     </button>
-                    <button type="button" id="btnNarrativeYellow" onClick={(e) => { try { (new Function('e', "handleFalseNarrativeSelect('YELLOW')"))(e); } catch(err) { console.error(err); } }}
+                    <button type="button" id="btnNarrativeYellow" onClick={(e) => { try { (window.handleFalseNarrativeSelect('YELLOW')); } catch(err) { console.error(err); } }}
                       style={{"background":"#78350f","border":"1px solid #d97706","color":"#fde68a","fontSize":"0.8rem","fontWeight":"700","padding":"6px 12px","borderRadius":"6px","cursor":"pointer","display":"inline-flex","alignItems":"center","gap":"5px","transition":"all 0.15s"}}>
                       🟡 Yellow
                     </button>
-                    <button type="button" id="btnNarrativeRed" onClick={(e) => { try { (new Function('e', "handleFalseNarrativeSelect('RED')"))(e); } catch(err) { console.error(err); } }}
+                    <button type="button" id="btnNarrativeRed" onClick={(e) => { try { (window.handleFalseNarrativeSelect('RED')); } catch(err) { console.error(err); } }}
                       style={{"background":"#7f1d1d","border":"1px solid #dc2626","color":"#fca5a5","fontSize":"0.8rem","fontWeight":"700","padding":"6px 12px","borderRadius":"6px","cursor":"pointer","display":"inline-flex","alignItems":"center","gap":"5px","transition":"all 0.15s"}}>
                       🔴 Red
                     </button>
-                    <button type="button" id="btnNarrativeOff" onClick={(e) => { try { (new Function('e', "handleFalseNarrativeSelect('OFF')"))(e); } catch(err) { console.error(err); } }}
+                    <button type="button" id="btnNarrativeOff" onClick={(e) => { try { (window.handleFalseNarrativeSelect('OFF')); } catch(err) { console.error(err); } }}
                       style={{"background":"#1e293b","border":"1px solid #475569","color":"#cbd5e1","fontSize":"0.8rem","fontWeight":"700","padding":"6px 12px","borderRadius":"6px","cursor":"pointer","display":"inline-flex","alignItems":"center","gap":"5px","transition":"all 0.15s"}}>
                       ⚪ Off (Live)
                     </button>
@@ -320,7 +320,7 @@ export default function SubViewSystemSupervisor() {
                     🌐 Open Store (5000) ↗
                   </a>
                   <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnToggleYoupiStore"
-                    style={{"fontSize":"0.88rem","padding":"0.65rem 1.4rem"}} onClick={(e) => { try { (new Function('e', "toggleYoupiStore()"))(e); } catch(err) { console.error(err); } }}>
+                    style={{"fontSize":"0.88rem","padding":"0.65rem 1.4rem"}} onClick={(e) => { try { (window.toggleYoupiStore()); } catch(err) { console.error(err); } }}>
                     ⚡ Toggle Port 5000
                   </button>
                 </div>
@@ -336,9 +336,9 @@ export default function SubViewSystemSupervisor() {
                     stop, or restart any gateway service independently.</div>
                 </div>
                 <div style={{"display":"flex","gap":"0.5rem","alignItems":"center"}}>
-                  <button className="btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "startAllServices()"))(e); } catch(err) { console.error(err); } }}>▶ Start All</button>
-                  <button className="btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "stopAllServices()"))(e); } catch(err) { console.error(err); } }}>⏹ Stop All</button>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "loadServices()"))(e); } catch(err) { console.error(err); } }}>🔄 Refresh</button>
+                  <button className="btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.startAllServices()); } catch(err) { console.error(err); } }}>▶ Start All</button>
+                  <button className="btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.stopAllServices()); } catch(err) { console.error(err); } }}>⏹ Stop All</button>
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.loadServices()); } catch(err) { console.error(err); } }}>🔄 Refresh</button>
                 </div>
               </div>
     
@@ -372,7 +372,7 @@ export default function SubViewSystemSupervisor() {
                   <div className="card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Live SSE stdout/stderr broadcast stream from all active processes.</div>
                 </div>
                 <div style={{"display":"flex","gap":"0.6rem","alignItems":"center"}}>
-                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="logServiceFilter" style={{"padding":"0.4rem 0.75rem","fontSize":"0.78rem"}} onChange={(e) => { try { (new Function('e', "filterLogs()"))(e); } catch(err) { console.error(err); } }}>
+                  <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="logServiceFilter" style={{"padding":"0.4rem 0.75rem","fontSize":"0.78rem"}} onChange={(e) => { try { (window.filterLogs()); } catch(err) { console.error(err); } }}>
                     <option value="ALL">All Services</option>
                     <option value="payment-api">payment-api (6100)</option>
                     <option value="checkout-portal">checkout-portal (7000)</option>
@@ -382,7 +382,7 @@ export default function SubViewSystemSupervisor() {
                     <option value="gmail-observer">gmail-observer (6003)</option>
                   </select>
                   <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.4rem 0.75rem","fontSize":"0.78rem"}}
-                    onClick={(e) => { try { (new Function('e', "clearLogsConsole()"))(e); } catch(err) { console.error(err); } }}>Clear Console</button>
+                    onClick={(e) => { try { (window.clearLogsConsole()); } catch(err) { console.error(err); } }}>Clear Console</button>
                 </div>
               </div>
     

@@ -25,10 +25,10 @@ export default function SubViewAndroidGateway() {
                 <div style={{"fontSize":"0.8rem","color":"#94a3b8","margin":"0.75rem 0"}}>
                   Enrollment Secret: <code id="smsTokenVal2" style={{"color":"#38bdf8","fontWeight":"700"}}>Loading...</code>
                   <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.7rem","padding":"0.2rem 0.5rem","marginLeft":"0.5rem"}}
-                    onClick={(e) => { try { (new Function('e', "copySmsToken()"))(e); } catch(err) { console.error(err); } }}>📋 Copy</button>
+                    onClick={(e) => { try { (window.copySmsToken()); } catch(err) { console.error(err); } }}>📋 Copy</button>
                 </div>
                 <div style={{"display":"flex","justifyContent":"center","gap":"0.5rem"}}>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchSmsPairQr()"))(e); } catch(err) { console.error(err); } }}>🔄 Refresh QR</button>
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchSmsPairQr()); } catch(err) { console.error(err); } }}>🔄 Refresh QR</button>
                   <a className="btn btn-success inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" href="/youpi-sms-gateway.apk" download="youpi-sms-gateway.apk">📲 Download
                     Android APK</a>
                 </div>
@@ -67,7 +67,7 @@ export default function SubViewAndroidGateway() {
                   <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="text" id="testSmsBody"
                     defaultValue="Dear Customer, A/C *1234 credited by Rs 500.00 on 30-Sep-26 by UPI/9212339720/REF987654321 - HDFC Bank"
                     placeholder="SMS Body" style={{"flex":"1","minWidth":"240px"}} />
-                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "sendTestBankSms()"))(e); } catch(err) { console.error(err); } }}>Dispatch</button>
+                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.sendTestBankSms()); } catch(err) { console.error(err); } }}>Dispatch</button>
                 </div>
                 <div id="testSmsResult" style={{"fontSize":"0.78rem","color":"#94a3b8"}}></div>
               </div>

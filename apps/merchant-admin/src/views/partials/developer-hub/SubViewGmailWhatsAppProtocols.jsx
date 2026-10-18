@@ -38,7 +38,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                     {/*  Primary Google Action Button  */}
                     <div style={{"display":"flex","gap":"0.5rem","alignItems":"center"}}>
                       <button type="button" id="btnGooglePrimaryAuth" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={(e) => { try { (new Function('e', "startAutomatedGoogleAuth()"))(e); } catch(err) { console.error(err); } }}
+                        onClick={(e) => { try { (window.startAutomatedGoogleAuth()); } catch(err) { console.error(err); } }}
                         style={{"display":"inline-flex","alignItems":"center","gap":"0.6rem","padding":"0.65rem 1.25rem","fontSize":"0.9rem","fontWeight":"700","background":"#2563eb","color":"#fff","border":"none","borderRadius":"0.5rem","cursor":"pointer","boxShadow":"0 4px 14px rgba(37,99,235,0.4)"}}>
                         <svg width="18" height="18" viewBox="0 0 24 24">
                           <path fill="#ffffff"
@@ -53,7 +53,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                         <span id="btnGooglePrimaryAuthLabel">Connect with Google (One-Click)</span>
                       </button>
                       <button type="button" id="btnGoogleDisconnect" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={(e) => { try { (new Function('e', "disconnectGmailAccount()"))(e); } catch(err) { console.error(err); } }}
+                        onClick={(e) => { try { (window.disconnectGmailAccount()); } catch(err) { console.error(err); } }}
                         style={{"display":"none","fontSize":"0.8rem","padding":"0.65rem 0.9rem","color":"#f87171","borderColor":"#7f1d1d"}}>
                         ❌ Disconnect
                       </button>
@@ -90,11 +90,11 @@ export default function SubViewGmailWhatsAppProtocols() {
     
                 {/*  Secondary Actions  */}
                 <div style={{"display":"flex","gap":"0.5rem","flexWrap":"wrap","marginBottom":"0.75rem"}}>
-                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "testGmailConnection()"))(e); } catch(err) { console.error(err); } }}>🔑 Test Live
+                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.testGmailConnection()); } catch(err) { console.error(err); } }}>🔑 Test Live
                     Connection</button>
-                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "startAutomatedGoogleAuth()"))(e); } catch(err) { console.error(err); } }}>🔄 Re-authorize
+                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.startAutomatedGoogleAuth()); } catch(err) { console.error(err); } }}>🔄 Re-authorize
                     Account</button>
-                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "openGmailGuideModal()"))(e); } catch(err) { console.error(err); } }}>📖 Setup Guide</button>
+                  <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.openGmailGuideModal()); } catch(err) { console.error(err); } }}>📖 Setup Guide</button>
                 </div>
     
                 <div id="gmailTestResultBox"
@@ -119,7 +119,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                         <label style={{"fontSize":"0.75rem","fontWeight":"700","color":"var(--text-muted)"}}>Google OAuth Client
                           Secret</label>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.68rem","padding":"0.1rem 0.4rem"}}
-                          onClick={(e) => { try { (new Function('e', "toggleSecretVisibility()"))(e); } catch(err) { console.error(err); } }}>👁️ Show/Hide</button>
+                          onClick={(e) => { try { (window.toggleSecretVisibility()); } catch(err) { console.error(err); } }}>👁️ Show/Hide</button>
                       </div>
                       <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="password" id="gmailClientSecretInput" placeholder="your-google-client-secret"
                         style={{"width":"100%","fontFamily":"monospace","fontSize":"0.8rem"}} />
@@ -129,7 +129,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                         <label style={{"fontSize":"0.75rem","fontWeight":"700","color":"var(--text-muted)"}}>Exact Authorized
                           Redirect URI</label>
                         <button type="button" className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.68rem","padding":"0.1rem 0.4rem"}}
-                          onClick={(e) => { try { (new Function('e', "copyGmailRedirectUri()"))(e); } catch(err) { console.error(err); } }}>📋 Copy</button>
+                          onClick={(e) => { try { (window.copyGmailRedirectUri()); } catch(err) { console.error(err); } }}>📋 Copy</button>
                       </div>
                       <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" type="text" id="gmailRedirectUriInput" readOnly
                         style={{"width":"100%","fontFamily":"monospace","fontSize":"0.8rem","background":"#020617","color":"#38bdf8"}} />
@@ -143,7 +143,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                     </div>
                     <div>
                       <button type="button" className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"fontSize":"0.8rem","padding":"0.4rem 0.8rem"}}
-                        onClick={(e) => { try { (new Function('e', "saveGmailCredentials()"))(e); } catch(err) { console.error(err); } }}>💾 Save Manual Credentials</button>
+                        onClick={(e) => { try { (window.saveGmailCredentials()); } catch(err) { console.error(err); } }}>💾 Save Manual Credentials</button>
                     </div>
                   </div>
                 </details>
@@ -178,15 +178,15 @@ export default function SubViewGmailWhatsAppProtocols() {
                     style={{"width":"240px","height":"240px","display":"flex","alignItems":"center","justifyContent":"center","color":"#0f172a","fontSize":"0.85rem","textAlign":"center","padding":"1rem"}}>
                     Click "Connect / Refresh QR" to pair device
                   </div>
-                  <img id="waQrImg" src="" alt="WhatsApp Pairing QR" style={{"width":"240px","height":"240px","display":"none","imageRendering":"pixelated"}} onError={(e) => { try { (new Function('e', "e.currentTarget.style.display='none'; if(document.getElementById('waQrPlaceholder')){ document.getElementById('waQrPlaceholder').style.display='flex'; document.getElementById('waQrPlaceholder').innerText='QR preview unavailable. Click Refresh QR.'; }"))(e); } catch(err) { console.error(err); } }} />
+                  <img id="waQrImg" src="" alt="WhatsApp Pairing QR" style={{"width":"240px","height":"240px","display":"none","imageRendering":"pixelated"}} onError={(e) => { try { e.currentTarget.style.display='none'; const ph = document.getElementById('waQrPlaceholder'); if(ph){ ph.style.display='flex'; ph.innerText='QR preview unavailable. Click Refresh QR.'; } } catch(err) { console.error(err); } }} />
                 </div>
     
                 <div style={{"display":"flex","gap":"0.5rem","flexWrap":"wrap"}}>
-                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnWaConnect" onClick={(e) => { try { (new Function('e', "reconnectWhatsApp()"))(e); } catch(err) { console.error(err); } }}>⚡ Connect / Refresh
+                  <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnWaConnect" onClick={(e) => { try { (window.reconnectWhatsApp()); } catch(err) { console.error(err); } }}>⚡ Connect / Refresh
                     QR</button>
-                  <button className="btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnWaDisconnect" onClick={(e) => { try { (new Function('e', "disconnectWhatsApp()"))(e); } catch(err) { console.error(err); } }}
+                  <button className="btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" id="btnWaDisconnect" onClick={(e) => { try { (window.disconnectWhatsApp()); } catch(err) { console.error(err); } }}
                     style={{"display":"none"}}>🔌 Disconnect</button>
-                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "fetchWhatsAppStatus(true)"))(e); } catch(err) { console.error(err); } }}>🔄 Check Status</button>
+                  <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.fetchWhatsAppStatus(true)); } catch(err) { console.error(err); } }}>🔄 Check Status</button>
                 </div>
               </div>
             </div>

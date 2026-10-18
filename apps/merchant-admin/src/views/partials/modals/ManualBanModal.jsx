@@ -11,7 +11,7 @@ export default function ManualBanModal() {
             <h3 style={{"color":"#f87171","margin":"0","display":"flex","alignItems":"center","gap":"0.5rem","fontSize":"1.15rem"}}>
               <span>🚫</span> Manually Ban Abusive Customer
             </h3>
-            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.25rem 0.5rem"}} onClick={(e) => { try { (new Function('e', "closeManualBanModal()"))(e); } catch(err) { console.error(err); } }}>✕</button>
+            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"padding":"0.25rem 0.5rem"}} onClick={(e) => { try { (window.closeManualBanModal()); } catch(err) { console.error(err); } }}>✕</button>
           </div>
     
           <div style={{"marginBottom":"1rem"}}>
@@ -20,7 +20,7 @@ export default function ManualBanModal() {
             </label>
             <select className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="manualBanCustomerSelect"
               style={{"width":"100%","background":"#020617","border":"1px solid #334155","color":"#f8fafc","borderRadius":"6px","padding":"0.55rem","fontSize":"0.85rem"}}
-              onChange={(e) => { try { (new Function('e', "handleManualBanCustomerChange()"))(e); } catch(err) { console.error(err); } }}>
+              onChange={(e) => { try { (window.handleManualBanCustomerChange()); } catch(err) { console.error(err); } }}>
               <option value="">-- Choose Existing Customer --</option>
             </select>
           </div>
@@ -52,9 +52,9 @@ export default function ManualBanModal() {
           </div>
     
           <div style={{"display":"flex","justifyContent":"flex-end","gap":"0.75rem","borderTop":"1px solid #1e293b","paddingTop":"1rem"}}>
-            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (new Function('e', "closeManualBanModal()"))(e); } catch(err) { console.error(err); } }}>Cancel</button>
+            <button className="btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" onClick={(e) => { try { (window.closeManualBanModal()); } catch(err) { console.error(err); } }}>Cancel</button>
             <button className="btn btn-danger inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-red-600 hover:bg-red-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"background":"#dc2626","borderColor":"#dc2626","fontWeight":"700"}}
-              onClick={(e) => { try { (new Function('e', "executeManualBan()"))(e); } catch(err) { console.error(err); } }}>Confirm Ban</button>
+              onClick={(e) => { try { (window.executeManualBan()); } catch(err) { console.error(err); } }}>Confirm Ban</button>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function Header() {
     <div
       className="theme-mode-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 cursor-pointer select-none transition-all hover:border-slate-400 hover:-translate-y-0.5 shadow-sm"
       id="headerThemeBadge"
-      onClick={(e) => { try { (new Function('e', "toggleThemeManual()"))(e); } catch(err) { console.error(err); } }}
+      onClick={(e) => { try { (window.toggleThemeManual()); } catch(err) { console.error(err); } }}
       title="Auto-switches to Dark Mode in Developer Hub and Bright White Mode in Operations &amp; Store Settings. Click to toggle manually anytime."
     >
       <span id="headerThemeIcon">☀️</span>
@@ -30,7 +30,7 @@ export default function Header() {
     <div
       className="store-switch-badge is-offline inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 cursor-pointer select-none transition-all hover:brightness-105 [&.is-online]:bg-emerald-500/10 [&.is-online]:text-emerald-500 [&.is-online]:border-emerald-500/30 [&.is-offline]:bg-rose-500/10 [&.is-offline]:text-rose-500 [&.is-offline]:border-rose-500/30"
       id="headerStoreBadge"
-      onClick={(e) => { try { (new Function('e', "toggleYoupiStore()"))(e); } catch(err) { console.error(err); } }}
+      onClick={(e) => { try { (window.toggleYoupiStore()); } catch(err) { console.error(err); } }}
       title="Click to 1-Click Enable/Disable YOUPI Showcase Store on Port 5000"
     >
       <span id="headerStoreDot">●</span>
@@ -41,7 +41,7 @@ export default function Header() {
     <span
       className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20 cursor-pointer transition-all hover:border-blue-400"
       id="accountVpaDisplay"
-      onClick={(e) => { try { (new Function('e', "switchSection('storeSettings', 'subTabVpa')"))(e); } catch(err) { console.error(err); } }}
+      onClick={(e) => { try { (window.switchSection('storeSettings', 'subTabVpa')); } catch(err) { console.error(err); } }}
     >
       VPA: Loading...
     </span>
@@ -49,7 +49,7 @@ export default function Header() {
     {/*  Environment Mode  */}
     <div
       className="flex items-center gap-1.5 bg-white dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-800 cursor-pointer"
-      onClick={(e) => { try { (new Function('e', "switchSection('developerHub', 'subViewDevCloudflare')"))(e); } catch(err) { console.error(err); } }}
+      onClick={(e) => { try { (window.switchSection('developerHub', 'subViewDevCloudflare')); } catch(err) { console.error(err); } }}
     >
       <span className="text-[0.72rem] text-slate-500 dark:text-slate-400 font-bold">ENV:</span>
       <span
@@ -73,7 +73,7 @@ export default function Header() {
   <button
     className="main-nav-btn active flex items-center gap-2.5 py-4 px-5 cursor-pointer font-extrabold border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 whitespace-nowrap text-sm transition-all duration-200 [&.active]:border-blue-600 [&.active]:text-blue-600 dark:[&.active]:border-sky-400 dark:[&.active]:text-sky-400 [&.active]:bg-blue-50/50 dark:[&.active]:bg-sky-500/10"
     id="mainNavOperations"
-    onClick={(e) => { try { (new Function('e', "switchSection('operations')"))(e); } catch(err) { console.error(err); } }}
+    onClick={(e) => { try { (window.switchSection('operations')); } catch(err) { console.error(err); } }}
   >
     <span>🏪</span>
     <span>Daily Merchant Operations</span>
@@ -81,7 +81,7 @@ export default function Header() {
   <button
     className="main-nav-btn flex items-center gap-2.5 py-4 px-5 cursor-pointer font-extrabold border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 whitespace-nowrap text-sm transition-all duration-200 [&.active]:border-blue-600 [&.active]:text-blue-600 dark:[&.active]:border-sky-400 dark:[&.active]:text-sky-400 [&.active]:bg-blue-50/50 dark:[&.active]:bg-sky-500/10"
     id="mainNavStoreSettings"
-    onClick={(e) => { try { (new Function('e', "switchSection('storeSettings')"))(e); } catch(err) { console.error(err); } }}
+    onClick={(e) => { try { (window.switchSection('storeSettings')); } catch(err) { console.error(err); } }}
   >
     <span>⚙️</span>
     <span>Store Settings</span>
@@ -89,7 +89,7 @@ export default function Header() {
   <button
     className="main-nav-btn flex items-center gap-2.5 py-4 px-5 cursor-pointer font-extrabold border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 whitespace-nowrap text-sm transition-all duration-200 [&.active]:border-blue-600 [&.active]:text-blue-600 dark:[&.active]:border-sky-400 dark:[&.active]:text-sky-400 [&.active]:bg-blue-50/50 dark:[&.active]:bg-sky-500/10"
     id="mainNavDeveloperHub"
-    onClick={(e) => { try { (new Function('e', "switchSection('developerHub')"))(e); } catch(err) { console.error(err); } }}
+    onClick={(e) => { try { (window.switchSection('developerHub')); } catch(err) { console.error(err); } }}
   >
     <span>🛠️</span>
     <span>Developer &amp; Infrastructure Hub</span>
@@ -97,7 +97,7 @@ export default function Header() {
   <button
     className="main-nav-btn flex items-center gap-2.5 py-4 px-5 cursor-pointer font-extrabold border-b-[3px] border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50 whitespace-nowrap text-sm transition-all duration-200 [&.active]:border-blue-600 [&.active]:text-blue-600 dark:[&.active]:border-sky-400 dark:[&.active]:text-sky-400 [&.active]:bg-blue-50/50 dark:[&.active]:bg-sky-500/10"
     id="mainNavSecurity"
-    onClick={(e) => { try { (new Function('e', "switchSection('security')"))(e); } catch(err) { console.error(err); } }}
+    onClick={(e) => { try { (window.switchSection('security')); } catch(err) { console.error(err); } }}
   >
     <span>🛡️</span>
     <span>Security</span>

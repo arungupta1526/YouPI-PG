@@ -17,7 +17,7 @@ export default function SubViewSellingModes() {
     
               {/*  Mode Segmented Switch  */}
               <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1.5rem"}}>
-                <div id="cardModeOnline" onClick={(e) => { try { (new Function('e', "setSellingMode('ONLINE', true)"))(e); } catch(err) { console.error(err); } }} className="selling-mode-card mode-selected-online">
+                <div id="cardModeOnline" onClick={(e) => { try { (window.setSellingMode('ONLINE', true)); } catch(err) { console.error(err); } }} className="selling-mode-card mode-selected-online">
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.5rem"}}>
                     <strong style={{"fontSize":"1rem","color":"var(--text-heading)"}}>🌐 Online Selling Mode</strong>
                     <span className="badge badge-primary" id="badgeOnlineActive">ACTIVE</span>
@@ -28,7 +28,7 @@ export default function SubViewSellingModes() {
                   </p>
                 </div>
     
-                <div id="cardModeOffline" onClick={(e) => { try { (new Function('e', "setSellingMode('OFFLINE', true)"))(e); } catch(err) { console.error(err); } }} className="selling-mode-card rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 cursor-pointer transition-all hover:border-slate-400">
+                <div id="cardModeOffline" onClick={(e) => { try { (window.setSellingMode('OFFLINE', true)); } catch(err) { console.error(err); } }} className="selling-mode-card rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 cursor-pointer transition-all hover:border-slate-400">
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.5rem"}}>
                     <strong style={{"fontSize":"1rem","color":"var(--text-heading)"}}>🏬 Offline Selling Mode</strong>
                     <span className="badge badge-warning inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20" id="badgeOfflineActive" style={{"display":"none"}}>ACTIVE</span>
@@ -142,7 +142,7 @@ export default function SubViewSellingModes() {
               </div>
     
               <button className="btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed" style={{"width":"100%","padding":"0.75rem"}}
-                onClick={(e) => { try { (new Function('e', "saveMerchantBrandingAndToggles()"))(e); } catch(err) { console.error(err); } }}>
+                onClick={(e) => { try { (window.saveMerchantBrandingAndToggles()); } catch(err) { console.error(err); } }}>
                 💾 Save Selling Mode &amp; Payment Modalities
               </button>
             </div>
