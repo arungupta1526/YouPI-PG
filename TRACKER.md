@@ -44,8 +44,9 @@ This tracker monitors all audit items, active bugs, security remediations, Andro
   - Fix: Updated `engines.node` to `>=22.5.0`.
 
 ### Phase 2: CI/CD & ReviewGround
-- [x] Setup GitHub Actions workflow `.github/workflows/ci.yml` (Lint, Typecheck, Test on Node 22+).
-- [x] Setup GitHub Actions workflow `.github/workflows/reviewground.yml` (ReviewGround automated PR review).
+- [x] Setup GitHub Actions workflow `.github/workflows/ci.yml` (5-stage snake pipeline: Gitleaks, Audit, Typecheck & Build, 32 Regression Tests, ReviewGround Stage Summary).
+- [x] Setup GitHub Actions workflow `.github/workflows/reviewground.yml` (ReviewGround automated PR review with issue_comment slash-commands).
+- [x] Setup GitHub Dependabot `.github/dependabot.yml` (grouped npm & GitHub Actions updates).
 
 ### Phase 3: Android Module Cleanup
 - [x] Add Android artifacts and build outputs to `.gitignore` (`.gradle/`, `build/`, `*.apk`, `*.aar`, `local.properties`).
