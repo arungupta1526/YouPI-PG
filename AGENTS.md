@@ -40,8 +40,9 @@ This document establishes the mandatory architectural rules, Git workflows, secu
    - **Always Commit with Detailed Information**:
      - Every commit message MUST include a conventional header, a bulleted list of what changed, the architectural rationale, and verification status.
 6. **Mandatory Automated PR Review & Interactive Suggestion Resolution Protocol**:
-   - **Proactive Review Inspection**: After opening a PR or pushing a commit, inspect GitHub Actions CI run results and automated AI code review comments (e.g., ReviewGround, security linters) via `gh pr view <pr-number> --comments`.
-   - **Continuous Suggestion Resolution**: If the review flags valid and needed suggestions—such as eliminating dynamic evaluation (`new Function`, `eval`), resolving security advisories/CWEs, fixing memory leaks, or improving code safety—the agent **MUST continuously and proactively address and fix them**.
+   - **Proactive Review & Inline Suggestion Inspection**: After opening a PR or pushing a commit, inspect GitHub Actions CI run results, automated AI code review comments (e.g., ReviewGround, security linters), and **inline PR review suggestions** via `gh pr view <pr-number> --comments` and `gh api repos/<owner>/<repo>/pulls/<pr-number>/comments`.
+   - **Continuous Suggestion & Inline Fix Resolution**: If automated reviews or maintainers flag valid and needed suggestions—such as 1-click inline code suggestions, eliminating dynamic evaluation (`new Function`, `eval`), strengthening path traversal boundaries (`path.relative`), resolving security advisories/CWEs, fixing memory leaks, or improving code safety—the agent **MUST continuously and proactively address and implement them**.
+   - **Sync Fixes Across Fork & Upstream PRs**: When fixes or architectural improvements are committed on the fork, verify whether corresponding open upstream PRs require the same updates and push the new commits to upstream PR branches promptly.
    - **Re-Verification & Push**: Always verify all fixes locally (`npm run typecheck`, `npm test`) and push updates to the active PR branch so that the PR achieves 100% green checks with zero unresolved blockers or critical warnings before requesting merge approval.
 
 ---
