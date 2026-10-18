@@ -209,7 +209,8 @@ export class AttributionEngine {
 
       // Invariant Check 0a: Transaction Reference Already Used Check
       let isUtrAlreadyUsed = false;
-      if (normalizedObs.bankReferenceNumber && typeof normalizedObs.bankReferenceNumber === 'string' && normalizedObs.bankReferenceNumber.trim().length > 0) {
+      const trimmedUtr = normalizedObs.bankReferenceNumber ? String(normalizedObs.bankReferenceNumber).trim() : '';
+      if (trimmedUtr.length > 0) {
         const priorUsedSession = this.sessionRepo.db.queryOne(`
           SELECT ps.id, ps.order_id
           FROM payment_sessions ps
@@ -218,7 +219,7 @@ export class AttributionEngine {
             AND ps.id != ?
             AND po.bank_reference_number = ?
           LIMIT 1
-        `, [currentSession.id, normalizedObs.bankReferenceNumber.trim()]);
+        `, [currentSession.id, trimmedUtr]);
 
         if (priorUsedSession) {
           isUtrAlreadyUsed = true;
@@ -230,7 +231,7 @@ export class AttributionEngine {
               action: 'REUSED_UTR_REJECTED',
               actorType: 'SYSTEM',
               details: {
-                bankReferenceNumber: normalizedObs.bankReferenceNumber,
+                bankReferenceNumber: trimmedUtr,
                 consumedByOrderId: priorUsedSession.order_id,
                 consumedBySessionId: priorUsedSession.id
               }
@@ -239,12 +240,12 @@ export class AttributionEngine {
         }
       }
 
-      // Invariant Check 0b: Check if SMS is from personal numeric phone number
+      // Invariant Check 0b: Check if SMS is from personal numeric phone number (10-15 digits E.164, no letters)
       let isPersonalSms = false;
       const senderStr = (normalizedObs.rawPayload?.sender || normalizedObs.rawPayload?.from || '').toString().trim();
       if ((normalizedObs.source === 'SMS' || normalizedObs.source === 'ANDROID_OBSERVER') && senderStr) {
         const digitsOnly = senderStr.replace(/[\s+-]/g, '');
-        if (/^\d+$/.test(digitsOnly) && !/[a-zA-Z]/.test(senderStr)) {
+        if (digitsOnly.length >= 10 && /^\d+$/.test(digitsOnly) && !/[a-zA-Z]/.test(senderStr)) {
           isPersonalSms = true;
         }
       }
