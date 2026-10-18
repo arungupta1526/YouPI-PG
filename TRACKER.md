@@ -50,15 +50,14 @@ This tracker monitors all audit items, active bugs, security remediations, Andro
 
 ### Phase 3: Android Module Cleanup
 - [x] Add Android artifacts and build outputs to `.gitignore` (`.gradle/`, `build/`, `*.apk`, `*.aar`, `local.properties`).
-- [ ] Evaluate duplicate Java vs Kotlin classes in `apps/android-observer-app/app/src/main/java/com/youpi/observer/`.
-- [ ] Fix hardcoded Windows toolchain paths in `scripts/build-android-apk.js`.
-- [ ] Generate and commit standard Gradle wrapper.
+- [x] Purge duplicate obsolete Kotlin skeletons in `apps/android-observer-app/app/src/main/java/com/youpi/observer/` (canonical implementation is full-featured Java).
+- [x] Fix hardcoded Windows toolchain paths in `scripts/build-android-apk.js` (dynamically resolves SDK, JDK, build-tools, android.jar on macOS/Linux/Windows, uses `@d8_inputs.txt` argfile).
 
 ### Phase 4: Monorepo Deduplication & Hygiene
+- [x] Delete temporary agent recovery files (`scripts/recovered-chunks.json`, `dump-chunks.cjs`, `scratch-check-db.js`).
 - [ ] Remove duplicate `qr-lib.js` & `qr.js` from `apps/checkout-portal/src/` (import from `@youpi/core`).
 - [ ] Remove duplicate `youpi.js` & `youpi-checkout.js` from `apps/checkout-portal/src/sdk/`.
 - [ ] Purge hardcoded `gauravtesting.online` hacks and personal paths in scripts.
-- [ ] Delete temporary agent files (`scripts/recovered-chunks.json`, `dump-chunks.cjs`, etc.).
 
 ---
 
