@@ -45,12 +45,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           enable-pr-description-update: 'true'
           enable-check-run: 'true'
-          enable-search-grounding: 'true'
-          enable-inline-suggestions: 'true'
-          enable-npm-verify: 'true'
-          enable-smart-diff-priority: 'true'
-          enable-owasp-tagging: 'true'
-          review-level: 'standard'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
