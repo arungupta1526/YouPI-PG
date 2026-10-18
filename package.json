@@ -19,7 +19,9 @@
     "dev": "node scripts/dev.js",
     "test": "node scripts/test-all.js",
     "test:all": "node scripts/test-all.js",
-    "test:acceptance": "node --test scripts/production-infrastructure.test.js",
+    "build:admin:jsx": "node apps/merchant-admin/scripts/build-jsx.js",
+    "build:admin:css": "./node_modules/.bin/tailwindcss -c ./apps/merchant-admin/tailwind.config.js -i ./apps/merchant-admin/src/styles/input.css -o ./apps/merchant-admin/public/css/admin.css --minify",
+    "build:admin": "npm run build:admin:jsx && npm run build:admin:css",
     "typecheck": "tsc -b --noEmit"
   },
   "devDependencies": {
