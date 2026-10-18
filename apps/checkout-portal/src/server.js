@@ -100,12 +100,14 @@ export class CheckoutServer {
   loadTemplateWithPartials() {
     try {
       let content = fs.readFileSync(this.htmlTemplatePath, 'utf8');
-      const partialsDir = path.join(__dirname, 'views', 'partials');
+      const partialsDir = path.resolve(__dirname, 'views', 'partials');
       content = content.replace(/<!--\s*include:partials\/([a-zA-Z0-9_\-.]+)\s*-->/g, (match, filename) => {
-        const partialPath = path.join(partialsDir, filename);
-        if (fs.existsSync(partialPath)) {
-          return fs.readFileSync(partialPath, 'utf8');
-        }
+        try {
+          const partialPath = path.resolve(partialsDir, filename);
+          if (partialPath.startsWith(partialsDir) && fs.existsSync(partialPath)) {
+            return fs.readFileSync(partialPath, 'utf8');
+          }
+        } catch {}
         return match;
       });
       return content;
@@ -276,8 +278,9 @@ export class CheckoutServer {
       // Static CSS: GET /css/:filename
       if (pathname.startsWith('/css/')) {
         const cssName = path.basename(pathname);
-        const cssPath = path.join(__dirname, '..', 'public', 'css', cssName);
-        if (fs.existsSync(cssPath)) {
+        const cssDir = path.resolve(__dirname, '..', 'public', 'css');
+        const cssPath = path.resolve(cssDir, cssName);
+        if (cssPath.startsWith(cssDir) && fs.existsSync(cssPath)) {
           res.writeHead(200, {
             'Content-Type': 'text/css; charset=utf-8',
             'Cache-Control': 'public, max-age=86400',
@@ -291,8 +294,9 @@ export class CheckoutServer {
       // Static JS: GET /js/:filename
       if (pathname.startsWith('/js/')) {
         const jsName = path.basename(pathname);
-        const jsPath = path.join(__dirname, '..', 'public', 'js', jsName);
-        if (fs.existsSync(jsPath)) {
+        const jsDir = path.resolve(__dirname, '..', 'public', 'js');
+        const jsPath = path.resolve(jsDir, jsName);
+        if (jsPath.startsWith(jsDir) && fs.existsSync(jsPath)) {
           res.writeHead(200, {
             'Content-Type': 'application/javascript; charset=utf-8',
             'Cache-Control': 'public, max-age=86400',
