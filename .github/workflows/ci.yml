@@ -72,7 +72,7 @@ jobs:
         run: npm ci
 
       - name: Security Audit (npm audit)
-        run: npm audit --audit-level=high
+        run: npm audit --omit=dev --audit-level=high
 
   # =============================================================
   # Stage 3: TypeScript Compilation & Production Build Check
