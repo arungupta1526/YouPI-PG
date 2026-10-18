@@ -187,7 +187,8 @@ export class PaymentVerificationPipeline {
       stage5,
       stage6,
       parsed,
-      session
+      session,
+      attribution = null
     }) => {
       return {
         success: finalStatus === 'VERIFIED',
@@ -218,7 +219,8 @@ export class PaymentVerificationPipeline {
           orderId: session.orderId,
           amountPaise: session.amountPaise?.toString(),
           status: session.status
-        } : null
+        } : null,
+        attribution: attribution || null
       };
     };
 
@@ -366,10 +368,31 @@ export class PaymentVerificationPipeline {
         emailDomain = cleanEmail.toLowerCase().trim().replace(/[>]/g, '');
       }
 
-      // Universal Bank Identifier: Email domain ends with .bank.in (e.g. alerts@hdfc.bank.in, example@example.bank.in)
-      const isBankDomain = emailDomain.endsWith('.bank.in') || emailDomain === 'bank.in';
+      // Universal Bank Identifier: Email domain ends with .bank.in/.fin.in or is an official verified Indian bank domain
+      const KNOWN_BANK_DOMAINS = new Set([
+        'hdfcbank.net', 'hdfcbank.com',
+        'icicibank.com',
+        'sbi.co.in',
+        'axisbank.com',
+        'kotak.com', 'kotak.co.in',
+        'paytmbank.com', 'paytm.com',
+        'yesbank.in', 'pnb.co.in',
+        'bankofbaroda.co.in', 'bankofbaroda.com',
+        'indusind.com',
+        'idfcfirstbank.com', 'idfcbank.com',
+        'canarabank.com',
+        'unionbankofindia.co.in',
+        'federalbank.co.in',
+        'idbibank.com'
+      ]);
+      const isBankDomain =
+        emailDomain.endsWith('.bank.in') ||
+        emailDomain.endsWith('.fin.in') ||
+        emailDomain === 'bank.in' ||
+        emailDomain === 'fin.in' ||
+        Array.from(KNOWN_BANK_DOMAINS).some(root => emailDomain === root || emailDomain.endsWith('.' + root));
       // In automated test suite or local dev, allow TEST sender and legacy test fixture domains
-      const isValidDomain = isBankDomain || sender === 'TEST' || cleanEmail === 'TEST' || sender === 'gmail-browser-automator' || emailDomain.endsWith('.youpi.local') || emailDomain === 'hdfcbank.net';
+      const isValidDomain = isBankDomain || sender === 'TEST' || cleanEmail === 'TEST' || sender === 'gmail-browser-automator' || emailDomain.endsWith('.youpi.local');
 
       if (!isValidDomain) {
         if (!isAttributableToCustomer) {
@@ -471,17 +494,27 @@ export class PaymentVerificationPipeline {
     }
 
     // Invariant 3: Check 12-digit reference (UTR / RRN)
-    let bankRef = null;
-    const ref12Patterns = [
-      /(?:upi\s*ref(?:erence)?\s*(?:no\.?|num)?|utr(?:\s*no\.?)?|rrn(?:\s*no\.?)?|txn\s*(?:id|ref)?|ref\s*no\.?)[\s:=-]+([0-9]{12})\b/i,
-      /(?:ref\s*no\.?)?[\s:#=-]+([0-9]{12})\b/i,
-      /\b([0-9]{12})\b/
-    ];
-    for (const pat of ref12Patterns) {
-      const match = rawText.match(pat);
-      if (match && match[1]) {
-        bankRef = match[1].trim();
-        break;
+    let bankRef = input.bankReferenceNumber || input.utr || null;
+    if (!bankRef) {
+      const ref12Patterns = [
+        /(?:upi\s*ref(?:erence)?\s*(?:no\.?|num)?|utr(?:\s*no\.?)?|rrn(?:\s*no\.?)?|txn\s*(?:id|ref)?|ref\s*no\.?)[\s:=-]+([0-9]{12})\b/i,
+        /(?:ref\s*no\.?)?[\s:#=-]+([0-9]{12})\b/i,
+        /\b([0-9]{12})\b/
+      ];
+      for (const pat of ref12Patterns) {
+        const match = rawText.match(pat);
+        if (match && match[1]) {
+          bankRef = match[1].trim();
+          break;
+        }
+      }
+    }
+
+    if (!bankRef && isGmailSource) {
+      const generalRefMatch = rawText.match(/(?:utr|ref(?:\s*no\.?)?|txn\s*(?:id|ref)?|rrn)[:\s#]+([a-zA-Z0-9\-_]{6,35})/i) ||
+        rawText.match(/UPI\/CR\/([a-zA-Z0-9\-_]+)/i);
+      if (generalRefMatch && generalRefMatch[1]) {
+        bankRef = generalRefMatch[1].trim();
       }
     }
 
@@ -1073,8 +1106,11 @@ export class PaymentVerificationPipeline {
       status: attributionResult.attributed ? 'ATTRIBUTED' : 'UNRESOLVED',
       outcomeStatus: attributionResult.outcomeStatus,
       details: {
+        attributed: attributionResult.attributed,
+        paymentSessionId: attributionResult.paymentSessionId,
         observationId: attributionResult.observationId,
         attributedSessionId: attributionResult.paymentSessionId,
+        outcomeStatus: attributionResult.outcomeStatus,
         verificationLevel: attributionResult.verificationLevel,
         verificationTag: attributionResult.verificationTag
       }
@@ -1093,7 +1129,8 @@ export class PaymentVerificationPipeline {
       stage5,
       stage6,
       parsed: parsedData,
-      session: updatedSession || session
+      session: updatedSession || session,
+      attribution: attributionResult
     });
   }
 }
