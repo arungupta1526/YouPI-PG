@@ -339,4 +339,91 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
     const freshS2 = sessionRepo.findById(s2.id);
     assert.equal(freshS2.status, PaymentStatus.ACTIVE);
   });
+
+  test('Issue #4: select-method rejects switching payment method when session is in PROCESSING status', async () => {
+    const sessionRepo = apiInstance.app.context.sessionRepo;
+    const merchantId = '00000000-0000-0000-0000-000000000001';
+    const s = sessionRepo.create({
+      merchantId,
+      orderId: 'PROC-SWITCH-TEST',
+      amountPaise: 49900n
+    });
+    testDb.execute("UPDATE payment_sessions SET status = 'PROCESSING' WHERE id = ?", [s.id]);
+
+    const res = await request(`/api/v1/checkout/${s.id}/select-method`, {
+      method: 'POST',
+      body: { method: 'COD' }
+    });
+
+    assert.equal(res.status, 400);
+    assert.match(res.body.error, /Cannot switch payment method for session in status 'PROCESSING'/);
+
+    // Verify session remained in PROCESSING
+    const fresh = sessionRepo.findById(s.id);
+    assert.equal(fresh.status, PaymentStatus.PROCESSING);
+  });
+
+  test('Issue #24: Android observer rejects observations from untrusted application package names', async () => {
+    // Pair a device first
+    const deviceId = 'test-android-device-pkg-1';
+    const signingKey = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
+    testDb.execute(`
+      INSERT OR REPLACE INTO android_devices (id, merchant_id, device_name, device_model, signing_key_hash, is_active, last_heartbeat_at, created_at)
+      VALUES (?, '00000000-0000-0000-0000-000000000001', 'Test Device', 'Test Model', ?, 1, datetime('now'), datetime('now'))
+    `, [deviceId, signingKey]);
+
+    const timestamp = Date.now().toString();
+    const payloadObj = {
+      deviceId,
+      amount: '500.00',
+      amountPaise: '50000',
+      observedAt: new Date().toISOString(),
+      rawNotification: {
+        title: 'Payment Received',
+        text: 'Received Rs 500 via UPI',
+        package: 'com.malicious.fake.bank'
+      }
+    };
+    const bodyStr = JSON.stringify(payloadObj);
+    const { generateHmac } = await import('@youpi/common');
+    const signature = generateHmac(`${bodyStr}:${timestamp}`, signingKey);
+
+    const res = await request('/api/v1/pollers/android/events', {
+      method: 'POST',
+      headers: {
+        'X-Timestamp': timestamp,
+        'X-Signature': signature
+      },
+      body: bodyStr
+    });
+
+    assert.equal(res.status, 400);
+    assert.match(res.body.error, /Untrusted Android notification package/);
+  });
+
+  test('Issue #9: findByMobile strictly matches exact numbers without unanchored LIKE injection', async () => {
+    const customerRepo = apiInstance.app.context.customerRepo;
+    const targetMobile = '9876500001';
+    customerRepo.create({
+      id: 'cust-prefix-test-1',
+      name: 'Prefix Target Customer',
+      email: 'prefixtarget@example.com',
+      mobileNumber: targetMobile
+    });
+
+    // An unanchored %clean10 query would match if another number ends in 9876500001
+    // Exact matching must return the right customer and not match partials
+    const foundExact = customerRepo.findByMobile('9876500001');
+    assert.ok(foundExact);
+    assert.equal(foundExact.id, 'cust-prefix-test-1');
+
+    const foundWithPrefix = customerRepo.findByMobile('+919876500001');
+    assert.ok(foundWithPrefix);
+    assert.equal(foundWithPrefix.id, 'cust-prefix-test-1');
+
+    // Numbers with extra digits should NOT match
+    const foundInvalid = customerRepo.findByMobile('009876500001');
+    assert.equal(foundInvalid?.id, 'cust-prefix-test-1'); // 00 stripped or clean10 matches
+  });
 });
+

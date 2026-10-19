@@ -1019,8 +1019,8 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
 
-    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
-      HttpServer.json(res, 400, { error: `Cannot switch payment method for terminal session in status '${session.status}'` });
+    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED, PaymentStatus.PROCESSING].includes(session.status)) {
+      HttpServer.json(res, 400, { error: `Cannot switch payment method for session in status '${session.status}'` });
       return;
     }
 
@@ -1283,8 +1283,8 @@ export function registerCheckoutRoutes(server, ctx) {
       ctx.sessionRepo.db.execute(`
         UPDATE payment_receiving_accounts
         SET is_slot_busy = 0, current_active_session_id = NULL, updated_at = ?
-        WHERE id = ?
-      `, [nowIso, oldReceivingAccountId]);
+        WHERE id = ? AND current_active_session_id = ?
+      `, [nowIso, oldReceivingAccountId, session.id]);
 
       const promoted = ctx.queueEngine.promoteNext(oldReceivingAccountId);
       if (promoted) {
