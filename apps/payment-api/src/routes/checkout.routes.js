@@ -1,6 +1,7 @@
 import { HttpServer } from '../server.js';
 import { toRupeesString, buildUpiUri, PaymentStatus, PaymentMethod, UPI_PROVIDERS, isInternalServiceRequest } from '@youpi/common';
 import { validateSessionDeviceAccess } from '@youpi/core';
+import { isPaymentOwner } from '../auth-guard.js';
 
 /**
  * Validates device access to an active payment session.
@@ -1305,7 +1306,7 @@ export function registerCheckoutRoutes(server, ctx) {
     const updated = ctx.sessionRepo.findById(session.id);
 
     let customer = null;
-    if (updated.customerId && ctx.customerRepo) {
+    if (isPaymentOwner(req, updated, ctx) && updated.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(updated.customerId);
       if (c) {
         customer = {

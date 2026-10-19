@@ -17,11 +17,45 @@ const BASE_SECURITY_HEADERS = Object.freeze({
 });
 
 /** Security headers applied to embeddable checkout pages allowing universal merchant iframe integration. */
-const CHECKOUT_FRAME_HEADERS = Object.freeze({
+export const CHECKOUT_FRAME_HEADERS = Object.freeze({
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Content-Security-Policy': "default-src 'self' data: blob:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-ancestors *; base-uri 'none'; form-action 'self'; object-src 'none'"
 });
+
+/**
+ * Origins allowed to embed the checkout page, from CHECKOUT_FRAME_ANCESTORS
+ * (comma or space separated, e.g. "https://shop.example.com"). youpi.js opens the
+ * checkout in an iframe on the merchant's own site, which `frame-ancestors 'self'`
+ * blocks whenever the store and the portal are on different origins. Anything that
+ * is not a plain http(s) origin is ignored, so the CSP cannot be widened by accident.
+ */
+export function frameAncestorOrigins(raw = process.env.CHECKOUT_FRAME_ANCESTORS) {
+  const origins = [];
+  for (const entry of String(raw || '').split(/[\s,]+/)) {
+    if (!entry) continue;
+    try {
+      const url = new URL(entry);
+      if ((url.protocol === 'https:' || url.protocol === 'http:') && entry.replace(/\/$/, '') === url.origin) {
+        origins.push(url.origin);
+      }
+    } catch {}
+  }
+  return origins;
+}
+
+/** Headers for the embeddable checkout page: CHECKOUT_FRAME_HEADERS with allowed embedders or fallback. */
+export function checkoutPageSecurityHeaders() {
+  const origins = frameAncestorOrigins();
+  if (origins.length > 0) {
+    return {
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Content-Security-Policy': `default-src 'self' data: blob:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-ancestors 'self' ${origins.join(' ')}; base-uri 'none'; form-action 'self'; object-src 'none'`
+    };
+  }
+  return CHECKOUT_FRAME_HEADERS;
+}
 
 /**
  * Escapes a value for interpolation into HTML text or attribute context.
@@ -340,7 +374,7 @@ res.writeHead(200, {
             'Pragma': 'no-cache',
             'Expires': '0',
             'Access-Control-Allow-Origin': '*',
-            ...CHECKOUT_FRAME_HEADERS
+            ...checkoutPageSecurityHeaders()
           });
         res.end(rendered);
         return;
