@@ -16,6 +16,13 @@ const BASE_SECURITY_HEADERS = Object.freeze({
   'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-ancestors 'self'; base-uri 'none'; form-action 'self'; object-src 'none'"
 });
 
+/** Security headers applied to embeddable checkout pages allowing universal merchant iframe integration. */
+const CHECKOUT_FRAME_HEADERS = Object.freeze({
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Content-Security-Policy': "default-src 'self' data: blob:; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; frame-ancestors *; base-uri 'none'; form-action 'self'; object-src 'none'"
+});
+
 /**
  * Escapes a value for interpolation into HTML text or attribute context.
  * Order ids, merchant names and branding fields are attacker-influenced, so they must
@@ -314,7 +321,7 @@ export class CheckoutServer {
           'Pragma': 'no-cache',
           'Expires': '0',
           'Access-Control-Allow-Origin': '*',
-          ...BASE_SECURITY_HEADERS
+          ...CHECKOUT_FRAME_HEADERS
         });
         res.end(svg);
         return;
@@ -333,7 +340,7 @@ res.writeHead(200, {
             'Pragma': 'no-cache',
             'Expires': '0',
             'Access-Control-Allow-Origin': '*',
-            ...BASE_SECURITY_HEADERS
+            ...CHECKOUT_FRAME_HEADERS
           });
         res.end(rendered);
         return;
