@@ -1649,10 +1649,8 @@ export function registerCheckoutRoutes(server, ctx) {
       }
     }
 
-    // 4. Generate unique order reference from sourceSession
-    const cleanOrderId = sourceSession.orderId ? sourceSession.orderId.replace(/-R\d+$/, '') : `ORD-${Date.now()}`;
-    const randSuffix = Math.floor(1000 + Math.random() * 9000);
-    const newOrderId = `${cleanOrderId}-R${randSuffix}`;
+    // 4. Preserve merchant's exact order reference from sourceSession
+    const newOrderId = sourceSession.orderId ? sourceSession.orderId.replace(/-R\d+$/, '') : `ORD-${Date.now()}`;
 
     // 5. Ensure device exists and register
     if (newDeviceId && ctx.deviceRepo) {

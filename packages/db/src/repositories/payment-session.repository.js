@@ -13,14 +13,15 @@ export class PaymentSessionRepository {
     const id = data.id || crypto.randomUUID();
     const now = new Date().toISOString();
     const metadata = typeof data.metadata === 'object' ? JSON.stringify(data.metadata) : (data.metadata || '{}');
+    const attemptId = data.attemptId || id;
 
     const sql = `
       INSERT INTO payment_sessions (
-        id, merchant_id, customer_id, receiving_account_id, order_id,
+        id, merchant_id, customer_id, receiving_account_id, order_id, attempt_id,
         amount_paise, currency, method, status, queue_position,
         return_url, idempotency_key, device_id, verification_level, verification_sources,
         verification_tag, metadata, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, '[]', 'UNVERIFIED', ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, '[]', 'UNVERIFIED', ?, ?, ?)
     `;
 
     this.db.execute(sql, [
@@ -29,6 +30,7 @@ export class PaymentSessionRepository {
       data.customerId || null,
       data.receivingAccountId || null,
       data.orderId,
+      attemptId,
       Number(data.amountPaise),
       data.currency || 'INR',
       data.method || PaymentMethod.UPI,
@@ -53,7 +55,7 @@ export class PaymentSessionRepository {
 
   findByOrderId(merchantId, orderId) {
     const row = this.db.queryOne(
-      'SELECT * FROM payment_sessions WHERE merchant_id = ? AND order_id = ?',
+      'SELECT * FROM payment_sessions WHERE merchant_id = ? AND order_id = ? ORDER BY created_at DESC LIMIT 1',
       [merchantId, orderId]
     );
     if (!row) return null;
@@ -586,6 +588,7 @@ export class PaymentSessionRepository {
       customerId: row.customer_id,
       receivingAccountId: row.receiving_account_id,
       orderId: row.order_id,
+      attemptId: row.attempt_id || row.id,
       amountPaise: BigInt(row.amount_paise),
       currency: row.currency,
       method: row.method,

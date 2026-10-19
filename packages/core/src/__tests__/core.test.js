@@ -326,5 +326,32 @@ describe('@youpi/core Unit & Integration Tests', () => {
       assert.equal(parsed.amount, '1200.00');
       assert.equal(parsed.bankReferenceNumber, '987654321012');
     });
+
+    test('ignores available balance amount appearing before credit amount', () => {
+      const sms = {
+        text: 'Avl Bal Rs 15,000.00. Rs 500.00 credited to A/c XX1234 for UPI txn Ref 123456789012.'
+      };
+      const parsed = BankSmsParser.parse(sms);
+      assert.ok(parsed);
+      assert.equal(parsed.amount, '500.00');
+      assert.equal(parsed.amountPaise, 50000n);
+      assert.equal(parsed.bankReferenceNumber, '123456789012');
+    });
+
+    test('rejects debit notification even if credited disclaimer appears later', () => {
+      const sms = {
+        text: 'Dear Customer, A/c *1234 is debited for Rs 750 on 19-Oct-26. If not done by you, contact bank. Amount will be credited back in 48 hours.'
+      };
+      const parsed = BankSmsParser.parse(sms);
+      assert.equal(parsed, null);
+    });
+
+    test('rejects bare payment or transfer debit message without credit indicator', () => {
+      const sms = {
+        text: 'Payment of Rs 350.00 sent to merchant@upi on 19-Oct. UPI Ref 998877665544.'
+      };
+      const parsed = BankSmsParser.parse(sms);
+      assert.equal(parsed, null);
+    });
   });
 });

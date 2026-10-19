@@ -108,11 +108,20 @@ export function registerPaymentRoutes(server, ctx) {
       const isStale = (existing.status === PaymentStatus.ACTIVE && existing.expiresAt && existing.expiresAt.getTime() <= now) ||
         (existing.status === PaymentStatus.PROCESSING && existing.processingExpiresAt && existing.processingExpiresAt.getTime() <= now);
       if (isStale) {
-        ctx.sessionRepo.transitionToTerminal(existing.id, PaymentStatus.EXPIRED);
+        const terminalStatus = existing.status === PaymentStatus.PROCESSING ? PaymentStatus.FAILED : PaymentStatus.EXPIRED;
+        ctx.sessionRepo.transitionToTerminal(existing.id, terminalStatus);
         if (existing.receivingAccountId) {
           ctx.queueEngine.promoteNext(existing.receivingAccountId);
         }
-        existing.status = PaymentStatus.EXPIRED;
+        existing.status = terminalStatus;
+        if (ctx.eventEmitter) {
+          ctx.eventEmitter.emit(`PAYMENT.${terminalStatus}`, {
+            paymentId: existing.id,
+            orderId: existing.orderId,
+            merchantId: existing.merchantId,
+            amountPaise: existing.amountPaise
+          });
+        }
       }
 
       // If existing is non-terminal (ACTIVE, PROCESSING, QUEUED, INITIATED):
@@ -148,10 +157,9 @@ export function registerPaymentRoutes(server, ctx) {
         return;
       }
 
-      // CASE 4: Previous session is TERMINAL (FAILED, EXPIRED, CANCELLED) -> RETRY / NEW PAYMENT!
-      const cleanOrderId = body.orderId.replace(/-R\d+$/, '');
-      const randSuffix = Math.floor(1000 + Math.random() * 9000);
-      body.orderId = `${cleanOrderId}-R${randSuffix}`;
+      // CASE 4: Previous session is TERMINAL (FAILED, EXPIRED, CANCELLED) -> RETRY / NEW ATTEMPT!
+      // Invariant: Keep merchant's exact orderId untouched so webhooks, reconciliations, and reporting align.
+      body.orderId = body.orderId.replace(/-R\d+$/, '');
     }
 
     let amountPaise;

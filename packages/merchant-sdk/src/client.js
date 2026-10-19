@@ -115,9 +115,10 @@ export class YoupiPaymentClient {
    * @param {string} rawPayloadString Raw request body text (unparsed)
    * @param {string} signatureHeader Value of 'X-Gateway-Signature' header (e.g. 'sha256=...')
    * @param {string} [customSecret] Optional override secret
+   * @param {string|number} [timestamp] Value of 'X-Gateway-Timestamp' header (recommended for replay protection)
    * @returns {any} Validated parsed webhook event payload
    */
-  verifyWebhook(rawPayloadString, signatureHeader, customSecret = null) {
+  verifyWebhook(rawPayloadString, signatureHeader, customSecret = null, timestamp = null) {
     const secret = customSecret || this.webhookSecret;
     if (!secret) {
       throw new Error('Webhook verification failed: webhookSecret is not configured.');
@@ -128,7 +129,16 @@ export class YoupiPaymentClient {
     }
 
     const actualSignature = signatureHeader.replace('sha256=', '');
-    const isValid = verifyHmac(rawPayloadString, secret, actualSignature);
+
+    // Replay protection: check ${timestamp}.${rawPayloadString} first if timestamp is provided
+    let isValid = false;
+    if (timestamp != null && timestamp !== '') {
+      isValid = verifyHmac(`${timestamp}.${rawPayloadString}`, secret, actualSignature);
+    }
+    // Fallback: verify directly over rawPayloadString for legacy payloads
+    if (!isValid) {
+      isValid = verifyHmac(rawPayloadString, secret, actualSignature);
+    }
 
     if (!isValid) {
       throw new Error('Webhook verification failed: signature mismatch.');

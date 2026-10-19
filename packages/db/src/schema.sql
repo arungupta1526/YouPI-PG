@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS payment_sessions (
     customer_id TEXT REFERENCES customers(id) ON DELETE SET NULL,
     receiving_account_id TEXT REFERENCES payment_receiving_accounts(id),
     order_id VARCHAR(255) NOT NULL,
+    attempt_id TEXT,
     amount_paise BIGINT NOT NULL CHECK (amount_paise > 0),
     currency VARCHAR(3) NOT NULL DEFAULT 'INR',
     method VARCHAR(50) NOT NULL DEFAULT 'UPI',
@@ -94,11 +95,14 @@ CREATE TABLE IF NOT EXISTS payment_sessions (
     verification_tag VARCHAR(100) DEFAULT 'UNVERIFIED',
     metadata TEXT NOT NULL DEFAULT '{}',
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT uq_merchant_order UNIQUE (merchant_id, order_id)
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX IF NOT EXISTS idx_payment_sessions_active ON payment_sessions (receiving_account_id, status);
+CREATE INDEX IF NOT EXISTS idx_payment_sessions_order ON payment_sessions (merchant_id, order_id, created_at);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_single_active_session_per_order
+  ON payment_sessions (merchant_id, order_id)
+  WHERE status NOT IN ('FAILED', 'EXPIRED', 'CANCELLED');
 
 -- 5. Payment Observations Table
 CREATE TABLE IF NOT EXISTS payment_observations (

@@ -2,11 +2,19 @@ import '../../../../scripts/test-support.js';
 import { test, describe, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Database } from '@youpi/db';
 import { startServer as startPaymentApi } from '../index.js';
 import { PaymentStatus, PaymentMethod } from '@youpi/common';
 import { authHeadersFor } from '../../../../scripts/test-support.js';
 import { WebhookEngine } from '@youpi/core';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '../../../..');
 
 describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #27, #28)', () => {
   let apiInstance;
@@ -424,6 +432,115 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
     // Numbers with extra digits should NOT match
     const foundInvalid = customerRepo.findByMobile('009876500001');
     assert.equal(foundInvalid?.id, 'cust-prefix-test-1'); // 00 stripped or clean10 matches
+  });
+
+  test('Issue #7: Retrying a terminal payment session preserves exact orderId without -R suffix', async () => {
+    const payRes1 = await request('/api/v1/payments', {
+      method: 'POST',
+      body: {
+        orderId: 'ORDER-EXACT-RETRY-01',
+        amount: '350.00'
+      }
+    });
+    assert.equal(payRes1.status, 201);
+    assert.equal(payRes1.body.orderId, 'ORDER-EXACT-RETRY-01');
+
+    // Manually transition first attempt to EXPIRED
+    testDb.execute("UPDATE payment_sessions SET status = 'EXPIRED' WHERE id = ?", [payRes1.body.paymentId]);
+
+    // Customer retries payment for the same order
+    const payRes2 = await request('/api/v1/payments', {
+      method: 'POST',
+      body: {
+        orderId: 'ORDER-EXACT-RETRY-01',
+        amount: '350.00'
+      }
+    });
+    assert.equal(payRes2.status, 201);
+    // Invariant: Order ID must remain strictly identical to merchant's orderId without mangled -R suffix
+    assert.equal(payRes2.body.orderId, 'ORDER-EXACT-RETRY-01');
+    assert.notEqual(payRes2.body.paymentId, payRes1.body.paymentId);
+  });
+
+  test('Issue #7: WebhookEngine includes utr, attemptId, and binds timestamp in signature', async () => {
+    let receivedHook = null;
+    const server = http.createServer((req, res) => {
+      let data = '';
+      req.on('data', c => { data += c; });
+      req.on('end', () => {
+        receivedHook = {
+          headers: req.headers,
+          body: JSON.parse(data)
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ok: true }));
+      });
+    });
+
+    await new Promise(r => server.listen(0, r));
+    const hookPort = server.address().port;
+
+    const merchantRepo = apiInstance.app.context.merchantRepo;
+    const sessionRepo = apiInstance.app.context.sessionRepo;
+    const secret = 'hook_sec_invariants_777';
+
+    const testMerch = merchantRepo.create({
+      businessName: 'Webhook UTR Test Store',
+      slug: 'webhook-utr-store',
+      contactEmail: 'utr@example.com',
+      contactPhone: '9876543210',
+      webhookUrl: `http://localhost:${hookPort}/webhook`,
+      webhookSecret: secret
+    });
+
+    const session = sessionRepo.create({
+      merchantId: testMerch.id,
+      orderId: 'HOOK-UTR-ORD-01',
+      amountPaise: 99900n,
+      method: 'UPI'
+    });
+
+    // Simulate attributed bank observation with UTR
+    const obsId = crypto.randomUUID();
+    testDb.execute(`
+      INSERT INTO payment_observations (id, receiving_account_id, source, amount_paise, bank_reference_number, fingerprint_hash, observed_at)
+      VALUES (?, '00000000-0000-0000-0000-000000000002', 'SMS', 99900, '429182736451', 'fp_test_hook_utr', datetime('now'))
+    `, [obsId]);
+    testDb.execute("UPDATE payment_sessions SET status = 'SUCCESS', attributed_observation_id = ? WHERE id = ?", [obsId, session.id]);
+
+    const updatedSession = sessionRepo.findById(session.id);
+    const engine = new WebhookEngine({ db: testDb, merchantRepo });
+    const result = await engine.dispatch('SUCCESS', updatedSession);
+
+    await new Promise(cb => server.close(cb));
+
+    assert.equal(result.delivered, true);
+    assert.ok(receivedHook);
+    assert.equal(receivedHook.body.orderId, 'HOOK-UTR-ORD-01');
+    assert.equal(receivedHook.body.utr, '429182736451');
+    assert.ok(receivedHook.body.attemptId);
+
+    // Verify timestamp HMAC binding
+    const sig = receivedHook.headers['x-gateway-signature'].replace('sha256=', '');
+    const ts = receivedHook.headers['x-gateway-timestamp'];
+    assert.ok(ts);
+    const expectedHmac = crypto.createHmac('sha256', secret).update(`${ts}.${JSON.stringify(receivedHook.body)}`).digest('hex');
+    assert.equal(sig, expectedHmac);
+  });
+
+  test('Issue #11: AndroidManifest disables cleartext traffic and binds network security config', () => {
+    const manifestPath = path.resolve(rootDir, 'apps/android-observer-app/app/src/main/AndroidManifest.xml');
+    const netConfigPath = path.resolve(rootDir, 'apps/android-observer-app/app/src/main/res/xml/network_security_config.xml');
+
+    assert.ok(fs.existsSync(manifestPath), 'AndroidManifest.xml must exist');
+    assert.ok(fs.existsSync(netConfigPath), 'network_security_config.xml must exist');
+
+    const manifestContent = fs.readFileSync(manifestPath, 'utf8');
+    const netConfigContent = fs.readFileSync(netConfigPath, 'utf8');
+
+    assert.match(manifestContent, /android:usesCleartextTraffic="false"/, 'Cleartext traffic must be explicitly disabled');
+    assert.match(manifestContent, /android:networkSecurityConfig="@xml\/network_security_config"/, 'Network security config must be bound');
+    assert.match(netConfigContent, /cleartextTrafficPermitted="false"/, 'Base network config must forbid cleartext traffic');
   });
 });
 

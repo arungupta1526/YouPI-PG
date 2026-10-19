@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS payment_sessions (
     customer_id TEXT REFERENCES customers(id) ON DELETE SET NULL,
     receiving_account_id TEXT REFERENCES payment_receiving_accounts(id),
     order_id TEXT NOT NULL,
+    attempt_id TEXT,
     amount_paise INTEGER NOT NULL CHECK (amount_paise > 0),
     currency TEXT NOT NULL DEFAULT 'INR',
     method TEXT NOT NULL DEFAULT 'UPI',
@@ -93,11 +94,16 @@ CREATE TABLE IF NOT EXISTS payment_sessions (
     verification_tag TEXT DEFAULT 'UNVERIFIED',
     metadata TEXT NOT NULL DEFAULT '{}',
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    updated_at TEXT NOT NULL DEFAULT (datetime('now')),
-    UNIQUE(merchant_id, order_id)
+    updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
 CREATE INDEX IF NOT EXISTS idx_payment_sessions_active ON payment_sessions (receiving_account_id, status);
+CREATE INDEX IF NOT EXISTS idx_payment_sessions_order ON payment_sessions (merchant_id, order_id, created_at);
+-- At most one active/processing/queued/successful session per merchant order.
+-- Retrying a terminal (FAILED, EXPIRED, CANCELLED) order allows a new attempt with the true orderId.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_single_active_session_per_order
+  ON payment_sessions (merchant_id, order_id)
+  WHERE status NOT IN ('FAILED', 'EXPIRED', 'CANCELLED');
 -- Slot exclusivity is a database invariant, not an application convention: at most one
 -- session per receiving account may occupy the slot (ACTIVE or PROCESSING) at any time.
 -- Concurrent writers are rejected by the engine instead of relying on lock contention.
