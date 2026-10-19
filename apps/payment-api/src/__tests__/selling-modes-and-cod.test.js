@@ -198,7 +198,19 @@ describe('Architectural Update: Selling Modes (Online vs Offline), COD Flow, & C
     assert.equal(checkBRes.body.status, PaymentStatus.ACTIVE);
     assert.equal(checkBRes.body.queuePosition, 0);
 
-    // Developer API endpoint: GET /api/v1/orders/:orderId/cod
+    // Anonymous caller gets order status and amount with masked PII, but no merchant metadata
+    for (const path of ['/api/v1/orders/ORDER-COD-A/cod', `/api/v1/payments/${paymentIdA}/cod`]) {
+      const anonRes = await request(path, { headers: { Authorization: '' } });
+      assert.equal(anonRes.status, 200);
+      assert.equal(anonRes.body.orderId, 'ORDER-COD-A');
+      assert.equal(anonRes.body.method, 'COD');
+      assert.equal(anonRes.body.customer.name, 'Rahul Sharma');
+      assert.match(anonRes.body.customer.email, /^ra\*\*\*@/);
+      assert.match(anonRes.body.customer.mobileNumber, /^98\*\*\*\*\*\*\d{2}$/);
+      assert.equal(anonRes.body.metadata, undefined, `${path} leaked metadata`);
+    }
+
+    // Developer API endpoint: GET /api/v1/orders/:orderId/cod (owner credential returns full customer details)
     const devOrderRes = await request('/api/v1/orders/ORDER-COD-A/cod');
     assert.equal(devOrderRes.status, 200);
     assert.equal(devOrderRes.body.orderId, 'ORDER-COD-A');

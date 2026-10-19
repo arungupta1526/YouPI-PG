@@ -2,6 +2,7 @@ import { test, describe, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { startCheckoutServer } from '../index.js';
+import { frameAncestorOrigins } from '../server.js';
 import { generateQrMatrix, generateQrSvg } from '@youpi/core';
 
 describe('Checkout Portal Integration Tests', () => {
@@ -83,6 +84,22 @@ describe('Checkout Portal Integration Tests', () => {
       assert.equal(res.text.includes('View Offers'), false);
       assert.equal(res.text.includes('id="checkoutNoticeText"'), false);
       assert.equal(res.text.includes('available-offers-card'), false);
+    });
+
+    test('GET /checkout/:id frame-ancestors respects CHECKOUT_FRAME_ANCESTORS allowlist', async () => {
+      // Default: when CHECKOUT_FRAME_ANCESTORS is unset, frame-ancestors * is served
+      const defaultRes = await get('/checkout/pay_test_uuid_12345');
+      assert.ok(defaultRes.headers['content-security-policy'].includes("frame-ancestors *"));
+
+      // When configured: allowlist is enforced and malformed/non-origin entries dropped
+      process.env.CHECKOUT_FRAME_ANCESTORS = 'https://shop.example.com, javascript:alert(1) https://x.test/path *';
+      try {
+        const res = await get('/checkout/pay_test_uuid_12345');
+        assert.ok(res.headers['content-security-policy'].includes("frame-ancestors 'self' https://shop.example.com;"));
+      } finally {
+        delete process.env.CHECKOUT_FRAME_ANCESTORS;
+      }
+      assert.deepEqual(frameAncestorOrigins('https://a.test http://localhost:5000/'), ['https://a.test', 'http://localhost:5000']);
     });
 
     test('GET /checkout/:id/qr.svg returns dynamic SVG image', async () => {
