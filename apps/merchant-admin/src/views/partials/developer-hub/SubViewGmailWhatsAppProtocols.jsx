@@ -4,7 +4,7 @@ export default function SubViewGmailWhatsAppProtocols() {
   return (
     <>
           <div id="subViewDevProtocols" hidden>
-            <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1.5rem"}}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/*  Gmail Direct API  */}
               <div className="card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" id="gmailObserverCard">
                 <div className="card-header flex items-center justify-between mb-5 flex-wrap gap-3">
@@ -71,8 +71,7 @@ export default function SubViewGmailWhatsAppProtocols() {
                 </div>
     
                 {/*  Live Connection Status Details  */}
-                <div
-                  style={{"background":"#090d16","border":"1px solid #1e293b","borderRadius":"0.5rem","padding":"0.85rem","marginBottom":"1rem","fontSize":"0.8rem","display":"grid","gridTemplateColumns":"1fr 1fr","gap":"0.6rem"}}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 mb-4 rounded-lg border border-slate-800 bg-[#090d16] text-xs">
                   <div><span style={{"color":"#64748b"}}>OAuth Status:</span> <strong id="gmailOAuthStatusText"
                       style={{"color":"#f87171"}}>DISCONNECTED</strong></div>
                   <div><span style={{"color":"#64748b"}}>Token Status:</span> <strong id="gmailTokenStatusText"

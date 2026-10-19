@@ -14,8 +14,7 @@ export default function SubViewBrandCustomizer() {
                 <span className="badge badge-success inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20">100% White-Label Capable</span>
               </div>
     
-              <div
-                style={{"display":"grid","gridTemplateColumns":"minmax(0, 1.4fr) minmax(340px, 1fr)","gap":"2rem","alignItems":"start"}}>
+              <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,1fr)] gap-8 items-start">
     
                 {/*  LEFT COLUMN: CONTROLS & SETTINGS  */}
                 <div>
@@ -24,7 +23,7 @@ export default function SubViewBrandCustomizer() {
                     <div className="group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4">
                       🏷️ 1. Core Brand Identity &amp; Title
                     </div>
-                    <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1rem"}}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Merchant
                           Store / Business Name</label>
@@ -54,7 +53,7 @@ export default function SubViewBrandCustomizer() {
                     <div className="group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4">
                       🎨 2. Visual Theme &amp; Color Palette
                     </div>
-                    <div style={{"display":"grid","gridTemplateColumns":"1.2fr 1fr","gap":"1rem","marginBottom":"1rem"}}>
+                    <div className="grid grid-cols-1 sm:grid-cols-[1.2fr_1fr] gap-4 mb-4">
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Primary
                           Brand Color (Hex)</label>
@@ -132,7 +131,7 @@ export default function SubViewBrandCustomizer() {
                     <div className="group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4">
                       🛡️ 4. Guarantees &amp; Conversion Notices
                     </div>
-                    <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem"}}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Sidebar Trust Notice</label>
                         <input className="rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all" id="settingSidebarNotice" type="text" placeholder="e.g. Fast & Secure 256-Bit Encrypted Payments" style={{"width":"100%"}} onInput={(e) => { try { (window.updateLiveWhiteLabelPreview()); } catch(err) { console.error(err); } }} />
@@ -149,7 +148,7 @@ export default function SubViewBrandCustomizer() {
                     <div className="group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4">
                       📞 5. Support &amp; Legal Policies
                     </div>
-                    <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1rem"}}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Customer
                           Support Email(s)</label>
@@ -163,7 +162,7 @@ export default function SubViewBrandCustomizer() {
                           style={{"width":"100%"}} />
                       </div>
                     </div>
-                    <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem"}}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Privacy
                           Policy URL</label>

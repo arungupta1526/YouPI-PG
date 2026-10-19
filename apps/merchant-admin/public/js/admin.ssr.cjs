@@ -329,7 +329,7 @@ var import_react28 = __toESM(require_react(), 1);
 // apps/merchant-admin/src/views/partials/Header.jsx
 var import_react = __toESM(require_react(), 1);
 function Header() {
-  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("header", { className: "bg-white dark:bg-[#070a12] border-b border-slate-200 dark:border-slate-800 px-6 py-3.5 flex items-center justify-between sticky top-0 z-[1000] backdrop-blur-md" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-3.5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-xl font-black text-slate-900 dark:text-white flex items-center gap-2 tracking-tight" }, /* @__PURE__ */ import_react.default.createElement("span", null, "\u{1F6E1}\uFE0F YOUPI PG")), /* @__PURE__ */ import_react.default.createElement("span", { className: "text-[0.72rem] font-bold py-1 px-2.5 rounded-full uppercase tracking-wider bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20" }, "Merchant & Supervisor Hub")), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-3 flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
+  return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("header", { className: "bg-white dark:bg-[#070a12] border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center justify-between sticky top-0 z-[1000] backdrop-blur-md gap-3" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center justify-between gap-3.5" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "text-xl font-black text-slate-900 dark:text-white flex items-center gap-2 tracking-tight" }, /* @__PURE__ */ import_react.default.createElement("span", null, "\u{1F6E1}\uFE0F YOUPI PG")), /* @__PURE__ */ import_react.default.createElement("span", { className: "text-[0.72rem] font-bold py-1 px-2.5 rounded-full uppercase tracking-wider bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20" }, "Merchant & Supervisor Hub")), /* @__PURE__ */ import_react.default.createElement("div", { className: "flex items-center gap-2.5 overflow-x-auto pb-1 sm:pb-0 w-full md:w-auto flex-nowrap md:flex-wrap" }, /* @__PURE__ */ import_react.default.createElement(
     "div",
     {
       className: "theme-mode-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 cursor-pointer select-none transition-all hover:border-slate-400 hover:-translate-y-0.5 shadow-sm",
@@ -525,7 +525,7 @@ function SubViewPaymentObservers() {
       style: { "fontSize": "1.15rem", "fontWeight": "800", "color": "var(--text-heading)", "marginBottom": "1rem", "display": "flex", "alignItems": "center", "gap": "0.5rem" },
       dangerouslySetInnerHTML: { __html: "<span>\u{1F4E1}</span> Payment Observers (SMS & Gmail)" }
     }
-  ), /* @__PURE__ */ import_react6.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1.5rem" } }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", style: { "marginBottom": "0" } }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4F1} Android SMS Gateway"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "smsGatewayBadge" }, "STANDBY")), /* @__PURE__ */ import_react6.default.createElement("p", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed", style: { "marginBottom": "1rem" } }, "Native Android observer app captures credit SMS notifications in real-time from bank-linked handsets."), /* @__PURE__ */ import_react6.default.createElement(
+  ), /* @__PURE__ */ import_react6.default.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", style: { "marginBottom": "0" } }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react6.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4F1} Android SMS Gateway"), /* @__PURE__ */ import_react6.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "smsGatewayBadge" }, "STANDBY")), /* @__PURE__ */ import_react6.default.createElement("p", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed", style: { "marginBottom": "1rem" } }, "Native Android observer app captures credit SMS notifications in real-time from bank-linked handsets."), /* @__PURE__ */ import_react6.default.createElement(
     "div",
     {
       style: { "background": "var(--bg-surface)", "border": "1px solid var(--border)", "borderRadius": "0.5rem", "padding": "1rem", "marginBottom": "1rem" }
@@ -579,475 +579,468 @@ var import_react11 = __toESM(require_react(), 1);
 // apps/merchant-admin/src/views/partials/store-settings/SubViewBrandCustomizer.jsx
 var import_react8 = __toESM(require_react(), 1);
 function SubViewBrandCustomizer() {
-  return /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement("div", { id: "subViewStoreBrand" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3A8} White-Label Branding & Visual Gateway Customizer"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Customize every visual, textual, and brand asset of your customer checkout experience. Live reflection on smartphone mockup.")), /* @__PURE__ */ import_react8.default.createElement("span", { className: "badge badge-success inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20" }, "100% White-Label Capable")), /* @__PURE__ */ import_react8.default.createElement(
+  return /* @__PURE__ */ import_react8.default.createElement(import_react8.default.Fragment, null, /* @__PURE__ */ import_react8.default.createElement("div", { id: "subViewStoreBrand" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3A8} White-Label Branding & Visual Gateway Customizer"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Customize every visual, textual, and brand asset of your customer checkout experience. Live reflection on smartphone mockup.")), /* @__PURE__ */ import_react8.default.createElement("span", { className: "badge badge-success inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20" }, "100% White-Label Capable")), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 xl:grid-cols-[minmax(0,1.4fr)_minmax(340px,1fr)] gap-8 items-start" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F3F7}\uFE0F 1. Core Brand Identity & Title"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Merchant Store / Business Name"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingBusinessName",
+      type: "text",
+      placeholder: "e.g. YOUPI Store or MSPCARE",
+      style: { "width": "100%" },
+      onInput: (e) => {
+        try {
+          window.updateLiveWhiteLabelPreview();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Gateway Title / App Name"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingAppName",
+      type: "text",
+      defaultValue: "YOUPI PG",
+      placeholder: "e.g. YOUPI Pay",
+      style: { "width": "100%" },
+      onInput: (e) => {
+        try {
+          window.updateLiveWhiteLabelPreview();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  ))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Brand Logo Image URL"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingLogoUrl",
+      type: "url",
+      placeholder: "https://yourbrand.com/logo.png",
+      style: { "width": "100%" },
+      onInput: (e) => {
+        try {
+          window.updateLiveWhiteLabelPreview();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "span",
+    {
+      style: { "fontSize": "0.72rem", "color": "var(--text-muted)", "display": "block", "marginTop": "0.25rem" }
+    },
+    "Transparent PNG or SVG recommended. When left blank, your store initial letter is used."
+  ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F3A8} 2. Visual Theme & Color Palette"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-[1.2fr_1fr] gap-4 mb-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Primary Brand Color (Hex)"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "alignItems": "center" } }, /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingColorPicker",
+      type: "color",
+      defaultValue: "#0b63e5",
+      style: { "width": "44px", "height": "40px", "border": "none", "background": "transparent", "cursor": "pointer", "padding": "0" },
+      onInput: (e) => {
+        try {
+          window.syncColorPickerToText(e.currentTarget.value);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingPrimaryColor",
+      type: "text",
+      defaultValue: "#0b63e5",
+      style: { "flex": "1", "fontFamily": "monospace", "fontWeight": "700" },
+      onInput: (e) => {
+        try {
+          window.syncTextColorToPicker(e.currentTarget.value);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  ))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Header Styling Theme"), /* @__PURE__ */ import_react8.default.createElement("select", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingHeaderTheme", style: { "width": "100%" }, onChange: (e) => {
+    try {
+      window.updateLiveWhiteLabelPreview();
+    } catch (err) {
+      console.error(err);
+    }
+  } }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "gradient" }, "Dynamic Gradient (Brand to Deep Accent)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "solid" }, "Solid Brand Color"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "dark" }, "Obsidian Dark Navy (#0b1329)")))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
+    "span",
+    {
+      style: { "fontSize": "0.75rem", "color": "var(--text-muted)", "fontWeight": "700", "display": "block", "marginBottom": "0.4rem" }
+    },
+    "Quick FinTech Brand Palettes:"
+  ), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap" } }, /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#0b63e5", "gradient");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F535} Sapphire Blue"
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#10b981", "gradient");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F7E2} Emerald Green"
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#8b5cf6", "gradient");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F7E3} Violet Purple"
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#f43f5e", "gradient");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F534} Rose Crimson"
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#d97706", "gradient");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F7E1} Amber Gold"
+  ), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      type: "button",
+      className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
+      onClick: (e) => {
+        try {
+          window.applyQuickPalette("#0f172a", "dark");
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u26AB Obsidian Dark"
+  )))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F6E1}\uFE0F 3. Badges & Conversion Banners"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "hidden", id: "settingHideTrustBadge" }), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "hidden", id: "settingTrustBadgeText" }), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "marginBottom": "1rem", "paddingBottom": "1rem", "borderBottom": "1px dashed var(--border)" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.35rem" } }, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "fontSize": "0.82rem", "fontWeight": "700" } }, "Header Sub-banner Text"), /* @__PURE__ */ import_react8.default.createElement(
+    "label",
+    {
+      style: { "fontSize": "0.78rem", "color": "var(--text-muted)", "display": "flex", "alignItems": "center", "gap": "0.35rem", "cursor": "pointer" }
+    },
+    /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideSubbanner", onChange: (e) => {
+      try {
+        window.updateLiveWhiteLabelPreview();
+      } catch (err) {
+        console.error(err);
+      }
+    } }),
+    /* @__PURE__ */ import_react8.default.createElement("span", null, "Hide Sub-banner")
+  )), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingSubbannerText",
+      type: "text",
+      placeholder: "e.g. \u26A1 5-Second Instant UPI Activation",
+      style: { "width": "100%" },
+      onInput: (e) => {
+        try {
+          window.updateLiveWhiteLabelPreview();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+  )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
+    "label",
+    {
+      style: { "fontSize": "0.78rem", "color": "var(--text-muted)", "display": "flex", "alignItems": "center", "gap": "0.35rem", "cursor": "pointer" }
+    },
+    /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideTimeSavingBanner", onChange: (e) => {
+      try {
+        window.updateLiveWhiteLabelPreview();
+      } catch (err) {
+        console.error(err);
+      }
+    } }),
+    /* @__PURE__ */ import_react8.default.createElement("span", null, "Hide Psychological Time-Saving Banner")
+  ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F6E1}\uFE0F 4. Guarantees & Conversion Notices"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Sidebar Trust Notice"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingSidebarNotice", type: "text", placeholder: "e.g. Fast & Secure 256-Bit Encrypted Payments", style: { "width": "100%" }, onInput: (e) => {
+    try {
+      window.updateLiveWhiteLabelPreview();
+    } catch (err) {
+      console.error(err);
+    }
+  } })), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Footer Guarantee Text"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingFooterGuarantee", type: "text", placeholder: "e.g. 100% Payment Protection Guaranteed", style: { "width": "100%" }, onInput: (e) => {
+    try {
+      window.updateLiveWhiteLabelPreview();
+    } catch (err) {
+      console.error(err);
+    }
+  } })))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F4DE} 5. Support & Legal Policies"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Customer Support Email(s)"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingSupportEmails",
+      type: "text",
+      placeholder: "support@brand.com, help@brand.com",
+      style: { "width": "100%" }
+    }
+  )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Customer Support Mobile(s)"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingSupportMobiles",
+      type: "text",
+      placeholder: "+91 9876543210, +91 9123456789",
+      style: { "width": "100%" }
+    }
+  ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4" }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Privacy Policy URL"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingPrivacyPolicyUrl",
+      type: "url",
+      placeholder: "https://yourbrand.com/privacy-policy",
+      style: { "width": "100%" }
+    }
+  )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Terms of Service URL"), /* @__PURE__ */ import_react8.default.createElement(
+    "input",
+    {
+      className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+      id: "settingTermsUrl",
+      type: "url",
+      placeholder: "https://yourbrand.com/terms",
+      style: { "width": "100%" }
+    }
+  )))), /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+      style: { "padding": "0.85rem 1.75rem", "fontSize": "0.95rem", "width": "100%", "justifyContent": "center" },
+      onClick: (e) => {
+        try {
+          window.saveMerchantBrandingAndToggles();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    },
+    "\u{1F4BE} Save & Apply All White-Label Settings"
+  )), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "position": "sticky", "top": "130px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react8.default.createElement(
     "div",
     {
-      style: { "display": "grid", "gridTemplateColumns": "minmax(0, 1.4fr) minmax(340px, 1fr)", "gap": "2rem", "alignItems": "start" }
+      style: { "fontSize": "0.82rem", "fontWeight": "800", "textTransform": "uppercase", "color": "#94a3b8", "display": "flex", "alignItems": "center", "gap": "0.4rem" }
     },
-    /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F3F7}\uFE0F 1. Core Brand Identity & Title"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Merchant Store / Business Name"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingBusinessName",
-        type: "text",
-        placeholder: "e.g. YOUPI Store or MSPCARE",
-        style: { "width": "100%" },
-        onInput: (e) => {
-          try {
-            window.updateLiveWhiteLabelPreview();
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Gateway Title / App Name"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingAppName",
-        type: "text",
-        defaultValue: "YOUPI PG",
-        placeholder: "e.g. YOUPI Pay",
-        style: { "width": "100%" },
-        onInput: (e) => {
-          try {
-            window.updateLiveWhiteLabelPreview();
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Brand Logo Image URL"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingLogoUrl",
-        type: "url",
-        placeholder: "https://yourbrand.com/logo.png",
-        style: { "width": "100%" },
-        onInput: (e) => {
-          try {
-            window.updateLiveWhiteLabelPreview();
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-    ), /* @__PURE__ */ import_react8.default.createElement(
+    /* @__PURE__ */ import_react8.default.createElement(
       "span",
       {
-        style: { "fontSize": "0.72rem", "color": "var(--text-muted)", "display": "block", "marginTop": "0.25rem" }
-      },
-      "Transparent PNG or SVG recommended. When left blank, your store initial letter is used."
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F3A8} 2. Visual Theme & Color Palette"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1.2fr 1fr", "gap": "1rem", "marginBottom": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Primary Brand Color (Hex)"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "alignItems": "center" } }, /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingColorPicker",
-        type: "color",
-        defaultValue: "#0b63e5",
-        style: { "width": "44px", "height": "40px", "border": "none", "background": "transparent", "cursor": "pointer", "padding": "0" },
-        onInput: (e) => {
-          try {
-            window.syncColorPickerToText(e.currentTarget.value);
-          } catch (err) {
-            console.error(err);
-          }
-        }
+        style: { "display": "inline-block", "width": "8px", "height": "8px", "borderRadius": "50%", "background": "#10b981" }
       }
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingPrimaryColor",
-        type: "text",
-        defaultValue: "#0b63e5",
-        style: { "flex": "1", "fontFamily": "monospace", "fontWeight": "700" },
-        onInput: (e) => {
-          try {
-            window.syncTextColorToPicker(e.currentTarget.value);
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Header Styling Theme"), /* @__PURE__ */ import_react8.default.createElement("select", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingHeaderTheme", style: { "width": "100%" }, onChange: (e) => {
-      try {
-        window.updateLiveWhiteLabelPreview();
-      } catch (err) {
-        console.error(err);
-      }
-    } }, /* @__PURE__ */ import_react8.default.createElement("option", { value: "gradient" }, "Dynamic Gradient (Brand to Deep Accent)"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "solid" }, "Solid Brand Color"), /* @__PURE__ */ import_react8.default.createElement("option", { value: "dark" }, "Obsidian Dark Navy (#0b1329)")))), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
-      "span",
-      {
-        style: { "fontSize": "0.75rem", "color": "var(--text-muted)", "fontWeight": "700", "display": "block", "marginBottom": "0.4rem" }
-      },
-      "Quick FinTech Brand Palettes:"
-    ), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap" } }, /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#0b63e5", "gradient");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F535} Sapphire Blue"
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#10b981", "gradient");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F7E2} Emerald Green"
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#8b5cf6", "gradient");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F7E3} Violet Purple"
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#f43f5e", "gradient");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F534} Rose Crimson"
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#d97706", "gradient");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F7E1} Amber Gold"
-    ), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        type: "button",
-        className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.3rem 0.65rem", "fontSize": "0.75rem" },
-        onClick: (e) => {
-          try {
-            window.applyQuickPalette("#0f172a", "dark");
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u26AB Obsidian Dark"
-    )))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F6E1}\uFE0F 3. Badges & Conversion Banners"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "hidden", id: "settingHideTrustBadge" }), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "hidden", id: "settingTrustBadgeText" }), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "marginBottom": "1rem", "paddingBottom": "1rem", "borderBottom": "1px dashed var(--border)" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.35rem" } }, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "fontSize": "0.82rem", "fontWeight": "700" } }, "Header Sub-banner Text"), /* @__PURE__ */ import_react8.default.createElement(
-      "label",
-      {
-        style: { "fontSize": "0.78rem", "color": "var(--text-muted)", "display": "flex", "alignItems": "center", "gap": "0.35rem", "cursor": "pointer" }
-      },
-      /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideSubbanner", onChange: (e) => {
-        try {
-          window.updateLiveWhiteLabelPreview();
-        } catch (err) {
-          console.error(err);
-        }
-      } }),
-      /* @__PURE__ */ import_react8.default.createElement("span", null, "Hide Sub-banner")
-    )), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingSubbannerText",
-        type: "text",
-        placeholder: "e.g. \u26A1 5-Second Instant UPI Activation",
-        style: { "width": "100%" },
-        onInput: (e) => {
-          try {
-            window.updateLiveWhiteLabelPreview();
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
-      "label",
-      {
-        style: { "fontSize": "0.78rem", "color": "var(--text-muted)", "display": "flex", "alignItems": "center", "gap": "0.35rem", "cursor": "pointer" }
-      },
-      /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "settingHideTimeSavingBanner", onChange: (e) => {
-        try {
-          window.updateLiveWhiteLabelPreview();
-        } catch (err) {
-          console.error(err);
-        }
-      } }),
-      /* @__PURE__ */ import_react8.default.createElement("span", null, "Hide Psychological Time-Saving Banner")
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F6E1}\uFE0F 4. Guarantees & Conversion Notices"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Sidebar Trust Notice"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingSidebarNotice", type: "text", placeholder: "e.g. Fast & Secure 256-Bit Encrypted Payments", style: { "width": "100%" }, onInput: (e) => {
-      try {
-        window.updateLiveWhiteLabelPreview();
-      } catch (err) {
-        console.error(err);
-      }
-    } })), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Footer Guarantee Text"), /* @__PURE__ */ import_react8.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", id: "settingFooterGuarantee", type: "text", placeholder: "e.g. 100% Payment Protection Guaranteed", style: { "width": "100%" }, onInput: (e) => {
-      try {
-        window.updateLiveWhiteLabelPreview();
-      } catch (err) {
-        console.error(err);
-      }
-    } })))), /* @__PURE__ */ import_react8.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react8.default.createElement("div", { className: "group-box-title text-xs font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4" }, "\u{1F4DE} 5. Support & Legal Policies"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Customer Support Email(s)"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingSupportEmails",
-        type: "text",
-        placeholder: "support@brand.com, help@brand.com",
-        style: { "width": "100%" }
-      }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Customer Support Mobile(s)"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingSupportMobiles",
-        type: "text",
-        placeholder: "+91 9876543210, +91 9123456789",
-        style: { "width": "100%" }
-      }
-    ))), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem" } }, /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Privacy Policy URL"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingPrivacyPolicyUrl",
-        type: "url",
-        placeholder: "https://yourbrand.com/privacy-policy",
-        style: { "width": "100%" }
-      }
-    )), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Terms of Service URL"), /* @__PURE__ */ import_react8.default.createElement(
-      "input",
-      {
-        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-        id: "settingTermsUrl",
-        type: "url",
-        placeholder: "https://yourbrand.com/terms",
-        style: { "width": "100%" }
-      }
-    )))), /* @__PURE__ */ import_react8.default.createElement(
-      "button",
-      {
-        className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-        style: { "padding": "0.85rem 1.75rem", "fontSize": "0.95rem", "width": "100%", "justifyContent": "center" },
-        onClick: (e) => {
-          try {
-            window.saveMerchantBrandingAndToggles();
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      },
-      "\u{1F4BE} Save & Apply All White-Label Settings"
-    )),
-    /* @__PURE__ */ import_react8.default.createElement("div", { style: { "position": "sticky", "top": "130px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react8.default.createElement(
+    ),
+    "Live Gateway Mockup Preview"
+  ), /* @__PURE__ */ import_react8.default.createElement("span", { style: { "fontSize": "0.72rem", "color": "var(--text-muted)" } }, "Real-time reflection")), /* @__PURE__ */ import_react8.default.createElement(
+    "div",
+    {
+      style: { "width": "100%", "maxWidth": "380px", "margin": "0 auto", "background": "#ffffff", "borderRadius": "36px", "border": "9px solid #1e293b", "boxShadow": "0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1)", "overflow": "hidden", "position": "relative", "minHeight": "580px", "display": "flex", "flexDirection": "column" }
+    },
+    /* @__PURE__ */ import_react8.default.createElement(
       "div",
       {
-        style: { "fontSize": "0.82rem", "fontWeight": "800", "textTransform": "uppercase", "color": "#94a3b8", "display": "flex", "alignItems": "center", "gap": "0.4rem" }
+        style: { "background": "#0b0f19", "height": "24px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "padding": "0 16px", "color": "#ffffff", "fontSize": "10px", "fontWeight": "700" }
       },
+      /* @__PURE__ */ import_react8.default.createElement("span", null, "9:41"),
+      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "width": "50px", "height": "4px", "background": "#334155", "borderRadius": "4px" } }),
+      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "4px", "alignItems": "center" } }, /* @__PURE__ */ import_react8.default.createElement("span", null, "5G"), /* @__PURE__ */ import_react8.default.createElement("span", null, "100%"))
+    ),
+    /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        id: "mockupHeader",
+        style: { "background": "linear-gradient(180deg, #0b63e5 0%, #0747a6 100%)", "padding": "12px 14px 10px 14px", "color": "#ffffff", "transition": "background 0.2s ease" }
+      },
+      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "8px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "gap": "10px" } }, /* @__PURE__ */ import_react8.default.createElement(
+        "div",
+        {
+          style: { "width": "36px", "height": "36px", "borderRadius": "50%", "background": "#ffffff", "display": "flex", "alignItems": "center", "justifyContent": "center", "overflow": "hidden", "boxShadow": "0 2px 5px rgba(0,0,0,0.15)", "flexShrink": "0" }
+        },
+        /* @__PURE__ */ import_react8.default.createElement("span", { id: "mockupAvatarLetter", style: { "fontWeight": "900", "color": "#0b63e5", "fontSize": "16px" } }, "M"),
+        /* @__PURE__ */ import_react8.default.createElement(
+          "img",
+          {
+            id: "mockupAvatarImg",
+            alt: "Logo",
+            style: { "display": "none", "width": "100%", "height": "100%", "objectFit": "contain" }
+          }
+        )
+      ), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
+        "div",
+        {
+          id: "mockupHeaderMerchantName",
+          style: { "fontSize": "13.5px", "fontWeight": "800", "lineHeight": "1.2", "color": "#ffffff" }
+        },
+        "Merchant Checkout"
+      ), /* @__PURE__ */ import_react8.default.createElement(
+        "div",
+        {
+          id: "mockupTrustBadge",
+          style: { "display": "inline-flex", "alignItems": "center", "gap": "3px", "marginTop": "2px" }
+        },
+        /* @__PURE__ */ import_react8.default.createElement("span", { style: { "fontSize": "11px" } }, "\u{1F6E1}\uFE0F"),
+        /* @__PURE__ */ import_react8.default.createElement(
+          "span",
+          {
+            id: "mockupTrustBadgeText",
+            style: { "fontSize": "10px", "fontWeight": "700", "color": "rgba(255,255,255,0.92)" }
+          },
+          "YouPI PG Verified Business"
+        )
+      ))), /* @__PURE__ */ import_react8.default.createElement(
+        "div",
+        {
+          style: { "width": "28px", "height": "28px", "borderRadius": "50%", "background": "rgba(255,255,255,0.18)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px" }
+        },
+        "\u{1F464}"
+      )),
+      /* @__PURE__ */ import_react8.default.createElement(
+        "div",
+        {
+          id: "mockupSubbanner",
+          style: { "background": "rgba(255,255,255,0.15)", "borderRadius": "6px", "padding": "4px 8px", "fontSize": "10.5px", "fontWeight": "700", "display": "flex", "alignItems": "center", "gap": "5px", "backdropFilter": "blur(4px)" }
+        },
+        /* @__PURE__ */ import_react8.default.createElement("span", null, "\u{1F6D2}"),
+        /* @__PURE__ */ import_react8.default.createElement(
+          "span",
+          {
+            id: "mockupSubbannerText",
+            style: { "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }
+          },
+          "Verified & Protected by YOUPI PG"
+        )
+      )
+    ),
+    /* @__PURE__ */ import_react8.default.createElement("div", { style: { "padding": "12px", "background": "#f8fafc", "flex": "1", "display": "flex", "flexDirection": "column", "gap": "10px" } }, /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        id: "mockupTimeSavingBanner",
+        style: { "background": "#f0fdf4", "border": "1px solid #86efac", "borderRadius": "8px", "padding": "7px 10px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "6px" }
+      },
+      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "10px", "color": "#14532d", "fontWeight": "700", "lineHeight": "1.3" } }, "\u26A1 Skip wait: Instant billing counter checkout available"),
       /* @__PURE__ */ import_react8.default.createElement(
         "span",
         {
-          style: { "display": "inline-block", "width": "8px", "height": "8px", "borderRadius": "50%", "background": "#10b981" }
-        }
-      ),
-      "Live Gateway Mockup Preview"
-    ), /* @__PURE__ */ import_react8.default.createElement("span", { style: { "fontSize": "0.72rem", "color": "var(--text-muted)" } }, "Real-time reflection")), /* @__PURE__ */ import_react8.default.createElement(
+          style: { "background": "#10b981", "color": "#fff", "fontSize": "9px", "fontWeight": "800", "padding": "3px 7px", "borderRadius": "5px", "whiteSpace": "nowrap" }
+        },
+        "Switch"
+      )
+    ), /* @__PURE__ */ import_react8.default.createElement(
       "div",
       {
-        style: { "width": "100%", "maxWidth": "380px", "margin": "0 auto", "background": "#ffffff", "borderRadius": "36px", "border": "9px solid #1e293b", "boxShadow": "0 25px 50px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1)", "overflow": "hidden", "position": "relative", "minHeight": "580px", "display": "flex", "flexDirection": "column" }
+        style: { "background": "#ffffff", "border": "1px solid #e2e8f0", "borderRadius": "10px", "padding": "10px", "display": "flex", "justifyContent": "space-between", "alignItems": "center" }
+      },
+      /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "9.5px", "color": "#64748b", "fontWeight": "700", "textTransform": "uppercase" } }, "Order #ORD-78921"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "17px", "fontWeight": "900", "color": "#0f172a", "marginTop": "2px" } }, "\u20B91,500.00")),
+      /* @__PURE__ */ import_react8.default.createElement(
+        "span",
+        {
+          style: { "background": "#eff6ff", "color": "#2563eb", "fontSize": "10px", "fontWeight": "800", "padding": "3px 8px", "borderRadius": "6px" }
+        },
+        "Direct UPI"
+      )
+    ), /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        style: { "background": "#ffffff", "border": "1px solid #e2e8f0", "borderRadius": "10px", "padding": "12px", "textAlign": "center" }
       },
       /* @__PURE__ */ import_react8.default.createElement(
         "div",
         {
-          style: { "background": "#0b0f19", "height": "24px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "padding": "0 16px", "color": "#ffffff", "fontSize": "10px", "fontWeight": "700" }
+          style: { "width": "110px", "height": "110px", "margin": "0 auto 8px auto", "borderRadius": "8px", "border": "2px solid #0f172a", "padding": "4px", "display": "flex", "alignItems": "center", "justifyContent": "center", "background": "#ffffff" }
         },
-        /* @__PURE__ */ import_react8.default.createElement("span", null, "9:41"),
-        /* @__PURE__ */ import_react8.default.createElement("div", { style: { "width": "50px", "height": "4px", "background": "#334155", "borderRadius": "4px" } }),
-        /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "gap": "4px", "alignItems": "center" } }, /* @__PURE__ */ import_react8.default.createElement("span", null, "5G"), /* @__PURE__ */ import_react8.default.createElement("span", null, "100%"))
+        /* @__PURE__ */ import_react8.default.createElement(
+          "div",
+          {
+            style: { "width": "100%", "height": "100%", "background": "repeating-linear-gradient(45deg, #0f172a, #0f172a 6px, #ffffff 6px, #ffffff 12px)", "borderRadius": "4px", "opacity": "0.85" }
+          }
+        )
       ),
+      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "10px", "fontWeight": "700", "color": "#334155" } }, "Scan with any UPI App (GPay, PhonePe, Paytm)")
+    )),
+    /* @__PURE__ */ import_react8.default.createElement("div", { style: { "background": "#ffffff", "borderTop": "1px solid #e2e8f0", "padding": "10px 14px", "marginTop": "auto" } }, /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        style: { "display": "flex", "alignItems": "center", "justifyContent": "center", "gap": "5px", "fontSize": "10px", "fontWeight": "700", "color": "#0b63e5", "marginBottom": "5px" }
+      },
+      /* @__PURE__ */ import_react8.default.createElement("span", null, "\u{1F6E1}\uFE0F"),
+      /* @__PURE__ */ import_react8.default.createElement("span", { id: "mockupFooterGuarantee" }, "100% Payment Protection by YOUPI PG")
+    ), /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        id: "mockupLegalDisclaimer",
+        style: { "fontSize": "9px", "color": "#64748b", "textAlign": "center", "marginBottom": "8px" }
+      },
+      "Secured by YOUPI PG & 256-Bit Bank Encryption \u2022 Privacy Notice"
+    ), /* @__PURE__ */ import_react8.default.createElement(
+      "div",
+      {
+        style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "background": "#0f172a", "borderRadius": "8px", "padding": "8px 12px", "color": "#ffffff" }
+      },
+      /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "8.5px", "color": "#94a3b8", "fontWeight": "600" } }, "Total Payable"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "13px", "fontWeight": "800", "color": "#ffffff" } }, "\u20B91,500.00")),
       /* @__PURE__ */ import_react8.default.createElement(
-        "div",
+        "span",
         {
-          id: "mockupHeader",
-          style: { "background": "linear-gradient(180deg, #0b63e5 0%, #0747a6 100%)", "padding": "12px 14px 10px 14px", "color": "#ffffff", "transition": "background 0.2s ease" }
+          id: "mockupCtaButton",
+          style: { "background": "#2563eb", "color": "#ffffff", "fontSize": "10.5px", "fontWeight": "800", "padding": "5px 12px", "borderRadius": "6px" }
         },
-        /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "justifyContent": "space-between", "marginBottom": "8px" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "gap": "10px" } }, /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            style: { "width": "36px", "height": "36px", "borderRadius": "50%", "background": "#ffffff", "display": "flex", "alignItems": "center", "justifyContent": "center", "overflow": "hidden", "boxShadow": "0 2px 5px rgba(0,0,0,0.15)", "flexShrink": "0" }
-          },
-          /* @__PURE__ */ import_react8.default.createElement("span", { id: "mockupAvatarLetter", style: { "fontWeight": "900", "color": "#0b63e5", "fontSize": "16px" } }, "M"),
-          /* @__PURE__ */ import_react8.default.createElement(
-            "img",
-            {
-              id: "mockupAvatarImg",
-              alt: "Logo",
-              style: { "display": "none", "width": "100%", "height": "100%", "objectFit": "contain" }
-            }
-          )
-        ), /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            id: "mockupHeaderMerchantName",
-            style: { "fontSize": "13.5px", "fontWeight": "800", "lineHeight": "1.2", "color": "#ffffff" }
-          },
-          "Merchant Checkout"
-        ), /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            id: "mockupTrustBadge",
-            style: { "display": "inline-flex", "alignItems": "center", "gap": "3px", "marginTop": "2px" }
-          },
-          /* @__PURE__ */ import_react8.default.createElement("span", { style: { "fontSize": "11px" } }, "\u{1F6E1}\uFE0F"),
-          /* @__PURE__ */ import_react8.default.createElement(
-            "span",
-            {
-              id: "mockupTrustBadgeText",
-              style: { "fontSize": "10px", "fontWeight": "700", "color": "rgba(255,255,255,0.92)" }
-            },
-            "YouPI PG Verified Business"
-          )
-        ))), /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            style: { "width": "28px", "height": "28px", "borderRadius": "50%", "background": "rgba(255,255,255,0.18)", "display": "flex", "alignItems": "center", "justifyContent": "center", "fontSize": "12px" }
-          },
-          "\u{1F464}"
-        )),
-        /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            id: "mockupSubbanner",
-            style: { "background": "rgba(255,255,255,0.15)", "borderRadius": "6px", "padding": "4px 8px", "fontSize": "10.5px", "fontWeight": "700", "display": "flex", "alignItems": "center", "gap": "5px", "backdropFilter": "blur(4px)" }
-          },
-          /* @__PURE__ */ import_react8.default.createElement("span", null, "\u{1F6D2}"),
-          /* @__PURE__ */ import_react8.default.createElement(
-            "span",
-            {
-              id: "mockupSubbannerText",
-              style: { "whiteSpace": "nowrap", "overflow": "hidden", "textOverflow": "ellipsis" }
-            },
-            "Verified & Protected by YOUPI PG"
-          )
-        )
-      ),
-      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "padding": "12px", "background": "#f8fafc", "flex": "1", "display": "flex", "flexDirection": "column", "gap": "10px" } }, /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          id: "mockupTimeSavingBanner",
-          style: { "background": "#f0fdf4", "border": "1px solid #86efac", "borderRadius": "8px", "padding": "7px 10px", "display": "flex", "alignItems": "center", "justifyContent": "space-between", "gap": "6px" }
-        },
-        /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "10px", "color": "#14532d", "fontWeight": "700", "lineHeight": "1.3" } }, "\u26A1 Skip wait: Instant billing counter checkout available"),
-        /* @__PURE__ */ import_react8.default.createElement(
-          "span",
-          {
-            style: { "background": "#10b981", "color": "#fff", "fontSize": "9px", "fontWeight": "800", "padding": "3px 7px", "borderRadius": "5px", "whiteSpace": "nowrap" }
-          },
-          "Switch"
-        )
-      ), /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          style: { "background": "#ffffff", "border": "1px solid #e2e8f0", "borderRadius": "10px", "padding": "10px", "display": "flex", "justifyContent": "space-between", "alignItems": "center" }
-        },
-        /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "9.5px", "color": "#64748b", "fontWeight": "700", "textTransform": "uppercase" } }, "Order #ORD-78921"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "17px", "fontWeight": "900", "color": "#0f172a", "marginTop": "2px" } }, "\u20B91,500.00")),
-        /* @__PURE__ */ import_react8.default.createElement(
-          "span",
-          {
-            style: { "background": "#eff6ff", "color": "#2563eb", "fontSize": "10px", "fontWeight": "800", "padding": "3px 8px", "borderRadius": "6px" }
-          },
-          "Direct UPI"
-        )
-      ), /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          style: { "background": "#ffffff", "border": "1px solid #e2e8f0", "borderRadius": "10px", "padding": "12px", "textAlign": "center" }
-        },
-        /* @__PURE__ */ import_react8.default.createElement(
-          "div",
-          {
-            style: { "width": "110px", "height": "110px", "margin": "0 auto 8px auto", "borderRadius": "8px", "border": "2px solid #0f172a", "padding": "4px", "display": "flex", "alignItems": "center", "justifyContent": "center", "background": "#ffffff" }
-          },
-          /* @__PURE__ */ import_react8.default.createElement(
-            "div",
-            {
-              style: { "width": "100%", "height": "100%", "background": "repeating-linear-gradient(45deg, #0f172a, #0f172a 6px, #ffffff 6px, #ffffff 12px)", "borderRadius": "4px", "opacity": "0.85" }
-            }
-          )
-        ),
-        /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "10px", "fontWeight": "700", "color": "#334155" } }, "Scan with any UPI App (GPay, PhonePe, Paytm)")
-      )),
-      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "background": "#ffffff", "borderTop": "1px solid #e2e8f0", "padding": "10px 14px", "marginTop": "auto" } }, /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          style: { "display": "flex", "alignItems": "center", "justifyContent": "center", "gap": "5px", "fontSize": "10px", "fontWeight": "700", "color": "#0b63e5", "marginBottom": "5px" }
-        },
-        /* @__PURE__ */ import_react8.default.createElement("span", null, "\u{1F6E1}\uFE0F"),
-        /* @__PURE__ */ import_react8.default.createElement("span", { id: "mockupFooterGuarantee" }, "100% Payment Protection by YOUPI PG")
-      ), /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          id: "mockupLegalDisclaimer",
-          style: { "fontSize": "9px", "color": "#64748b", "textAlign": "center", "marginBottom": "8px" }
-        },
-        "Secured by YOUPI PG & 256-Bit Bank Encryption \u2022 Privacy Notice"
-      ), /* @__PURE__ */ import_react8.default.createElement(
-        "div",
-        {
-          style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "background": "#0f172a", "borderRadius": "8px", "padding": "8px 12px", "color": "#ffffff" }
-        },
-        /* @__PURE__ */ import_react8.default.createElement("div", null, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "8.5px", "color": "#94a3b8", "fontWeight": "600" } }, "Total Payable"), /* @__PURE__ */ import_react8.default.createElement("div", { style: { "fontSize": "13px", "fontWeight": "800", "color": "#ffffff" } }, "\u20B91,500.00")),
-        /* @__PURE__ */ import_react8.default.createElement(
-          "span",
-          {
-            id: "mockupCtaButton",
-            style: { "background": "#2563eb", "color": "#ffffff", "fontSize": "10.5px", "fontWeight": "800", "padding": "5px 12px", "borderRadius": "6px" }
-          },
-          "Continue \u203A"
-        )
-      )),
-      /* @__PURE__ */ import_react8.default.createElement("div", { style: { "background": "#ffffff", "height": "14px", "display": "flex", "alignItems": "center", "justifyContent": "center" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "width": "90px", "height": "4px", "background": "#cbd5e1", "borderRadius": "4px" } }))
-    ))
-  ))));
+        "Continue \u203A"
+      )
+    )),
+    /* @__PURE__ */ import_react8.default.createElement("div", { style: { "background": "#ffffff", "height": "14px", "display": "flex", "alignItems": "center", "justifyContent": "center" } }, /* @__PURE__ */ import_react8.default.createElement("div", { style: { "width": "90px", "height": "4px", "background": "#cbd5e1", "borderRadius": "4px" } }))
+  ))))));
 }
 
 // apps/merchant-admin/src/views/partials/store-settings/SubViewReceivingVpa.jsx
@@ -1068,7 +1061,7 @@ function SubViewReceivingVpa() {
       "Loading active VPA..."
     ), /* @__PURE__ */ import_react9.default.createElement("div", { style: { "fontSize": "0.85rem", "color": "var(--text-muted)" }, id: "activeVpaPayeeDisplay" }, "Payee: -")),
     /* @__PURE__ */ import_react9.default.createElement("div", { style: { "textAlign": "right" } }, /* @__PURE__ */ import_react9.default.createElement("div", { style: { "fontSize": "0.75rem", "color": "var(--text-muted)", "marginBottom": "0.3rem" } }, "Checkout Mode"), /* @__PURE__ */ import_react9.default.createElement("div", { style: { "fontSize": "0.9rem", "fontWeight": "800", "color": "var(--success)" } }, "\u2713 Direct Dynamic UPI QR Gateway"))
-  ), /* @__PURE__ */ import_react9.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react9.default.createElement("h4", { style: { "marginBottom": "0.85rem", "fontSize": "0.95rem", "color": "var(--text-heading)" } }, "\u2795 Add New Receiving UPI VPA"), /* @__PURE__ */ import_react9.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1rem" } }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.3rem" } }, "UPI ID / VPA"), /* @__PURE__ */ import_react9.default.createElement(
+  ), /* @__PURE__ */ import_react9.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react9.default.createElement("h4", { style: { "marginBottom": "0.85rem", "fontSize": "0.95rem", "color": "var(--text-heading)" } }, "\u2795 Add New Receiving UPI VPA"), /* @__PURE__ */ import_react9.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4" }, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.3rem" } }, "UPI ID / VPA"), /* @__PURE__ */ import_react9.default.createElement(
     "input",
     {
       className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
@@ -1096,7 +1089,7 @@ function SubViewReceivingVpa() {
 // apps/merchant-admin/src/views/partials/store-settings/SubViewSellingModes.jsx
 var import_react10 = __toESM(require_react(), 1);
 function SubViewSellingModes() {
-  return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("div", { id: "subViewStoreModes", hidden: true }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3EA} Store Selling Mode & Payment Modalities"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Toggle between ", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Online Selling Mode"), " (E-Commerce) or", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Offline Selling Mode"), " (Physical till/POS desk). Reflects instantly on checkout.")), /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "currentSellingModeBadge" }, "ONLINE SELLING MODE")), /* @__PURE__ */ import_react10.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", { id: "cardModeOnline", onClick: (e) => {
+  return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement("div", { id: "subViewStoreModes", hidden: true }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" }, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F3EA} Store Selling Mode & Payment Modalities"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Toggle between ", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Online Selling Mode"), " (E-Commerce) or", /* @__PURE__ */ import_react10.default.createElement("strong", null, "Offline Selling Mode"), " (Physical till/POS desk). Reflects instantly on checkout.")), /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "currentSellingModeBadge" }, "ONLINE SELLING MODE")), /* @__PURE__ */ import_react10.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6" }, /* @__PURE__ */ import_react10.default.createElement("div", { id: "cardModeOnline", onClick: (e) => {
     try {
       window.setSellingMode("ONLINE", true);
     } catch (err) {
@@ -1143,7 +1136,7 @@ function SubViewSellingModes() {
     },
     /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("div", { style: { "display": "flex", "alignItems": "center", "gap": "0.5rem", "marginBottom": "0.25rem" } }, /* @__PURE__ */ import_react10.default.createElement("strong", { style: { "fontSize": "0.9rem", "color": "var(--text-heading)" } }, "Card"), /* @__PURE__ */ import_react10.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", style: { "fontSize": "0.72rem" } }, "Store POS Terminal")), /* @__PURE__ */ import_react10.default.createElement("div", { style: { "fontSize": "0.8rem", "color": "var(--text-muted)" } }, "Customer swipes or taps card on physical store POS machine.")),
     /* @__PURE__ */ import_react10.default.createElement("input", { className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all", type: "checkbox", id: "toggleMethodCard", defaultChecked: true, style: { "width": "20px", "height": "20px", "cursor": "pointer" } })
-  ))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { "fontSize": "0.88rem", "fontWeight": "700", "color": "var(--text-heading)", "marginBottom": "1rem" } }, "\u{1F3EA} In-Store Till & POS Instructions"), /* @__PURE__ */ import_react10.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem" } }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Cash at Till Counter Instructions"), /* @__PURE__ */ import_react10.default.createElement(
+  ))), /* @__PURE__ */ import_react10.default.createElement("div", { className: "settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5" }, /* @__PURE__ */ import_react10.default.createElement("div", { style: { "fontSize": "0.88rem", "fontWeight": "700", "color": "var(--text-heading)", "marginBottom": "1rem" } }, "\u{1F3EA} In-Store Till & POS Instructions"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4" }, /* @__PURE__ */ import_react10.default.createElement("div", null, /* @__PURE__ */ import_react10.default.createElement("label", { style: { "display": "block", "fontSize": "0.82rem", "fontWeight": "700", "marginBottom": "0.35rem" } }, "Cash at Till Counter Instructions"), /* @__PURE__ */ import_react10.default.createElement(
     "input",
     {
       className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
@@ -1233,7 +1226,7 @@ function SubViewPaymentSimulator() {
         "Enable Test Mode"
       )
     ))
-  ), /* @__PURE__ */ import_react12.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", style: { "border": "1px solid #334155", "background": "#0f172a", "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(320px, 1fr))", "gap": "1.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react12.default.createElement("strong", { style: { "color": "#ffffff", "fontSize": "0.95rem", "display": "flex", "alignItems": "center", "gap": "0.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("span", null, "\u{1F464}"), " Target Customer"), /* @__PURE__ */ import_react12.default.createElement(
+  ), /* @__PURE__ */ import_react12.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", style: { "border": "1px solid #334155", "background": "#0f172a", "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(280px, 1fr))", "gap": "1.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("div", null, /* @__PURE__ */ import_react12.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react12.default.createElement("strong", { style: { "color": "#ffffff", "fontSize": "0.95rem", "display": "flex", "alignItems": "center", "gap": "0.5rem" } }, /* @__PURE__ */ import_react12.default.createElement("span", null, "\u{1F464}"), " Target Customer"), /* @__PURE__ */ import_react12.default.createElement(
     "button",
     {
       className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
@@ -1343,7 +1336,7 @@ function SubViewPaymentSimulator() {
   )))), /* @__PURE__ */ import_react12.default.createElement(
     "div",
     {
-      style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(360px, 1fr))", "gap": "1.5rem", "marginBottom": "1.5rem" }
+      style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(280px, 1fr))", "gap": "1.5rem", "marginBottom": "1.5rem" }
     },
     /* @__PURE__ */ import_react12.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", style: { "border": "1px solid #3b82f6", "background": "#0b0f19" } }, /* @__PURE__ */ import_react12.default.createElement(
       "div",
@@ -1762,7 +1755,7 @@ function SubViewSystemSupervisor() {
       /* @__PURE__ */ import_react13.default.createElement(
         "div",
         {
-          style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(320px, 1fr))", "gap": "1.25rem", "marginBottom": "1.5rem" }
+          style: { "display": "grid", "gridTemplateColumns": "repeat(auto-fit, minmax(280px, 1fr))", "gap": "1.25rem", "marginBottom": "1.5rem" }
         },
         /* @__PURE__ */ import_react13.default.createElement("div", { style: { "background": "#0b0f19", "border": "1px solid #334155", "borderRadius": "10px", "padding": "1.1rem" } }, /* @__PURE__ */ import_react13.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.6rem" } }, /* @__PURE__ */ import_react13.default.createElement("strong", { style: { "color": "#60a5fa", "fontSize": "0.92rem", "display": "flex", "alignItems": "center", "gap": "0.4rem" } }, "\u{1F4F1} SMS Test Message"), /* @__PURE__ */ import_react13.default.createElement(
           "input",
@@ -2093,7 +2086,7 @@ function SubViewSystemSupervisor() {
 // apps/merchant-admin/src/views/partials/developer-hub/SubViewCloudflareTunnel.jsx
 var import_react14 = __toESM(require_react(), 1);
 function SubViewCloudflareTunnel() {
-  return /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement("div", { id: "subViewDevCloudflare", hidden: true }, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "cardCloudflareConfig" }, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u2601\uFE0F Cloudflare Tunnel Configuration"), /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Single canonical production gateway routing. Enter your domain and prefix; all routes, local service ports, and dashboard mappings are system-derived.")), /* @__PURE__ */ import_react14.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "envModeDisplayBadge" }, "\u{1F4BB} LOCALHOST MODE")), /* @__PURE__ */ import_react14.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1rem", "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react14.default.createElement(
+  return /* @__PURE__ */ import_react14.default.createElement(import_react14.default.Fragment, null, /* @__PURE__ */ import_react14.default.createElement("div", { id: "subViewDevCloudflare", hidden: true }, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "cardCloudflareConfig" }, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u2601\uFE0F Cloudflare Tunnel Configuration"), /* @__PURE__ */ import_react14.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Single canonical production gateway routing. Enter your domain and prefix; all routes, local service ports, and dashboard mappings are system-derived.")), /* @__PURE__ */ import_react14.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "envModeDisplayBadge" }, "\u{1F4BB} LOCALHOST MODE")), /* @__PURE__ */ import_react14.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6" }, /* @__PURE__ */ import_react14.default.createElement(
     "div",
     {
       id: "btnEnvLocalhost",
@@ -2129,75 +2122,67 @@ function SubViewCloudflareTunnel() {
       style: { "background": "#090d16", "border": "1px solid var(--border)", "borderRadius": "0.75rem", "padding": "1.25rem", "marginBottom": "1.5rem" }
     },
     /* @__PURE__ */ import_react14.default.createElement("div", { style: { "fontSize": "0.88rem", "fontWeight": "700", "color": "#38bdf8", "marginBottom": "0.75rem" } }, "\u2601\uFE0F Cloudflare Domain & Prefix Setup"),
-    /* @__PURE__ */ import_react14.default.createElement(
-      "div",
+    /* @__PURE__ */ import_react14.default.createElement("div", { className: "grid grid-cols-1 md:grid-cols-[2fr_1fr_1.3fr] gap-4 items-end mb-4" }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
+      "label",
       {
-        style: { "display": "grid", "gridTemplateColumns": "2fr 1fr 1.3fr", "gap": "1rem", "alignItems": "flex-end", "marginBottom": "1rem" }
+        style: { "display": "block", "fontSize": "0.8rem", "fontWeight": "700", "color": "var(--text-muted)", "marginBottom": "0.35rem" }
       },
-      /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
-        "label",
-        {
-          style: { "display": "block", "fontSize": "0.8rem", "fontWeight": "700", "color": "var(--text-muted)", "marginBottom": "0.35rem" }
-        },
-        "1. Cloudflare Domain"
-      ), /* @__PURE__ */ import_react14.default.createElement(
-        "input",
-        {
-          className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-          id: "settingDomainTld",
-          type: "text",
-          placeholder: "example.com",
-          defaultValue: "",
-          onInput: (e) => {
-            try {
-              window.updateCloudflarePreview();
-            } catch (err) {
-              console.error(err);
-            }
-          },
-          style: { "width": "100%" }
-        }
-      )),
-      /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
-        "label",
-        {
-          style: { "display": "block", "fontSize": "0.8rem", "fontWeight": "700", "color": "var(--text-muted)", "marginBottom": "0.35rem" }
-        },
-        "2. Deployment Prefix"
-      ), /* @__PURE__ */ import_react14.default.createElement(
-        "input",
-        {
-          className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
-          id: "settingDomainPrefix",
-          type: "text",
-          placeholder: "pay",
-          defaultValue: "pay",
-          onInput: (e) => {
-            try {
-              window.updateCloudflarePreview();
-            } catch (err) {
-              console.error(err);
-            }
-          },
-          style: { "width": "100%" }
-        }
-      )),
-      /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
-        "button",
-        {
-          className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
-          style: { "width": "100%", "padding": "0.65rem", "justifyContent": "center" },
-          onClick: (e) => {
-            try {
-              window.saveDomainSettings();
-            } catch (err) {
-              console.error(err);
-            }
+      "1. Cloudflare Domain"
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      "input",
+      {
+        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+        id: "settingDomainTld",
+        type: "text",
+        placeholder: "example.com",
+        defaultValue: "",
+        onInput: (e) => {
+          try {
+            window.updateCloudflarePreview();
+          } catch (err) {
+            console.error(err);
           }
         },
-        "\u{1F4BE} SAVE CONFIGURATION"
-      ))
-    )
+        style: { "width": "100%" }
+      }
+    )), /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
+      "label",
+      {
+        style: { "display": "block", "fontSize": "0.8rem", "fontWeight": "700", "color": "var(--text-muted)", "marginBottom": "0.35rem" }
+      },
+      "2. Deployment Prefix"
+    ), /* @__PURE__ */ import_react14.default.createElement(
+      "input",
+      {
+        className: "rounded-lg text-sm py-2 px-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all",
+        id: "settingDomainPrefix",
+        type: "text",
+        placeholder: "pay",
+        defaultValue: "pay",
+        onInput: (e) => {
+          try {
+            window.updateCloudflarePreview();
+          } catch (err) {
+            console.error(err);
+          }
+        },
+        style: { "width": "100%" }
+      }
+    )), /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement(
+      "button",
+      {
+        className: "btn btn-primary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed",
+        style: { "width": "100%", "padding": "0.65rem", "justifyContent": "center" },
+        onClick: (e) => {
+          try {
+            window.saveDomainSettings();
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      },
+      "\u{1F4BE} SAVE CONFIGURATION"
+    )))
   ), /* @__PURE__ */ import_react14.default.createElement("div", { style: { "marginBottom": "1.5rem" } }, /* @__PURE__ */ import_react14.default.createElement("div", { style: { "display": "flex", "justifyContent": "space-between", "alignItems": "center", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react14.default.createElement("div", null, /* @__PURE__ */ import_react14.default.createElement("div", { style: { "fontSize": "0.95rem", "fontWeight": "800", "color": "#f1f5f9" } }, "\u{1F6E3}\uFE0F CLOUDFLARE TUNNEL ROUTES"), /* @__PURE__ */ import_react14.default.createElement("div", { style: { "fontSize": "0.78rem", "color": "var(--text-muted)" } }, "Exact routes to create in Cloudflare Dashboard. All ports and roles are system-defined.")), /* @__PURE__ */ import_react14.default.createElement("button", { className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", style: { "fontSize": "0.75rem" }, onClick: (e) => {
     try {
       window.copyAllMappings();
@@ -2340,7 +2325,7 @@ function SubViewAndroidGateway() {
 // apps/merchant-admin/src/views/partials/developer-hub/SubViewGmailWhatsAppProtocols.jsx
 var import_react17 = __toESM(require_react(), 1);
 function SubViewGmailWhatsAppProtocols() {
-  return /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement("div", { id: "subViewDevProtocols", hidden: true }, /* @__PURE__ */ import_react17.default.createElement("div", { style: { "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "1.5rem" } }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "gmailObserverCard" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4E7} Google Account & Gmail Direct API"), /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Official Google OAuth 2.0 automated observation for real-time UPI credit notifications.")), /* @__PURE__ */ import_react17.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "gmailConfigBadge2" }, "NOT CONFIGURED")), /* @__PURE__ */ import_react17.default.createElement(
+  return /* @__PURE__ */ import_react17.default.createElement(import_react17.default.Fragment, null, /* @__PURE__ */ import_react17.default.createElement("div", { id: "subViewDevProtocols", hidden: true }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm", id: "gmailObserverCard" }, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-header flex items-center justify-between mb-5 flex-wrap gap-3" }, /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-heading text-lg font-extrabold text-slate-900 dark:text-white flex items-center gap-2.5" }, "\u{1F4E7} Google Account & Gmail Direct API"), /* @__PURE__ */ import_react17.default.createElement("div", { className: "card-subtext text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed" }, "Official Google OAuth 2.0 automated observation for real-time UPI credit notifications.")), /* @__PURE__ */ import_react17.default.createElement("span", { className: "badge badge-info inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20", id: "gmailConfigBadge2" }, "NOT CONFIGURED")), /* @__PURE__ */ import_react17.default.createElement(
     "div",
     {
       id: "gmailConnectHeroBox",
@@ -2432,45 +2417,35 @@ function SubViewGmailWhatsAppProtocols() {
       ),
       /* @__PURE__ */ import_react17.default.createElement("span", null, "Google Authorization Window Active. Select your account and grant permissions to complete automatic setup...")
     )
-  ), /* @__PURE__ */ import_react17.default.createElement(
-    "div",
+  ), /* @__PURE__ */ import_react17.default.createElement("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 mb-4 rounded-lg border border-slate-800 bg-[#090d16] text-xs" }, /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "OAuth Status:"), " ", /* @__PURE__ */ import_react17.default.createElement(
+    "strong",
     {
-      style: { "background": "#090d16", "border": "1px solid #1e293b", "borderRadius": "0.5rem", "padding": "0.85rem", "marginBottom": "1rem", "fontSize": "0.8rem", "display": "grid", "gridTemplateColumns": "1fr 1fr", "gap": "0.6rem" }
+      id: "gmailOAuthStatusText",
+      style: { "color": "#f87171" }
     },
-    /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "OAuth Status:"), " ", /* @__PURE__ */ import_react17.default.createElement(
-      "strong",
-      {
-        id: "gmailOAuthStatusText",
-        style: { "color": "#f87171" }
-      },
-      "DISCONNECTED"
-    )),
-    /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Token Status:"), " ", /* @__PURE__ */ import_react17.default.createElement(
-      "strong",
-      {
-        id: "gmailTokenStatusText",
-        style: { "color": "#64748b" }
-      },
-      "NOT CONFIGURED"
-    )),
-    /* @__PURE__ */ import_react17.default.createElement("div", { style: { "gridColumn": "span 2", "display": "flex", "alignItems": "center", "gap": "0.4rem" } }, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Connected Account:"), /* @__PURE__ */ import_react17.default.createElement("strong", { id: "gmailConnectedAccountText", style: { "color": "#38bdf8", "fontFamily": "monospace" } }, "No account authorized")),
-    /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Last Successful Poll:"), " ", /* @__PURE__ */ import_react17.default.createElement(
-      "span",
-      {
-        id: "gmailLastPollText",
-        style: { "color": "#94a3b8" }
-      },
-      "Never"
-    )),
-    /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Observer Pipeline:"), " ", /* @__PURE__ */ import_react17.default.createElement(
-      "span",
-      {
-        id: "gmailLastSentText",
-        style: { "color": "#94a3b8" }
-      },
-      "Standby"
-    ))
-  ), /* @__PURE__ */ import_react17.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react17.default.createElement("button", { type: "button", className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
+    "DISCONNECTED"
+  )), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Token Status:"), " ", /* @__PURE__ */ import_react17.default.createElement(
+    "strong",
+    {
+      id: "gmailTokenStatusText",
+      style: { "color": "#64748b" }
+    },
+    "NOT CONFIGURED"
+  )), /* @__PURE__ */ import_react17.default.createElement("div", { style: { "gridColumn": "span 2", "display": "flex", "alignItems": "center", "gap": "0.4rem" } }, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Connected Account:"), /* @__PURE__ */ import_react17.default.createElement("strong", { id: "gmailConnectedAccountText", style: { "color": "#38bdf8", "fontFamily": "monospace" } }, "No account authorized")), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Last Successful Poll:"), " ", /* @__PURE__ */ import_react17.default.createElement(
+    "span",
+    {
+      id: "gmailLastPollText",
+      style: { "color": "#94a3b8" }
+    },
+    "Never"
+  )), /* @__PURE__ */ import_react17.default.createElement("div", null, /* @__PURE__ */ import_react17.default.createElement("span", { style: { "color": "#64748b" } }, "Observer Pipeline:"), " ", /* @__PURE__ */ import_react17.default.createElement(
+    "span",
+    {
+      id: "gmailLastSentText",
+      style: { "color": "#94a3b8" }
+    },
+    "Standby"
+  ))), /* @__PURE__ */ import_react17.default.createElement("div", { style: { "display": "flex", "gap": "0.5rem", "flexWrap": "wrap", "marginBottom": "0.75rem" } }, /* @__PURE__ */ import_react17.default.createElement("button", { type: "button", className: "btn btn-secondary inline-flex items-center gap-2 font-bold rounded-lg cursor-pointer text-sm py-2 px-4 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all duration-200 select-none disabled:opacity-50 disabled:cursor-not-allowed", onClick: (e) => {
     try {
       window.testGmailConnection();
     } catch (err) {
