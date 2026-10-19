@@ -155,7 +155,7 @@ export class ProcessManager extends EventEmitter {
     if (process.env.YOUPI_MODE) supervisorOverrides.YOUPI_MODE = process.env.YOUPI_MODE;
 
     const child = fork(svc.script, [], {
-      execArgv: [...process.execArgv, ...execArgv],
+      execArgv: [...process.execArgv],
       env: { ...freshEnv, ...process.env, ...supervisorOverrides, PORT: svc.port.toString() },
       stdio: ['ignore', 'pipe', 'pipe', 'ipc']
     });
