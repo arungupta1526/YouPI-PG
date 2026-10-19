@@ -784,5 +784,82 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
     assert.equal(updated.status, PaymentStatus.SUCCESS, 'Attributed PROCESSING session must recover to SUCCESS');
     assert.ok(successFired, 'PAYMENT.SUCCESS event must fire on recovery of attributed session');
   });
+
+  test('Issue #2: POST /api/v1/payments validates X-Merchant-Key when provided', async () => {
+    const res = await request('/api/v1/payments', {
+      method: 'POST',
+      headers: {
+        'x-merchant-id': '00000000-0000-0000-0000-000000000001',
+        'x-merchant-key': 'invalid_secret_key_123'
+      },
+      body: {
+        orderId: `KEY-FAIL-${Date.now()}`,
+        amount: '100.00'
+      }
+    });
+
+    assert.equal(res.status, 401);
+    assert.equal(res.body.code, 'INVALID_MERCHANT_KEY');
+  });
+
+  test('Issue #2: POST /api/v1/customer/check-user masks customer email to prevent PII harvesting', async () => {
+    const customerRepo = new CustomerRepository(testDb);
+    const uniquePhone = `98${Math.floor(10000000 + Math.random() * 90000000)}`;
+    customerRepo.create({
+      fullName: 'Secret User',
+      email: 'sensitive.email@corporate.example.com',
+      mobileNumber: uniquePhone
+    });
+
+    const res = await request('/api/v1/customer/check-user', {
+      method: 'POST',
+      body: { mobileNumber: uniquePhone }
+    });
+
+    assert.equal(res.status, 200);
+    assert.equal(res.body.exists, true);
+    assert.equal(res.body.customer.name, 'Secret User');
+    assert.match(res.body.customer.email, /^se\*\*\*@corporate\.example\.com$/);
+  });
+
+  test('Issue #2: COD endpoints mask customer email and mobile for unauthenticated callers', async () => {
+    const sessionRepo = new PaymentSessionRepository(testDb);
+    const customerRepo = new CustomerRepository(testDb);
+    const merchantId = '00000000-0000-0000-0000-000000000001';
+
+    const uniqueCodPhone = `97${Math.floor(10000000 + Math.random() * 90000000)}`;
+    const customer = customerRepo.create({
+      fullName: 'Vikram Malhotra',
+      email: 'vikram.malhotra@testmail.com',
+      mobileNumber: uniqueCodPhone
+    });
+
+    const orderId = `COD-PII-${Date.now()}`;
+    sessionRepo.create({
+      merchantId,
+      customerId: customer.id,
+      orderId,
+      amountPaise: 99900n,
+      method: 'COD',
+      status: PaymentStatus.SUCCESS
+    });
+
+    // Unauthenticated request without X-Merchant-Key or admin token
+    const url = new URL(`/api/v1/orders/${orderId}/cod`, baseUrl);
+    const rawRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, { method: 'GET' }, (res) => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.end();
+    });
+
+    assert.equal(rawRes.status, 200);
+    assert.equal(rawRes.body.customer.name, 'Vikram Malhotra');
+    assert.match(rawRes.body.customer.email, /^vi\*\*\*@testmail\.com$/);
+    assert.match(rawRes.body.customer.mobileNumber, /^97\*\*\*\*\*\*\d{2}$/);
+  });
 });
 

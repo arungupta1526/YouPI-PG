@@ -137,8 +137,8 @@ export function registerCustomerRoutes(server, ctx) {
       customer: existingUser ? {
         id: existingUser.id,
         name: existingUser.name,
-        email: existingUser.email,
-        mobileNumber: existingUser.mobileNumber
+        email: existingUser.email ? `${existingUser.email.slice(0, 2)}***@${existingUser.email.split('@')[1] || '***'}` : null,
+        mobileNumber: cleanMobile
       } : null
     });
   });

@@ -67,6 +67,13 @@ export function registerPaymentRoutes(server, ctx) {
       return;
     }
 
+    if (req.headers['x-merchant-key']) {
+      if (!merchant.webhookSecret || !safeEqual(req.headers['x-merchant-key'].trim(), merchant.webhookSecret)) {
+        HttpServer.json(res, 401, { error: 'Invalid merchant key', code: 'INVALID_MERCHANT_KEY' });
+        return;
+      }
+    }
+
     if (!body.orderId || !body.amount) {
       HttpServer.json(res, 400, { error: 'Missing required fields: orderId and amount.' });
       return;
@@ -349,11 +356,12 @@ export function registerPaymentRoutes(server, ctx) {
     if (session.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
+        const isOwner = isPaymentOwner(req, session, ctx);
         customer = {
           id: c.id,
           name: c.name,
-          email: c.email,
-          mobileNumber: c.mobileNumber
+          email: isOwner ? c.email : (c.email ? `${c.email.slice(0, 2)}***@${c.email.split('@')[1] || '***'}` : null),
+          mobileNumber: isOwner ? c.mobileNumber : (c.mobileNumber ? `${c.mobileNumber.slice(0, 2)}******${c.mobileNumber.slice(-2)}` : null)
         };
       }
     }
@@ -399,11 +407,12 @@ export function registerPaymentRoutes(server, ctx) {
     if (session.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
+        const isOwner = isPaymentOwner(req, session, ctx);
         customer = {
           id: c.id,
           name: c.name,
-          email: c.email,
-          mobileNumber: c.mobileNumber
+          email: isOwner ? c.email : (c.email ? `${c.email.slice(0, 2)}***@${c.email.split('@')[1] || '***'}` : null),
+          mobileNumber: isOwner ? c.mobileNumber : (c.mobileNumber ? `${c.mobileNumber.slice(0, 2)}******${c.mobileNumber.slice(-2)}` : null)
         };
       }
     }
