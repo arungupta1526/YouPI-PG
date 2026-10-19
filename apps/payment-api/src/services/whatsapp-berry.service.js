@@ -516,6 +516,8 @@ export class WhatsAppBerryService extends EventEmitter {
         console.warn(`[WhatsAppBerryService] Disconnect error: ${err.message}`);
       }
       this.client = null;
+      // Allow internal berryprotocol socket and SQLite storage handles to finish closing
+      await new Promise(r => setTimeout(r, 150));
     }
 
     if (options.cleanSession !== false) {

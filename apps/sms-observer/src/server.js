@@ -38,7 +38,9 @@ export class SmsObserverServer {
         res.end(JSON.stringify({
           status: 'UP',
           service: 'sms-observer',
-          isRunning: this.service.isRunning,
+          isRunning: Boolean(this.service.isRunning || (this.automator && this.automator.mode !== 'STANDBY')),
+          isPolling: this.service.isRunning,
+          mode: this.automator ? this.automator.mode : 'STANDBY',
           lastPollAt: this.service.lastPollAt,
           observedCount: this.service.observedCount
         }));
