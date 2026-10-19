@@ -43,6 +43,10 @@ CREATE TABLE IF NOT EXISTS customers (
     otp_attempts INTEGER NOT NULL DEFAULT 0,
     is_phone_verified INTEGER DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'ACTIVE',
+    ban_reason TEXT,
+    banned_at TEXT,
+    unbanned_at TEXT,
+    last_device TEXT,
     last_login_at TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
@@ -66,6 +70,28 @@ CREATE TABLE IF NOT EXISTS customer_sessions (
 
 CREATE INDEX IF NOT EXISTS idx_customer_sessions_token ON customer_sessions (token, is_active);
 CREATE INDEX IF NOT EXISTS idx_customer_sessions_customer ON customer_sessions (customer_id);
+
+-- 3c. Devices Table (Cryptographic Device Binding & Hardware Context Fingerprinting)
+CREATE TABLE IF NOT EXISTS devices (
+    id TEXT PRIMARY KEY,
+    customer_id TEXT REFERENCES customers(id) ON DELETE SET NULL,
+    public_key TEXT NOT NULL,
+    fingerprint_hash TEXT NOT NULL,
+    user_agent TEXT,
+    platform TEXT,
+    browser TEXT,
+    timezone TEXT,
+    language TEXT,
+    screen_signature TEXT,
+    device_token TEXT UNIQUE,
+    status TEXT NOT NULL DEFAULT 'ACTIVE',
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    last_seen_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_devices_customer ON devices (customer_id);
+CREATE INDEX IF NOT EXISTS idx_devices_fingerprint ON devices (fingerprint_hash);
+CREATE INDEX IF NOT EXISTS idx_devices_token ON devices (device_token);
 
 -- 4. Payment Sessions Table
 CREATE TABLE IF NOT EXISTS payment_sessions (
@@ -99,6 +125,7 @@ CREATE TABLE IF NOT EXISTS payment_sessions (
 
 CREATE INDEX IF NOT EXISTS idx_payment_sessions_active ON payment_sessions (receiving_account_id, status);
 CREATE INDEX IF NOT EXISTS idx_payment_sessions_order ON payment_sessions (merchant_id, order_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_payment_sessions_device ON payment_sessions (device_id);
 -- At most one active/processing/queued/successful session per merchant order.
 -- Retrying a terminal (FAILED, EXPIRED, CANCELLED) order allows a new attempt with the true orderId.
 CREATE UNIQUE INDEX IF NOT EXISTS idx_single_active_session_per_order
@@ -162,6 +189,8 @@ CREATE TABLE IF NOT EXISTS webhook_deliveries (
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE INDEX IF NOT EXISTS idx_webhook_deliveries_retry ON webhook_deliveries (is_successful, next_retry_at);
+
 -- 8. Support Tickets & Ticket Messages
 CREATE TABLE IF NOT EXISTS support_tickets (
     id TEXT PRIMARY KEY,
@@ -174,6 +203,9 @@ CREATE TABLE IF NOT EXISTS support_tickets (
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE INDEX IF NOT EXISTS idx_support_tickets_merchant ON support_tickets (merchant_id);
+CREATE INDEX IF NOT EXISTS idx_support_tickets_customer ON support_tickets (customer_id);
+
 CREATE TABLE IF NOT EXISTS ticket_messages (
     id TEXT PRIMARY KEY,
     ticket_id TEXT NOT NULL REFERENCES support_tickets(id) ON DELETE CASCADE,
@@ -183,6 +215,8 @@ CREATE TABLE IF NOT EXISTS ticket_messages (
     attachments TEXT DEFAULT '[]',
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE INDEX IF NOT EXISTS idx_ticket_messages_ticket ON ticket_messages (ticket_id);
 
 -- 9. Audit Logs Table
 CREATE TABLE IF NOT EXISTS audit_logs (
@@ -197,6 +231,9 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     ip_address TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE INDEX IF NOT EXISTS idx_audit_logs_merchant ON audit_logs (merchant_id);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_entity ON audit_logs (entity_type, entity_id);
 
 -- 10. Security Events Table (Forensic evidence for fraud, automatic and manual bans)
 CREATE TABLE IF NOT EXISTS security_events (
@@ -223,27 +260,5 @@ CREATE INDEX IF NOT EXISTS idx_security_events_customer ON security_events (cust
 CREATE INDEX IF NOT EXISTS idx_security_events_session ON security_events (payment_session_id);
 CREATE INDEX IF NOT EXISTS idx_security_events_type ON security_events (event_type);
 
--- 11. Devices Table (Cryptographic Device Binding & Hardware Context Fingerprinting)
-CREATE TABLE IF NOT EXISTS devices (
-    id TEXT PRIMARY KEY,
-    customer_id TEXT REFERENCES customers(id) ON DELETE SET NULL,
-    public_key TEXT NOT NULL,
-    fingerprint_hash TEXT NOT NULL,
-    user_agent TEXT,
-    platform TEXT,
-    browser TEXT,
-    timezone TEXT,
-    language TEXT,
-    screen_signature TEXT,
-    device_token TEXT UNIQUE,
-    status TEXT NOT NULL DEFAULT 'ACTIVE',
-    created_at TEXT NOT NULL DEFAULT (datetime('now')),
-    last_seen_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-
-CREATE INDEX IF NOT EXISTS idx_devices_customer ON devices (customer_id);
-CREATE INDEX IF NOT EXISTS idx_devices_fingerprint ON devices (fingerprint_hash);
-CREATE INDEX IF NOT EXISTS idx_devices_token ON devices (device_token);
-CREATE INDEX IF NOT EXISTS idx_payment_sessions_device ON payment_sessions (device_id);
 
 

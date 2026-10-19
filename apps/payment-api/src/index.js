@@ -473,6 +473,9 @@ export function createPaymentApp(customDb = null, options = {}) {
     if (typeof attributionEngine.destroy === 'function') {
       attributionEngine.destroy();
     }
+    if (whatsappBerryService && typeof whatsappBerryService.disconnect === 'function') {
+      whatsappBerryService.disconnect({ cleanSession: false }).catch(() => {});
+    }
   }
 
   return {

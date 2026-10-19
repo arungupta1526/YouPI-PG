@@ -16,7 +16,10 @@ test('WhatsApp Berry Protocol OTP Customer Auth & Merchant Configuration Suite',
     const s = app.rawServer.listen(testPort, () => resolve(s));
   });
 
-  t.after(() => {
+  t.after(async () => {
+    if (app.context.whatsappBerryService) {
+      await app.context.whatsappBerryService.disconnect({ cleanSession: false }).catch(() => {});
+    }
     app.destroy();
     serverInstance.close();
   });
