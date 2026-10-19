@@ -4,8 +4,8 @@ export default function Header() {
   return (
     <>
 {/*  TOP HEADER  */}
-<header className="bg-white dark:bg-[#070a12] border-b border-slate-200 dark:border-slate-800 px-6 py-3.5 flex items-center justify-between sticky top-0 z-[1000] backdrop-blur-md">
-  <div className="flex items-center gap-3.5">
+<header className="bg-white dark:bg-[#070a12] border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3 flex flex-col md:flex-row md:items-center justify-between sticky top-0 z-[1000] backdrop-blur-md gap-3">
+  <div className="flex items-center justify-between gap-3.5">
     <div className="text-xl font-black text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
       <span>🛡️ YOUPI PG</span>
     </div>
@@ -14,7 +14,7 @@ export default function Header() {
     </span>
   </div>
 
-  <div className="flex items-center gap-3 flex-wrap">
+  <div className="flex items-center gap-2.5 overflow-x-auto pb-1 sm:pb-0 w-full md:w-auto flex-nowrap md:flex-wrap">
     {/*  Real Light / Dark Mode Toggle Pill  */}
     <div
       className="theme-mode-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 cursor-pointer select-none transition-all hover:border-slate-400 hover:-translate-y-0.5 shadow-sm"

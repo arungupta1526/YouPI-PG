@@ -16,7 +16,7 @@ export default function SubViewSellingModes() {
               </div>
     
               {/*  Mode Segmented Switch  */}
-              <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1.5rem"}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div id="cardModeOnline" onClick={(e) => { try { (window.setSellingMode('ONLINE', true)); } catch(err) { console.error(err); } }} className="selling-mode-card mode-selected-online">
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.5rem"}}>
                     <strong style={{"fontSize":"1rem","color":"var(--text-heading)"}}>🌐 Online Selling Mode</strong>
@@ -123,7 +123,7 @@ export default function SubViewSellingModes() {
               <div className="settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5">
                 <div style={{"fontSize":"0.88rem","fontWeight":"700","color":"var(--text-heading)","marginBottom":"1rem"}}>🏪 In-Store
                   Till &amp; POS Instructions</div>
-                <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem"}}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.35rem"}}>Cash at Till
                       Counter Instructions</label>

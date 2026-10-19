@@ -35,7 +35,7 @@ export default function SubViewReceivingVpa() {
               <div className="settings-group-box rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 p-5 mb-5">
                 <h4 style={{"marginBottom":"0.85rem","fontSize":"0.95rem","color":"var(--text-heading)"}}>➕ Add New Receiving UPI VPA
                 </h4>
-                <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1rem"}}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label style={{"display":"block","fontSize":"0.82rem","fontWeight":"700","marginBottom":"0.3rem"}}>UPI ID /
                       VPA</label>

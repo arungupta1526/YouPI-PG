@@ -41,7 +41,7 @@ export default function SubViewPaymentSimulator() {
     
             {/*  Target Customer & Active Payment Session Card  */}
             <div className="card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" style={{"border":"1px solid #334155","background":"#0f172a","marginBottom":"1.5rem"}}>
-              <div style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(320px, 1fr))","gap":"1.5rem"}}>
+              <div style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(280px, 1fr))","gap":"1.5rem"}}>
     
                 {/*  Column 1: Customer Selection  */}
                 <div>
@@ -125,7 +125,7 @@ export default function SubViewPaymentSimulator() {
     
             {/*  Two Independent Streams: SMS & Gmail (Section 8-15)  */}
             <div
-              style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(360px, 1fr))","gap":"1.5rem","marginBottom":"1.5rem"}}>
+              style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(280px, 1fr))","gap":"1.5rem","marginBottom":"1.5rem"}}>
     
               {/*  SMS STREAM PANEL  */}
               <div className="card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" style={{"border":"1px solid #3b82f6","background":"#0b0f19"}}>

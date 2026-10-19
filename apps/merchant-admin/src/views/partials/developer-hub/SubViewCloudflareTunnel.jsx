@@ -15,7 +15,7 @@ export default function SubViewCloudflareTunnel() {
               </div>
     
               {/*  Mode Segmented Switch  */}
-              <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1rem","marginBottom":"1.5rem"}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div id="btnEnvLocalhost" onClick={(e) => { try { (window.setEnvMode('localhost')); } catch(err) { console.error(err); } }}
                   style={{"background":"#0f172a","border":"2px solid #38bdf8","borderRadius":"0.75rem","padding":"1.2rem","cursor":"pointer","transition":"all 0.2s"}}>
                   <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.4rem"}}>
@@ -46,8 +46,7 @@ export default function SubViewCloudflareTunnel() {
                 style={{"background":"#090d16","border":"1px solid var(--border)","borderRadius":"0.75rem","padding":"1.25rem","marginBottom":"1.5rem"}}>
                 <div style={{"fontSize":"0.88rem","fontWeight":"700","color":"#38bdf8","marginBottom":"0.75rem"}}>☁️ Cloudflare Domain
                   &amp; Prefix Setup</div>
-                <div
-                  style={{"display":"grid","gridTemplateColumns":"2fr 1fr 1.3fr","gap":"1rem","alignItems":"flex-end","marginBottom":"1rem"}}>
+                <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1.3fr] gap-4 items-end mb-4">
                   <div>
                     <label
                       style={{"display":"block","fontSize":"0.8rem","fontWeight":"700","color":"var(--text-muted)","marginBottom":"0.35rem"}}>1.

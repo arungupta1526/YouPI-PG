@@ -8,7 +8,7 @@ export default function SubViewPaymentObservers() {
               style={{"fontSize":"1.15rem","fontWeight":"800","color":"var(--text-heading)","marginBottom":"1rem","display":"flex","alignItems":"center","gap":"0.5rem"}}
               dangerouslySetInnerHTML={{ __html: '<span>📡</span> Payment Observers (SMS & Gmail)' }}
             />
-            <div style={{"display":"grid","gridTemplateColumns":"1fr 1fr","gap":"1.5rem"}}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/*  Android Companion Card  */}
               <div className="card rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 mb-6 shadow-sm" style={{"marginBottom":"0"}}>
                 <div className="card-header flex items-center justify-between mb-5 flex-wrap gap-3">

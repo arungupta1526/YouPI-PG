@@ -120,7 +120,7 @@ export default function SubViewSystemSupervisor() {
     
                 {/*  Sections 11D & 11E: Custom SMS & Custom Gmail Testing Grid  */}
                 <div
-                  style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(320px, 1fr))","gap":"1.25rem","marginBottom":"1.5rem"}}>
+                  style={{"display":"grid","gridTemplateColumns":"repeat(auto-fit, minmax(280px, 1fr))","gap":"1.25rem","marginBottom":"1.5rem"}}>
                   {/*  Custom SMS Input Area (Section 11D)  */}
                   <div style={{"background":"#0b0f19","border":"1px solid #334155","borderRadius":"10px","padding":"1.1rem"}}>
                     <div style={{"display":"flex","justifyContent":"space-between","alignItems":"center","marginBottom":"0.6rem"}}>
