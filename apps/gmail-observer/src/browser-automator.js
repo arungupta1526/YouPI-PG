@@ -223,6 +223,7 @@ export class GmailBrowserAutomator {
         // Target busy or initializing
       }
     }, 2000);
+    if (this.checkTimer.unref) this.checkTimer.unref();
   }
 
   /**
@@ -238,10 +239,15 @@ export class GmailBrowserAutomator {
         // Session idle or updating
       }
     }, 3000);
+    if (this.extractionTimer.unref) this.extractionTimer.unref();
   }
 
   async pollInboxEmails() {
-    const targets = await BrowserLauncher.getTargets(this.debuggingPort);
+    if (this._isPollingInbox) return;
+    this._isPollingInbox = true;
+
+    try {
+      const targets = await BrowserLauncher.getTargets(this.debuggingPort);
     const target = targets.find(t => (t.type === 'page' || !t.type) && t.url && t.url.includes('mail.google.com') && t.webSocketDebuggerUrl)
       || targets.find(t => t.url && t.url.includes('mail.google.com') && t.webSocketDebuggerUrl);
     if (!target) return;
@@ -367,6 +373,9 @@ export class GmailBrowserAutomator {
         }
       }
     }
+  } finally {
+    this._isPollingInbox = false;
+  }
   }
 
   getStatus() {
