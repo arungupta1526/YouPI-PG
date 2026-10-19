@@ -461,11 +461,11 @@ export class PaymentSessionRepository {
     const rows = this.db.query(`
       SELECT * FROM payment_sessions
       WHERE receiving_account_id = ?
-        AND status IN (?, ?)
+        AND status IN (?, ?, ?)
         AND updated_at >= ?
       ORDER BY updated_at DESC
       LIMIT 20
-    `, [receivingAccountId, PaymentStatus.EXPIRED, PaymentStatus.FAILED, sinceDate.toISOString()]);
+    `, [receivingAccountId, PaymentStatus.EXPIRED, PaymentStatus.FAILED, PaymentStatus.CANCELLED, sinceDate.toISOString()]);
 
     return rows.map(r => this.mapRow(r));
   }

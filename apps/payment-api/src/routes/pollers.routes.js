@@ -38,13 +38,14 @@ export function registerPollerRoutes(server, ctx) {
       HttpServer.json(res, 401, { error: 'Unauthorized', code: 'AUTH_REQUIRED' });
       return;
     }
+    const sixtySecsAgo = new Date(Date.now() - 60000).toISOString();
     const activeSessions = ctx.db.query(`
       SELECT id, order_id, receiving_account_id, amount_paise, status, verification_level, expires_at, processing_expires_at, completed_at
       FROM payment_sessions
       WHERE status IN ('ACTIVE', 'PROCESSING')
-         OR (status = 'SUCCESS' AND verification_level < 2 AND completed_at >= datetime('now', '-60 seconds'))
+         OR (status = 'SUCCESS' AND verification_level < 2 AND completed_at >= ?)
       ORDER BY created_at DESC
-    `);
+    `, [sixtySecsAgo]);
 
     const sessions = activeSessions.map(s => ({
       id: s.id,

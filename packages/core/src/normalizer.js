@@ -50,7 +50,7 @@ export function extractIntelligentPaise(text) {
  * Regex for extracting bank UTR / Reference numbers.
  * Matches: UTR: 123456789012, Ref 123456789012, Txn: ABC123XYZ, RRN: 987654
  */
-const REFERENCE_REGEX = /(?:utr|ref|txn|rrn|reference)[:\s#]+([a-zA-Z0-9\-_]{6,35})/i;
+const REFERENCE_REGEX = /(?:utr|ref(?:\s*no\.?)?|txn(?:\s*id)?|rrn|reference(?:\s*no\.?)?|upi(?:\s*(?:ref|reference|txn))?)[:\s#]+([a-zA-Z0-9\-_]{6,35})/i;
 
 /**
  * Regex for extracting sender VPA if present in notification text.

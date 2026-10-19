@@ -18,7 +18,7 @@ This authoritative tracker audits and verifies all 24 issues on upstream reposit
 | **#38** | `feat(merchant-admin): modularize admin.html into 27 JSX` | `upstream/feat-modular-merchant-admin` | "Closes #29", Tailwind SSR, zero eval | 27 JSX components, local Tailwind, AST-safe compilation without `eval`. 100% genuine. | ✅ **VERIFIED** |
 | **#39** | `docs: update Node 24 baseline, Docker Compose quickstart` | `upstream/docs-node24-and-docker-quickstart` | Docs & badge updates | Documentation updated accurately. | ✅ **VERIFIED** |
 | **#40** | `feat(checkout-portal): modularize checkout.html into 7 partials` | `upstream/feat-modular-checkout-portal` | 7 partials, static CSS/JS, universal iframe | Full modularization, clean XSS escaping preserved. 100% genuine. | ✅ **VERIFIED** |
-| **#41** | `fix(security): prevent verification pipeline rejections` | `upstream/fix-verification-pipeline-fallthrough` | "Closes #22, Closes #5" | **#22 Genuinely Fixed**: Immediate 400 return on pipeline REJECTED halts attribution fallthrough. #5 UTR unique index & reuse check added. | ✅ **#22 FIXED / #5 PARTIAL** |
+| **#41** | `fix(security): prevent verification pipeline rejections` | `upstream/fix-verification-pipeline-fallthrough` | "Closes #22, Closes #5" | **#22 & #5 Genuinely Fixed**: Immediate 400 return on pipeline REJECTED halts attribution fallthrough. UTR reuse check covers all attributed observations; CANCELLED sessions included in expired search; duplicate UTR conflicts raise refund ticket. | ✅ **VERIFIED FIXED** |
 | **#42** | `feat(coin-wallet-store): modularize monolithic store.html` | `upstream/feat-modular-coin-wallet-store` | Extract CSS/JS, responsive layout | Modularized reference merchant store. 100% genuine. | ✅ **VERIFIED** |
 
 ---
@@ -30,14 +30,14 @@ This authoritative tracker audits and verifies all 24 issues on upstream reposit
 | **#2** | `Security: merchant payments API, active-window, PII` [High] | Unauthenticated payment creation, active-window session snooping, PII leakage in check-user | `active-window` secured with observer/admin token. `GET /payments/:id` masked without merchant key. | Added rate limiting to `POST /customer/check-user` to block automated phone enumeration. | 🟡 **PARTIAL** |
 | **#3** | `Security: control-center and merchant-admin proxies` [High] | Control center start/stop endpoints unauthenticated, CORS `*`, merchant-admin proxy open | Supervisor endpoints, logs SSE stream, and proxy routes secured with constant-time admin token. | Verified in codebase; token validation active across all supervisor and proxy routes. | ✅ **VERIFIED FIXED** |
 | **#4** | `Payment state: terminal sessions transition` [Critical] | Terminal sessions reviving to ACTIVE, `select-method` allowing PROCESSING to switch, slot clearance without guard, un-transactional ban | State machine transitions asserted in `payment-session.repository.js`. Slot exclusivity partial index added. | Fixed `select-method` to block PROCESSING sessions. Added `current_active_session_id` guard to `confirm-cod`. Wrapped `banCustomer` in atomic transaction. | ✅ **VERIFIED FIXED** |
-| **#5** | `Attribution: cross-merchant fallback & UTR replay` [Critical] | Fallback matching across merchants; UTR replay settling wrong sessions; late payment to CANCELLED sessions | Scoped active session lookup to receiving account. Replay window enforced. | Added UNIQUE index on `payment_observations(bank_reference_number)` and reused UTR rejection in PR #41. | 🟡 **PARTIAL** |
+| **#5** | `Attribution: cross-merchant fallback & UTR replay` [Critical] | Fallback matching across merchants; UTR replay settling wrong sessions; late payment to CANCELLED sessions | Scoped active session lookup to receiving account. Replay window enforced. | Added indexes on `bank_reference_number`, `fingerprint_hash`, and `attributed_payment_id`. Covered `CANCELLED` sessions in `findRecentlyExpiredOrFailed` to prevent late payment hijacking. Handled duplicate UTR conflicts with automated refund tickets. Enhanced reference extraction for `Ref no`, `UPI:`, `UPI Ref:`. | ✅ **VERIFIED FIXED** |
 | **#6** | `SMS/Gmail parsers accept debits and balances` [High] | Debit SMS containing "credited" counted as credit; bare payment/transferred matching; balance amounts extracted; fake Gmail sender | ReDoS length bounds added. Bounded scan length to prevent event loop freeze. | Stripped balance phrases (`Avl Bal`, `Bal:`, `Available limit`) before amount extraction. Enforced debit-before-credit rejection (debits with credit disclaimers rejected). | ✅ **VERIFIED FIXED** |
 | **#7** | `Webhooks: retries never run; replay, SSRF, missing utr` [High] | Retries never run; timestamp not in HMAC; payload lacks UTR; SSRF via private IP; terminal events dropped; `ORDER-R` rewrites orderId | Webhook URL validated against private IP ranges in commit `aad314f`. Inbound webhooks dedupe on delivery id. | Scheduled 5s background retry daemon with atomic claim; bound timestamp in HMAC; added `utr` & `attemptId`; preserved exact merchant `orderId` on retry; emitted terminal events in queueSync & recovery. | ✅ **VERIFIED FIXED** |
 | **#8** | `Security: device binding bypass` [Critical] | `X-Internal-Render: true` header bypass; device binding skipped if headers omitted; cancel PROCESSING sessions | Proxy strips `X-Internal-Render`. Internal token required. Cancel route requires bound device. Session token blind-indexed. | Blind indexes and internal secret verified in active codebase. | ✅ **VERIFIED FIXED** |
 | **#9** | `Security: customer OTP lacks rate limiting & hashing` [High] | OTP brute force (no attempts limit, string comparison); plaintext session tokens in DB; unanchored LIKE mobile query; unencrypted secrets | 5-attempt lockout, `safeEqual` comparison, AES-256-GCM OTP encryption, session token HMAC blind index. | Removed unanchored `LIKE` in `findByMobile` (exact indexed match only). Added `; Secure` cookie flag in production. Added `check-user` rate limit. | ✅ **VERIFIED FIXED** |
 | **#10** | `Security: XSS and open redirect in checkout & admin` [High] | `replaceAll` injecting unescaped HTML; query params reflected in store; admin table innerHTML; open cancel redirect | HTML escaping implemented across checkout portal and store templates; origin validation on redirects. | Verified `escapeHtml()` across all interpolation sinks in checkout portal and coin store. | ✅ **VERIFIED FIXED** |
 | **#11** | `Android app: cleartext traffic, duplicate sources` [Medium] | `usesCleartextTraffic="true"`; dead `.kt` files; hardcoded signing passwords; 3 committed binary APKs | PR #34 removed duplicate `.kt` files and parameterized build paths. | Explicitly disabled cleartext traffic (`usesCleartextTraffic="false"`), bound `network_security_config.xml`, and restricted network trust anchors to system CAs. | ✅ **VERIFIED FIXED** |
-| **#12** | `Correctness: processing-window expiry, timestamps` [Medium] | PROCESSING session timeout rejecting valid bank SMS; restart recovery dropping ATTRIBUTED sessions; ISO vs `datetime('now')` timestamp mismatches | State machine guards added in commit `6c82cfb`. | Detailed timestamp format synchronization pending. | 🟡 **IN PROGRESS** |
+| **#12** | `Correctness: processing-window expiry, timestamps` [Medium] | PROCESSING session timeout rejecting valid bank SMS; restart recovery dropping ATTRIBUTED sessions; ISO vs `datetime('now')` timestamp mismatches | State machine guards added in commit `6c82cfb`. | Verified: `verification-pipeline` checks `processingExpiresAt` when `PROCESSING`; crash recovery preserves attributed `PROCESSING` sessions and promotes to `SUCCESS`; parameterized ISO strings replace `datetime('now', '-60 seconds')`. | ✅ **VERIFIED FIXED** |
 | **#13** | `Chore: build/typecheck, test coverage, DB schema drift` [Low] | `npm run typecheck` failing; Postgres schema references out of order; missing tests for observer packages; committed scratch files | PR #34 fixed tsconfig references and removed 3 scratch scripts. | Root tsconfig passes cleanly. Postgres schema drift cleanup pending. | 🟡 **PARTIAL** |
 | **#15** | `License` | Section 8 non-profit licensing inquiry | Closed by upstream maintainer. | N/A | ⚪ **CLOSED** |
 | **#20** | `Bug: Intermittent UPI Payment Failures & FamPay` [High] | FamPay transaction detection intermittent; Gmail observer and SMS observer `isRunning: false`; Cloudflare tunnel error 1033 | UTR boundary isolated in PR #35. | Android package filtering now allows `com.fampay.in`. Tunnel configuration documented. | 🟡 **PARTIAL** |
@@ -56,33 +56,42 @@ This authoritative tracker audits and verifies all 24 issues on upstream reposit
 
 ## 3. Current Progress & Next Work Items
 
-### Verified & Fixed in Codebase (15 Issues Verified):
+### Verified & Fixed in Codebase (17 Issues Verified):
 1. **Issue #3**: Control center supervisor, proxy routes, and SSE secured with constant-time admin bearer tokens.
 2. **Issue #4**: Guarded `select-method` against `PROCESSING` sessions; guarded `confirm-cod` slot release with `current_active_session_id = ?`; wrapped `banCustomer` in atomic `BEGIN IMMEDIATE` transaction.
-3. **Issue #6**: Filtered out balance amounts (`Avl Bal`, `Bal:`, `Available limit`) before amount extraction. Enforced debit-before-credit rejection (debits with credit disclaimers rejected immediately).
-4. **Issue #7**:
+3. **Issue #5**:
+   - Added DB indexes on `bank_reference_number`, `fingerprint_hash`, and `attributed_payment_id`.
+   - Included `CANCELLED` sessions in `findRecentlyExpiredOrFailed` to prevent late payments from cancelled sessions from matching subsequent active sessions of the same amount.
+   - Handled duplicate UTR conflicts within 60s of a successful session by logging audit entries and automatically creating refund reconciliation support tickets.
+   - Enhanced reference extraction in `normalizer.js` to match `Ref no`, `Ref no.`, `UPI:`, and `UPI Ref:` prefixes.
+4. **Issue #6**: Filtered out balance amounts (`Avl Bal`, `Bal:`, `Available limit`) before amount extraction. Enforced debit-before-credit rejection (debits with credit disclaimers rejected immediately).
+5. **Issue #7**:
    - Automated recurring webhook retry daemon with atomic claim (`BEGIN IMMEDIATE` transaction).
    - Timestamp binding in HMAC (`${timestamp}.${payload}`) for bulletproof replay protection.
    - Included `utr` and `attemptId` in webhook payload contract.
    - Preserved exact merchant `orderId` on retries (replaced table-level constraint with partial index on non-terminal sessions).
    - Emitted terminal events (`PAYMENT.EXPIRED`, `PAYMENT.FAILED`) in `queueSyncDaemon`, `recoveryEngine`, and stale checks so webhooks always fire.
-5. **Issue #8**: Device binding blind index and internal secret verified.
-6. **Issue #9**: Eliminated unanchored `LIKE` query in `findByMobile` (exact indexed match only); added `; Secure` cookie flag in production; added rate limiting to `POST /customer/check-user`.
-7. **Issue #10**: HTML escaping implemented across all checkout and store templates.
-8. **Issue #11**: Disabled cleartext traffic app-wide (`usesCleartextTraffic="false"`), bound `network_security_config.xml`, and restricted network trust anchors to system CAs.
-9. **Issue #22**: Immediate 400 return on pipeline `REJECTED` halts attribution fallthrough.
-10. **Issue #23**: Customer state endpoint strictly strips `gmailConfig` and tunnel tokens.
-11. **Issue #24**: Restricted Android notification listener to 24 verified banking/UPI packages (`com.phonepe.app`, `net.one97.paytm`, etc.) and enforced the same allowlist on server ingestion.
-12. **Issue #25**: Supervisor runtime environment strictly overrides `.env` values.
-13. **Issue #26**: Explicit `method: 'COD'` and `verificationTag: 'COD_ORDER_PLACED'` contract in webhook delivery.
-14. **Issue #27**: Live checkouts lock immutably to snapshot VPA even if merchant modifies account.
-15. **Issue #28**: Confirmation guards and `VACUUM INTO` atomic backups in reset scripts.
+6. **Issue #8**: Device binding blind index and internal secret verified.
+7. **Issue #9**: Eliminated unanchored `LIKE` query in `findByMobile` (exact indexed match only); added `; Secure` cookie flag in production; added rate limiting to `POST /customer/check-user`.
+8. **Issue #10**: HTML escaping implemented across all checkout and store templates.
+9. **Issue #11**: Disabled cleartext traffic app-wide (`usesCleartextTraffic="false"`), bound `network_security_config.xml`, and restricted network trust anchors to system CAs.
+10. **Issue #12**:
+    - Verification pipeline checks `processingExpiresAt` when a session is in `PROCESSING` status instead of prematurely rejecting valid SMS with `SESSION_EXPIRED`.
+    - Crash recovery engine preserves attributed `PROCESSING` sessions and promotes them to `SUCCESS` instead of marking them `FAILED`.
+    - Parameterized ISO 8601 strings replace `datetime('now', '-60 seconds')` in active session queries.
+    - Test execution detection strictly checks `--test` instead of matching any argument containing `test`.
+11. **Issue #22**: Immediate 400 return on pipeline `REJECTED` halts attribution fallthrough.
+12. **Issue #23**: Customer state endpoint strictly strips `gmailConfig` and tunnel tokens.
+13. **Issue #24**: Restricted Android notification listener to 24 verified banking/UPI packages (`com.phonepe.app`, `net.one97.paytm`, etc.) and enforced the same allowlist on server ingestion.
+14. **Issue #25**: Supervisor runtime environment strictly overrides `.env` values.
+15. **Issue #26**: Explicit `method: 'COD'` and `verificationTag: 'COD_ORDER_PLACED'` contract in webhook delivery.
+16. **Issue #27**: Live checkouts lock immutably to snapshot VPA even if merchant modifies account.
+17. **Issue #28**: Confirmation guards and `VACUUM INTO` atomic backups in reset scripts.
 
 ### Next Work Items to Address:
-1. **Issue #5 / Issue #12 (Attribution & Timestamps)**:
-   - Scoped attribution and cross-merchant isolation.
-   - Synchronize timestamp formats between SQLite ISO strings and `datetime('now')`.
+1. **Issue #2 (Security: merchant payments API, active-window, PII leakage)**:
+   - Guard against unauthenticated active-window sniffing and mask sensitive payment details.
 2. **Issue #13 (DB Schema Drift & Postgres Consistency)**:
-   - Synchronize Postgres `schema.sql` and SQLite `sqlite-schema.sql` column orders and indices.
+   - Ensure Postgres `schema.sql` and SQLite `sqlite-schema.sql` have 100% matching columns, foreign keys, and indices.
 3. **Issue #20 (FamPay Integration & Observer Health)**:
    - FamPay transaction regex detection enhancements and observer heartbeat checks.

@@ -129,6 +129,9 @@ CREATE TABLE IF NOT EXISTS payment_observations (
 );
 
 CREATE INDEX IF NOT EXISTS idx_observations_match ON payment_observations (receiving_account_id, amount_paise, attribution_status);
+CREATE INDEX IF NOT EXISTS idx_observations_bank_ref ON payment_observations (bank_reference_number);
+CREATE INDEX IF NOT EXISTS idx_observations_fingerprint ON payment_observations (fingerprint_hash);
+CREATE INDEX IF NOT EXISTS idx_observations_attributed_payment ON payment_observations (attributed_payment_id);
 
 -- 6. Android Devices Table
 CREATE TABLE IF NOT EXISTS android_devices (

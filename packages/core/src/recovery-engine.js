@@ -41,29 +41,48 @@ export class RecoveryEngine {
     const now = new Date();
     const nowIso = now.toISOString();
 
-    // 1. Recover overdue PROCESSING sessions -> mark FAILED
+    // 1. Recover overdue PROCESSING sessions -> mark SUCCESS if verified/attributed, else FAILED
     const overdueProcessing = this.db.query(`
-      SELECT id, merchant_id, order_id, receiving_account_id FROM payment_sessions
+      SELECT id, merchant_id, order_id, receiving_account_id, verification_level, attributed_observation_id FROM payment_sessions
       WHERE status = ? AND processing_expires_at < ?
     `, [PaymentStatus.PROCESSING, nowIso]);
 
     for (const row of overdueProcessing) {
-      this.sessionRepo.transitionToTerminal(row.id, PaymentStatus.FAILED);
-      failedCount++;
-      if (this.auditRepo) {
-        this.auditRepo.log({
-          entityType: 'PAYMENT_SESSION',
-          entityId: row.id,
-          action: 'CRASH_RECOVERY_EXPIRED_PROCESSING',
-          actorType: 'SYSTEM'
-        });
-      }
-      if (this.eventEmitter) {
-        this.eventEmitter.emit('PAYMENT.FAILED', {
-          paymentId: row.id,
-          orderId: row.order_id,
-          merchantId: row.merchant_id
-        });
+      if (row.verification_level >= 1 || row.attributed_observation_id) {
+        this.sessionRepo.transitionToTerminal(row.id, PaymentStatus.SUCCESS);
+        if (this.auditRepo) {
+          this.auditRepo.log({
+            entityType: 'PAYMENT_SESSION',
+            entityId: row.id,
+            action: 'CRASH_RECOVERY_ATTRIBUTED_SUCCESS',
+            actorType: 'SYSTEM'
+          });
+        }
+        if (this.eventEmitter) {
+          this.eventEmitter.emit('PAYMENT.SUCCESS', {
+            paymentId: row.id,
+            orderId: row.order_id,
+            merchantId: row.merchant_id
+          });
+        }
+      } else {
+        this.sessionRepo.transitionToTerminal(row.id, PaymentStatus.FAILED);
+        failedCount++;
+        if (this.auditRepo) {
+          this.auditRepo.log({
+            entityType: 'PAYMENT_SESSION',
+            entityId: row.id,
+            action: 'CRASH_RECOVERY_EXPIRED_PROCESSING',
+            actorType: 'SYSTEM'
+          });
+        }
+        if (this.eventEmitter) {
+          this.eventEmitter.emit('PAYMENT.FAILED', {
+            paymentId: row.id,
+            orderId: row.order_id,
+            merchantId: row.merchant_id
+          });
+        }
       }
     }
 
