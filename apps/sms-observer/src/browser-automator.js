@@ -218,6 +218,7 @@ export class GoogleMessagesAutomator {
         // Target busy or initializing
       }
     }, 2000);
+    if (this.checkTimer.unref) this.checkTimer.unref();
   }
 
   /**
@@ -233,10 +234,15 @@ export class GoogleMessagesAutomator {
         // Target busy or updating
       }
     }, 3000);
+    if (this.extractionTimer.unref) this.extractionTimer.unref();
   }
 
   async pollRecentMessages() {
-    const targets = await BrowserLauncher.getTargets(this.debuggingPort);
+    if (this._isPollingMessages) return;
+    this._isPollingMessages = true;
+
+    try {
+      const targets = await BrowserLauncher.getTargets(this.debuggingPort);
     const target = targets.find(t => (t.type === 'page' || !t.type) && t.url && t.url.includes('messages.google.com') && t.webSocketDebuggerUrl)
       || targets.find(t => t.url && t.url.includes('messages.google.com') && t.webSocketDebuggerUrl);
     if (!target) return;
@@ -342,6 +348,9 @@ export class GoogleMessagesAutomator {
         }
       }
     }
+  } finally {
+    this._isPollingMessages = false;
+  }
   }
 
   getStatus() {
