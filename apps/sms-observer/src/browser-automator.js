@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BrowserLauncher } from '@youpi/observer-sdk';
+import { getObserverToken } from '@youpi/common';
 import { BankSmsParser } from './sms-parser.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -39,7 +40,13 @@ export class GoogleMessagesAutomator {
 
   async fetchActivePaymentAmounts() {
     try {
-      const res = await fetch(`${this.apiBaseUrl}/api/v1/pollers/active-window`, { signal: AbortSignal.timeout(1500) });
+      if (this.smsService && this.smsService.observerClient && typeof this.smsService.observerClient.getActiveWindow === 'function') {
+        return await this.smsService.observerClient.getActiveWindow();
+      }
+      const res = await fetch(`${this.apiBaseUrl}/api/v1/pollers/active-window`, {
+        headers: { 'Authorization': `Bearer ${getObserverToken()}` },
+        signal: AbortSignal.timeout(1500)
+      });
       if (res.ok) {
         const data = await res.json();
         return data.sessions || [];

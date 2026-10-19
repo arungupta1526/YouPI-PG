@@ -353,5 +353,31 @@ describe('@youpi/core Unit & Integration Tests', () => {
       const parsed = BankSmsParser.parse(sms);
       assert.equal(parsed, null);
     });
+
+    test('Issue #20: correctly parses FamPay / FamApp credit notification with wallet, transaction ID, and UPI ID', () => {
+      const sms = {
+        text: 'Money received! Rs. 350.00 credited to FamPay Wallet via UPI from Gaurav (UPI ID: gaurav@fam). Transaction ID: 418293847562'
+      };
+      const parsed = BankSmsParser.parse(sms);
+      assert.ok(parsed);
+      assert.equal(parsed.amount, '350.00');
+      assert.equal(parsed.amountPaise, 35000n);
+      assert.equal(parsed.bankReferenceNumber, '418293847562');
+      assert.equal(parsed.senderVpa, 'gaurav@fam');
+    });
+
+    test('Issue #20: normalizes FamPay observation with added to account format', () => {
+      const obs = ObservationNormalizer.normalize({
+        source: ObserverSource.GOOGLE_MESSAGES,
+        receivingAccountId: 'acc_1',
+        rawPayload: {
+          text: 'Payment received! Rs. 500.00 added to your account via UPI from user@idfcbank. UPI Ref: 328910293841'
+        }
+      });
+      assert.equal(obs.amountPaise, 50000n);
+      assert.equal(obs.bankReferenceNumber, '328910293841');
+      assert.equal(obs.senderVpa, 'user@idfcbank');
+    });
   });
 });
+

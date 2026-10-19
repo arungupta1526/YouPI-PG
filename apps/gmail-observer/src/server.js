@@ -38,7 +38,9 @@ export class GmailObserverServer {
         res.end(JSON.stringify({
           status: 'UP',
           service: 'gmail-observer',
-          isRunning: this.poller.isRunning,
+          isRunning: Boolean(this.poller.isRunning || (this.automator && this.automator.mode !== 'STANDBY')),
+          isPolling: this.poller.isRunning,
+          mode: this.automator ? this.automator.mode : 'STANDBY',
           lastPollAt: this.poller.lastPollAt,
           observedCount: this.poller.observedCount
         }));

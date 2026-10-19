@@ -17,8 +17,9 @@ export class AttributionEngine {
     this.auditRepo = options.auditRepo;
     this.eventEmitter = options.eventEmitter || { emit: () => {} };
     const isTestExecution = process.env.NODE_ENV === 'test' ||
-      (process.execArgv && process.execArgv.includes('--test')) ||
-      (process.argv && process.argv.some(a => a === '--test' || a === 'test'));
+      Boolean(process.env.NODE_TEST_CONTEXT) ||
+      (process.execArgv && process.execArgv.some(a => a.includes('test'))) ||
+      (process.argv && process.argv.some(a => a.includes('test')));
 
     this.gracePeriodMs = options.gracePeriodMs !== undefined
       ? options.gracePeriodMs

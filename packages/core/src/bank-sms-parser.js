@@ -101,7 +101,7 @@ export class BankSmsParser {
     if (!text) return null;
 
     // Check if SMS represents an incoming credit. Bare "payment" or "transferred" without credit context is rejected.
-    const creditKeywords = /\b(credited|received|deposit|deposited|payment received|upi\/cr)\b/i;
+    const creditKeywords = /\b(credited|received|deposit|deposited|payment received|money received|added to (?:your )?(?:account|wallet)|upi\/cr)\b/i;
     if (!creditKeywords.test(text)) {
       return null;
     }
@@ -126,10 +126,10 @@ export class BankSmsParser {
       return null;
     }
 
-    // 2. Extract Bank Reference / UTR / RRN
+    // 2. Extract Bank Reference / UTR / RRN (including FamPay Transaction IDs)
     let bankRef;
     const utrPatterns = [
-      /(?:upi\s*ref(?:erence)?\s*(?:no\.?|num)?|utr(?:\s*no\.?)?|rrn(?:\s*no\.?)?|txn\s*(?:id|ref)?|ref\s*no\.?)[\s:=-]+([a-zA-Z0-9\-_]{6,35})/i,
+      /(?:upi\s*ref(?:erence)?\s*(?:no\.?|num)?|utr(?:\s*no\.?)?|rrn(?:\s*no\.?)?|txn\s*(?:id|ref|#)?|transaction\s*id|ref\s*no\.?)[\s:=-]+([a-zA-Z0-9\-_]{6,35})/i,
       /(?:upi\/(?:[0-9]+\/|cr\/)([a-zA-Z0-9\-_]{6,35}))/i,
       /\b(?:ref(?:\s*(?:no\.?|id|#))?)[:\s#=-]+([a-zA-Z0-9\-_]{6,35})/i,
       /\b([0-9]{12})\b/
@@ -143,9 +143,9 @@ export class BankSmsParser {
       }
     }
 
-    // 3. Extract Sender VPA
+    // 3. Extract Sender VPA (including FamPay formats like "from Rahul (UPI ID: rahul@fam)")
     let senderVpa;
-    const vpaMatch = text.match(/(?:from|by|vpa)\s+([a-zA-Z0-9.\-_]{2,64}@[a-zA-Z0-9.\-_]{2,32})/i);
+    const vpaMatch = text.match(/(?:from|by|vpa|upi\s*id)[\s:]+(?:[a-zA-Z\s]+[\(\[])?([a-zA-Z0-9.\-_]{2,64}@[a-zA-Z0-9.\-_]{2,32})/i);
     if (vpaMatch && vpaMatch[1]) {
       senderVpa = vpaMatch[1].trim().replace(/[.,;]+$/, '');
     }
