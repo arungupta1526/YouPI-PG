@@ -1,5 +1,5 @@
 import { HttpServer } from '../server.js';
-import { toRupeesString, buildUpiUri, PaymentStatus, PaymentMethod, UPI_PROVIDERS, isInternalServiceRequest } from '@youpi/common';
+import { toRupeesString, buildUpiUri, PaymentStatus, PaymentMethod, UPI_PROVIDERS, isInternalServiceRequest, isValidTransition } from '@youpi/common';
 import { validateSessionDeviceAccess } from '@youpi/core';
 import { isPaymentOwner } from '../auth-guard.js';
 
@@ -505,8 +505,17 @@ export function registerCheckoutRoutes(server, ctx) {
     const authHeader = req.headers['authorization'] || '';
     const bearerToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : (req.headers['x-customer-token'] || null);
 
+    // Customer PII is only disclosed to a party that is entitled to it:
+    //   - the owning merchant (admin/observer credential or X-Merchant-Key),
+    //   - the co-located checkout renderer,
+    //   - the customer themselves, presenting their own customer session token.
+    // An anonymous holder of a payment id must not receive name/email/phone.
+    const isOwnerCaller = isPaymentOwner(req, session, ctx) || isInternalServiceRequest(req);
+    const tokenAuth = (bearerToken && ctx.customerSessionRepo) ? ctx.customerSessionRepo.findByToken(bearerToken) : null;
+    const isSelfCaller = Boolean(tokenAuth?.customer && session.customerId && tokenAuth.customer.id === session.customerId);
+
     let customer = null;
-    if (session.customerId && ctx.customerRepo) {
+    if (session.customerId && ctx.customerRepo && (isOwnerCaller || isSelfCaller)) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
         customer = {
@@ -518,20 +527,21 @@ export function registerCheckoutRoutes(server, ctx) {
           phoneNumber: c.mobileNumber
         };
       }
-    } else if (!customer && bearerToken && ctx.customerSessionRepo) {
-      const authContext = ctx.customerSessionRepo.findByToken(bearerToken);
-      if (authContext?.customer) {
-        const c = authContext.customer;
-        customer = {
-          id: c.id,
-          name: c.name,
-          email: c.email,
-          mobileNumber: c.mobileNumber,
-          fullName: c.name,
-          phoneNumber: c.mobileNumber
-        };
-      }
+    } else if (!customer && tokenAuth?.customer) {
+      const c = tokenAuth.customer;
+      customer = {
+        id: c.id,
+        name: c.name,
+        email: c.email,
+        mobileNumber: c.mobileNumber,
+        fullName: c.name,
+        phoneNumber: c.mobileNumber
+      };
     }
+
+    // Merchant metadata is merchant-private: only the owner (or the internal renderer)
+    // may read it. The cancellation reason is exposed separately for the customer UI.
+    const publicMetadata = isOwnerCaller ? (session.metadata || {}) : {};
 
     // Single active payment session check (Section 1 & 2)
     const requestingDeviceId = req.headers['x-device-id'] || session.deviceId || null;
@@ -602,7 +612,7 @@ export function registerCheckoutRoutes(server, ctx) {
       status: session.status,
       reason: session.metadata?.cancelledReason || null,
       cancelledReason: session.metadata?.cancelledReason || null,
-      metadata: session.metadata || {},
+      metadata: publicMetadata,
       method: session.method,
       verificationLevel: session.verificationLevel || 0,
       verificationSources: session.verificationSources || [],
@@ -829,6 +839,11 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
 
+    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
+      HttpServer.json(res, 400, { error: `Cannot retry payment for terminal session in status '${session.status}'` });
+      return;
+    }
+
     const customerId = session.customerId;
     const requestingDeviceId = req.headers['x-device-id'] || session.deviceId || null;
 
@@ -1020,8 +1035,13 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
 
-    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED, PaymentStatus.PROCESSING].includes(session.status)) {
-      HttpServer.json(res, 400, { error: `Cannot switch payment method for session in status '${session.status}'` });
+    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
+      HttpServer.json(res, 400, { error: `Cannot switch payment method for terminal session in status '${session.status}'` });
+      return;
+    }
+
+    if (session.status === PaymentStatus.PROCESSING) {
+      HttpServer.json(res, 400, { error: `Cannot switch payment method for session in status 'PROCESSING': Cannot switch payment method while payment is in PROCESSING status` });
       return;
     }
 
@@ -1236,9 +1256,21 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
 
-    // PROCESSING = a UPI payment was already detected and is being verified; switching it to COD would drop that payment.
-    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED, PaymentStatus.PROCESSING].includes(session.status)) {
-      HttpServer.json(res, 400, { error: `Cannot place COD order for session in status '${session.status}'` });
+    // PROCESSING: a UPI payment was already detected and is being verified; switching it to COD would drop that payment.
+    if (session.status === PaymentStatus.PROCESSING) {
+      HttpServer.json(res, 400, { error: 'Cannot place COD order while payment is in PROCESSING status' });
+      return;
+    }
+
+    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
+      HttpServer.json(res, 400, { error: `Cannot place COD order for terminal session in status '${session.status}'` });
+      return;
+    }
+
+    // COD terminates the session as SUCCESS; make sure the state machine permits that edge
+    // (INITIATED/QUEUED/ACTIVE are all legal; anything else is caught above).
+    if (!isValidTransition(session.status, PaymentStatus.SUCCESS)) {
+      HttpServer.json(res, 409, { error: `Cannot place COD order for session in status '${session.status}'.` });
       return;
     }
 
@@ -1263,30 +1295,34 @@ export function registerCheckoutRoutes(server, ctx) {
       }
     }
 
-    // Update payment session to SUCCESS with COD method and release slot
+    // Update payment session to SUCCESS with COD method and release slot inside transaction
     const nowIso = new Date().toISOString();
     const oldReceivingAccountId = session.receivingAccountId || session.receiving_account_id;
 
-    ctx.sessionRepo.db.execute(`
-      UPDATE payment_sessions
-      SET method = 'COD',
-          status = 'SUCCESS',
-          verification_tag = 'COD_ORDER_PLACED',
-          verification_level = 1,
-          completed_at = ?,
-          receiving_account_id = NULL,
-          updated_at = ?
-      WHERE id = ?
-    `, [nowIso, nowIso, session.id]);
-
-    // Release receiving account slot and promote next queued customer
-    if (oldReceivingAccountId) {
+    ctx.sessionRepo.db.transaction(() => {
       ctx.sessionRepo.db.execute(`
-        UPDATE payment_receiving_accounts
-        SET is_slot_busy = 0, current_active_session_id = NULL, updated_at = ?
-        WHERE id = ? AND current_active_session_id = ?
-      `, [nowIso, oldReceivingAccountId, session.id]);
+        UPDATE payment_sessions
+        SET method = 'COD',
+            status = 'SUCCESS',
+            verification_tag = 'COD_ORDER_PLACED',
+            verification_level = 1,
+            completed_at = ?,
+            receiving_account_id = NULL,
+            updated_at = ?
+        WHERE id = ? AND status IN ('INITIATED', 'QUEUED', 'ACTIVE')
+      `, [nowIso, nowIso, session.id]);
 
+      // Release receiving account slot
+      if (oldReceivingAccountId) {
+        ctx.sessionRepo.db.execute(`
+          UPDATE payment_receiving_accounts
+          SET is_slot_busy = 0, current_active_session_id = NULL, updated_at = ?
+          WHERE id = ? AND (current_active_session_id = ? OR current_active_session_id IS NULL)
+        `, [nowIso, oldReceivingAccountId, session.id]);
+      }
+    });
+
+    if (oldReceivingAccountId && ctx.queueEngine) {
       const promoted = ctx.queueEngine.promoteNext(oldReceivingAccountId);
       if (promoted) {
         if (promoted.expiresAt && ctx.timingEngine) {
@@ -1364,7 +1400,7 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
     let customer = null;
-    if (session.customerId && ctx.customerRepo) {
+    if (isPaymentOwner(req, session, ctx) && session.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
         customer = {

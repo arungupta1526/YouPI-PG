@@ -82,7 +82,7 @@
     if (window.parent !== window || location.search.includes('embedded=1')) {
       document.body.classList.add('is-embedded');
       try {
-        window.parent.postMessage({ event: 'youpi.modal_ready', paymentId: PAYMENT_ID }, '*');
+        postToMerchant({ event: 'youpi.modal_ready', paymentId: PAYMENT_ID });
       } catch (e) { }
     }
 
@@ -146,27 +146,80 @@
       return baseOrigin ? `${baseOrigin}/order-failed?${query}` : `/order-failed?${query}`;
     }
 
+    /**
+     * Only http/https URLs may be navigated to. Blocks `javascript:`, `data:` and other
+     * schemes that would execute script in the checkout origin.
+     */
+    function sanitizeRedirectUrl(candidate) {
+      if (typeof candidate !== 'string') return null;
+      const trimmed = candidate.trim();
+      if (!trimmed) return null;
+      let parsed;
+      try {
+        parsed = new URL(trimmed, window.location.origin);
+      } catch (e) {
+        return null;
+      }
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') return null;
+      return parsed.href;
+    }
+
+    /**
+     * Origin of the storefront embedding this iframe, used as the postMessage target.
+     * Returns null when the embedder cannot be identified (callers then fall back to '*').
+     */
+    function resolveMerchantOrigin() {
+      try {
+        if (document.referrer) {
+          const parsed = new URL(document.referrer);
+          if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.origin;
+        }
+      } catch (e) { }
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const explicit = params.get('origin') || params.get('merchantOrigin');
+        if (explicit) {
+          const parsed = new URL(explicit, window.location.origin);
+          if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.origin;
+        }
+      } catch (e) { }
+      return null;
+    }
+
+    /** Posts to the embedding storefront using its resolved origin when known. */
+    function postToMerchant(message) {
+      try {
+        window.parent.postMessage(message, resolveMerchantOrigin() || '*');
+      } catch (e) { }
+    }
+
     // Store return URL resolver (used when user cancels payment or returns to merchant store)
     function getStoreReturnUrl() {
       if (typeof state !== 'undefined' && state) {
-        if (state.cancelUrl) {
-          return state.cancelUrl;
-        }
+        const stateCancel = sanitizeRedirectUrl(state.cancelUrl);
+        if (stateCancel) return stateCancel;
         if (state.returnUrl) {
-          try {
-            const parsed = new URL(state.returnUrl);
-            return parsed.origin ? `${parsed.origin}/` : state.returnUrl;
-          } catch (e) { }
+          const safeReturn = sanitizeRedirectUrl(state.returnUrl);
+          if (safeReturn) {
+            try {
+              const parsed = new URL(safeReturn);
+              return parsed.origin ? `${parsed.origin}/` : safeReturn;
+            } catch (e) { }
+          }
         }
       }
       try {
         const params = new URLSearchParams(window.location.search);
         const cancelParam = params.get('cancelUrl') || params.get('cancel_url');
-        if (cancelParam) return cancelParam;
+        const safeCancel = sanitizeRedirectUrl(cancelParam);
+        if (safeCancel) return safeCancel;
         const qUrl = params.get('returnUrl') || params.get('storeUrl') || params.get('redirectUrl');
-        if (qUrl) {
-          const parsed = new URL(qUrl, window.location.origin);
-          return parsed.origin ? `${parsed.origin}/` : qUrl;
+        const safeQueryUrl = sanitizeRedirectUrl(qUrl);
+        if (safeQueryUrl) {
+          try {
+            const parsed = new URL(safeQueryUrl);
+            return parsed.origin ? `${parsed.origin}/` : safeQueryUrl;
+          } catch (e) { }
         }
       } catch (e) { }
       if (document.referrer) {
@@ -194,7 +247,7 @@
 
       if (isEmbedded) {
         try {
-          window.parent.postMessage({
+          postToMerchant({
             event: 'youpi.payment_failed',
             data: {
               orderId,
@@ -208,33 +261,34 @@
             paymentId,
             status: reason,
             redirectUrl: failRedirectUrl
-          }, '*');
+          });
         } catch (e) { }
 
         // Fallback postMessage in case parent container only listens for modal_close
         try {
-          window.parent.postMessage({
+          postToMerchant({
             event: 'youpi.modal_close',
             action: 'payment_failed',
             redirectUrl: failRedirectUrl
-          }, '*');
+          });
         } catch (e) { }
       } else {
         // Standalone full page checkout
-        window.location.href = failRedirectUrl;
+        const safeFailUrl = sanitizeRedirectUrl(failRedirectUrl);
+        if (safeFailUrl) window.location.href = safeFailUrl;
       }
     }
 
     // --- ACTION HOOK ENGINE (Dispatches triggers to merchant website and backend telemetry) ---
     function emitTriggerHook(action, details = {}) {
       try {
-        window.parent.postMessage({
+        postToMerchant({
           type: 'YOUPI_PAYMENT_HOOK',
           action,
           paymentId: PAYMENT_ID,
           orderId: state?.orderId,
           details
-        }, '*');
+        });
       } catch { }
 
       fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/trigger-hook`, {
@@ -1773,15 +1827,18 @@
               const isEmbedded = (window.parent && window.parent !== window) || location.search.includes('embedded=1');
               if (isEmbedded) {
                 try {
-                  window.parent.postMessage({ event: 'youpi.modal_close', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.close', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.cancel', redirectUrl: storeUrl }, '*');
-                  window.parent.postMessage({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl }, '*');
+                  postToMerchant({ event: 'youpi.modal_close', redirectUrl: storeUrl });
+                  postToMerchant({ event: 'youpi.close', redirectUrl: storeUrl });
+                  postToMerchant({ event: 'youpi.cancel', redirectUrl: storeUrl });
+                  postToMerchant({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl });
                 } catch (e) {}
-              } else if (storeUrl && storeUrl !== '#' && !storeUrl.startsWith('javascript:')) {
-                window.location.href = storeUrl;
               } else {
-                window.history.back();
+                const safeStoreUrl = sanitizeRedirectUrl(storeUrl);
+                if (safeStoreUrl) {
+                  window.location.href = safeStoreUrl;
+                } else {
+                  window.history.back();
+                }
               }
             };
           }
@@ -1854,10 +1911,10 @@
           emitTriggerHook('PAYMENT_COMPLETED', { amount: data.amount, method: data.method, isCod: isCodOrder });
 
           try {
-            window.parent.postMessage({
+            postToMerchant({
               event: 'youpi.payment_success',
               data: data
-            }, '*');
+            });
           } catch (e) { }
 
           const btnReturn = document.getElementById('btnReturnStore') || document.getElementById('btnReturnToStore');
@@ -1865,7 +1922,8 @@
             btnReturn.hidden = false;
             btnReturn.href = data.returnUrl;
             if (window.parent === window) {
-              setTimeout(() => { window.location.href = data.returnUrl; }, 2000);
+              const safeReturn = sanitizeRedirectUrl(data.returnUrl);
+              setTimeout(() => { if (safeReturn) window.location.href = safeReturn; }, 2000);
             }
           } else if (btnReturn) {
             btnReturn.hidden = true;
@@ -2273,10 +2331,10 @@
 
         if (isEmbedded) {
           try {
-            window.parent.postMessage({ event: 'youpi.modal_close', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.close', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.cancel', redirectUrl: storeUrl }, '*');
-            window.parent.postMessage({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl }, '*');
+            postToMerchant({ event: 'youpi.modal_close', redirectUrl: storeUrl });
+            postToMerchant({ event: 'youpi.close', redirectUrl: storeUrl });
+            postToMerchant({ event: 'youpi.cancel', redirectUrl: storeUrl });
+            postToMerchant({ event: 'youpi.payment_cancelled', redirectUrl: storeUrl });
           } catch (e) { }
         }
 
@@ -2291,9 +2349,11 @@
 
     // Listen for cancel requests from parent iframe cross button
     window.addEventListener('message', (e) => {
-      if (e.data && e.data.event === 'youpi.request_cancel') {
-        openCancelPaymentModal();
-      }
+      if (!e.data || e.data.event !== 'youpi.request_cancel') return;
+      // Only the storefront that embeds this iframe may drive it.
+      const merchantOrigin = resolveMerchantOrigin();
+      if (merchantOrigin && e.origin !== merchantOrigin) return;
+      openCancelPaymentModal();
     });
 
     // --- MANUAL PAYMENT DONE VERIFICATION ---
@@ -2421,7 +2481,7 @@
       });
 
       try {
-        window.parent.postMessage({
+        postToMerchant({
           event: 'youpi.payment_blocked',
           data: {
             status: 'BLOCKED',
@@ -2429,7 +2489,7 @@
             orderId: orderRef,
             paymentId: data.id || PAYMENT_ID
           }
-        }, '*');
+        });
       } catch (e) {}
     }
 
@@ -2437,13 +2497,14 @@
       const failRedirectUrl = getFailedRedirectUrl();
       if (window.parent && window.parent !== window) {
         try {
-          window.parent.postMessage({
+          postToMerchant({
             event: 'youpi.payment_blocked_exit',
             data: { status: 'BLOCKED', isBanned: true, orderId: state?.orderId }
-          }, '*');
+          });
         } catch (e) {}
       }
-      window.location.href = failRedirectUrl;
+      const safeFailUrl = sanitizeRedirectUrl(failRedirectUrl);
+      if (safeFailUrl) window.location.href = safeFailUrl;
     }
 
     let lastDuplicateSessionPayload = null;
@@ -2506,7 +2567,7 @@
 
         const data = await res.json();
         if (data.success && (data.checkoutUrl || data.newSessionId)) {
-          const targetUrl = data.checkoutUrl || `/checkout/${data.newSessionId}`;
+          const targetUrl = sanitizeRedirectUrl(data.checkoutUrl) || `/checkout/${data.newSessionId}`;
           window.location.href = targetUrl;
         } else {
           alert(data.error || 'Failed to start new payment session. Please try again.');
