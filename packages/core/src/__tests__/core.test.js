@@ -8,6 +8,7 @@ import {
   AttributionEngine,
   BankSmsParser
 } from '../index.js';
+import { extractIntelligentAmount } from '../bank-sms-parser.js';
 import {
   PaymentStatus,
   PublicPaymentOutcome,
@@ -354,6 +355,16 @@ describe('Bank SMS Parser UTR & Amount Extraction', () => {
       assert.equal(parsed, null);
     });
 
+    test('amount extraction is not vulnerable to quadratic backtracking (ReDoS)', () => {
+      // The credit patterns chain several whitespace-matching quantifiers. A body such as
+      // "credited" followed by a long whitespace run used to take seconds to scan and blocked
+      // the payment event loop, so the text is whitespace-collapsed before matching.
+      const hostile = 'credited' + ' '.repeat(20000);
+      const started = Date.now();
+      extractIntelligentAmount(hostile);
+      const elapsed = Date.now() - started;
+      assert.ok(elapsed < 500, `amount extraction took ${elapsed}ms on a whitespace flood`);
+    });
     test('rejects bare payment or transfer debit message without credit indicator', () => {
       const sms = {
         text: 'Payment of Rs 350.00 sent to merchant@upi on 19-Oct. UPI Ref 998877665544.'

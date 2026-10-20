@@ -29,8 +29,11 @@ COPY apps/coin-wallet-store/package.json ./apps/coin-wallet-store/
 COPY apps/payment-help/package.json ./apps/payment-help/
 COPY apps/android-observer-app/package.json ./apps/android-observer-app/
 
-# Clean installation of dependencies with script safety
-RUN npm ci --ignore-scripts
+# Clean installation of dependencies. Install scripts stay disabled during `npm ci` so no
+# arbitrary third-party postinstall code runs during the build, then better-sqlite3's native
+# binding is compiled explicitly: it is a transitive dependency of the WhatsApp Berry SDK and
+# has no prebuilt binary for this platform, so skipping it leaves that feature broken.
+RUN npm ci --ignore-scripts && npm rebuild better-sqlite3
 
 # ── Stage 2: Builder ────────────────────────────────────────────────────────
 FROM deps AS builder

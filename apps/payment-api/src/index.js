@@ -291,6 +291,7 @@ export function createPaymentApp(customDb = null, options = {}) {
   }, Number(process.env.WEBHOOK_RETRY_INTERVAL_MS || 5000));
 
   if (webhookRetryDaemon.unref) webhookRetryDaemon.unref();
+
   // Consolidated, Coordinated Observer Polling & Verification Daemon
   // Eliminates duplicate HTTP sweeps, enforces 1.5s-2s cooldown, and prevents SQLite write contention
   const observerPollerService = new ObserverPollerService({
