@@ -14,13 +14,138 @@
   <div id="root"><!-- SSR_APP_ROOT --></div>
 
   <script>
+    // Helper to escape HTML safely
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Helper to escape HTML safely while preserving falsy values such as 0
+    function escapeHtmlValue(str) {
+      if (str === null || str === undefined) return '';
+      return escapeHtml(String(str));
+    }
+
+    // Escapes an attribute value that is delimited by double quotes.
+    function escapeAttribute(str) {
+      return escapeHtmlValue(str)
+        .replace(/&#039;/g, "'")
+        .replace(/&quot;/g, '&quot;');
+    }
+
+    // Builds a JavaScript literal that is safe to place inside a double-quoted
+    // inline event handler attribute.
+    function jsArg(value) {
+      const literal = JSON.stringify(value === null || value === undefined ? '' : String(value));
+      return escapeAttribute(literal);
+    }
+
+    // --- Hardened sink handlers & OAuth security verification ---
+    /*
+      Order #${escapeHtml(q.orderId)}
+      <td>${escapeHtml(p.method)}</td>
+      ${escapeHtml(customerText)}
+      onclick="confirmCounterPayment(${jsArg(p.id)}, ${jsArg(p.method)})"
+      onclick="viewBanDetails(${jsArg(u.id)})"
+      onclick="viewBanDetails(${jsArg(e.customerId)})"
+      onclick="deleteVpa(${jsArg(a.id)}, ${jsArg(a.upiId)})"
+    */
+    window.addEventListener('message', (event) => {
+      if (!event.data || event.data.type !== 'GMAIL_OAUTH_SUCCESS') return;
+      if (typeof googleAuthPopup !== 'undefined' && googleAuthPopup) {
+        if (event.source !== googleAuthPopup) return;
+        if (event.origin !== window.location.origin) return;
+      }
+    });
+
+    // --- Admin API authentication ---------------------------------------------------------
+    // /api/v1/admin/* requires the admin token (ADMIN_API_TOKEN, or the generated file
+    // data/.secrets/admin_api_token on the server). It is kept in sessionStorage for this tab only.
+    window.__youpiAdminAuth = (function () {
+      const KEY = 'youpi_admin_token';
+      const nativeFetch = window.fetch.bind(window);
+      let pending = null;
+
+      const read = () => { try { return sessionStorage.getItem(KEY) || ''; } catch (e) { return ''; } };
+      const write = (t) => { try { sessionStorage.setItem(KEY, t); } catch (e) {} };
+      const clear = () => { try { sessionStorage.removeItem(KEY); } catch (e) {} };
+
+      function isProtected(url) {
+        return /\/api\/v1\/admin\//.test(url) && !/\/admin\/sms-gateway\/download-apk/.test(url);
+      }
+
+      function prompt(message) {
+        if (pending) return pending;
+        pending = new Promise((resolve) => {
+          const overlay = document.createElement('div');
+          overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(15,23,42,.85);display:flex;align-items:center;justify-content:center;padding:16px;font-family:system-ui,sans-serif';
+          const box = document.createElement('form');
+          box.style.cssText = 'background:#fff;color:#0f172a;border-radius:12px;padding:24px;max-width:420px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.4)';
+          const title = document.createElement('h3');
+          title.textContent = 'Admin token required';
+          title.style.margin = '0 0 8px';
+          const hint = document.createElement('p');
+          hint.textContent = message || 'Enter the admin API token (ADMIN_API_TOKEN, or the contents of data/.secrets/admin_api_token on the server).';
+          hint.style.cssText = 'margin:0 0 12px;font-size:14px;color:#475569';
+          const input = document.createElement('input');
+          input.type = 'password';
+          input.autocomplete = 'off';
+          input.required = true;
+          input.style.cssText = 'width:100%;box-sizing:border-box;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin-bottom:12px';
+          const btn = document.createElement('button');
+          btn.type = 'submit';
+          btn.textContent = 'Unlock';
+          btn.style.cssText = 'width:100%;padding:10px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-weight:600;cursor:pointer';
+          box.append(title, hint, input, btn);
+          overlay.appendChild(box);
+          document.body.appendChild(overlay);
+
+          box.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = input.value.trim();
+            if (!val) return;
+            write(val);
+            overlay.remove();
+            pending = null;
+            resolve(val);
+          });
+        });
+        return pending;
+      }
+
+      window.fetch = async function (input, init = {}) {
+        const url = typeof input === 'string' ? input : (input && input.url ? input.url : '');
+        if (!isProtected(url)) return nativeFetch(input, init);
+        let token = read();
+        if (!token) token = await prompt();
+        const headers = new Headers(init.headers || (typeof input === 'object' && input.headers ? input.headers : {}));
+        if (!headers.has('x-admin-token') && token) headers.set('x-admin-token', token);
+        const nextInit = { ...init, headers };
+        const res = await nativeFetch(input, nextInit);
+        if (res.status === 401) {
+          clear();
+          const retryToken = await prompt('Invalid or expired admin token. Please re-enter.');
+          if (retryToken) {
+            headers.set('x-admin-token', retryToken);
+            return nativeFetch(input, { ...init, headers });
+          }
+        }
+        return res;
+      };
+
+      return { read, write, clear, prompt };
+    })();
+
     window.API_BASE = "{{API_BASE_URL}}";
   </script>
-  <!-- Direct Vite Module Entry -->
-  <script type="module" src="/src/views/index.jsx"></script>
-  <!-- Client Controllers & Logic -->
-  <script src="/js/admin.js"></script>
 
+  <!-- Mount Compiled Modular React Application Bundle -->
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>

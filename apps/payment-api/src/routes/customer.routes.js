@@ -93,6 +93,24 @@ export function registerCustomerRoutes(server, ctx) {
   }
 
   /**
+   * Resolves the configured cooldown between consecutive OTP dispatches.
+   * Prioritizes explicit runtime options (ctx.otpCooldownMs), environment overrides
+   * (OTP_RESEND_COOLDOWN_MS), and defaults to 30 seconds.
+   */
+  function getOtpCooldownMs() {
+    if (ctx && typeof ctx.otpCooldownMs === 'number' && ctx.otpCooldownMs >= 0) {
+      return ctx.otpCooldownMs;
+    }
+    if (process.env.OTP_RESEND_COOLDOWN_MS !== undefined) {
+      const val = Number(process.env.OTP_RESEND_COOLDOWN_MS);
+      if (Number.isFinite(val) && val >= 0) {
+        return val;
+      }
+    }
+    return OTP_RESEND_COOLDOWN_MS;
+  }
+
+  /**
    * Records an OTP request and reports whether the caller is within the resend cooldown.
    * Entries older than the cooldown are pruned on each call.
    */

@@ -331,9 +331,11 @@ export function registerPaymentRoutes(server, ctx) {
       return;
     }
 
+    // Order ids are merchant-chosen and often sequential, so the delivery contact and metadata
+    // are only for the owning merchant (or the gateway); anyone else gets the order status.
     const owner = isPaymentOwner(req, session, ctx);
     let customer = null;
-    if (session.customerId && ctx.customerRepo) {
+    if (owner && session.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
         customer = {
@@ -355,7 +357,7 @@ export function registerPaymentRoutes(server, ctx) {
       status: session.status,
       verificationTag: session.verificationTag,
       isCod: session.method === 'COD',
-      customer,
+      customer: owner ? customer : null,
       placedAt: session.completedAt ? (session.completedAt.toISOString ? session.completedAt.toISOString() : session.completedAt) : (session.createdAt?.toISOString ? session.createdAt.toISOString() : session.createdAt),
       ...(owner ? { metadata: session.metadata } : {})
     });
@@ -382,9 +384,11 @@ export function registerPaymentRoutes(server, ctx) {
       return;
     }
 
+    // Order ids are merchant-chosen and often sequential, so the delivery contact and metadata
+    // are only for the owning merchant (or the gateway); anyone else gets the order status.
     const owner = isPaymentOwner(req, session, ctx);
     let customer = null;
-    if (session.customerId && ctx.customerRepo) {
+    if (owner && session.customerId && ctx.customerRepo) {
       const c = ctx.customerRepo.findById(session.customerId);
       if (c) {
         customer = {
@@ -406,7 +410,7 @@ export function registerPaymentRoutes(server, ctx) {
       status: session.status,
       verificationTag: session.verificationTag,
       isCod: session.method === 'COD',
-      customer,
+      customer: owner ? customer : null,
       placedAt: session.completedAt ? (session.completedAt.toISOString ? session.completedAt.toISOString() : session.completedAt) : (session.createdAt?.toISOString ? session.createdAt.toISOString() : session.createdAt),
       ...(owner ? { metadata: session.metadata } : {})
     });
