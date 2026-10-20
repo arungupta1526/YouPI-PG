@@ -140,6 +140,12 @@ jobs:
     needs: [gitleaks, security-audit, build, test]
     if: always() && github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
+    # Only this job posts the summary comment; the other jobs stay least-privilege.
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      actions: read
 
     steps:
       - name: Checkout repository

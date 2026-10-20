@@ -411,6 +411,14 @@ export function registerCheckoutRoutes(server, ctx) {
         status: session.status,
         timeRemainingSeconds: 0,
         isTerminal: true,
+        // The return URL belongs to the terminal payload too. The checkout
+        // page reads it from the *state* it was last given, and a terminal
+        // session is answered by this branch — so a session that ends without
+        // it loses the merchant's return address, and the customer is left
+        // staring at a success screen with no way back to the store. The
+        // field is already public in the non-terminal payload below, so
+        // including it here exposes nothing new.
+        returnUrl: session.returnUrl,
         branding
       });
       return;
@@ -1035,13 +1043,13 @@ export function registerCheckoutRoutes(server, ctx) {
       return;
     }
 
-    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
-      HttpServer.json(res, 400, { error: `Cannot switch payment method for terminal session in status '${session.status}'` });
+    if (session.status === PaymentStatus.PROCESSING) {
+      HttpServer.json(res, 400, { error: `Cannot switch payment method while payment is in PROCESSING status: Cannot switch payment method for session in status 'PROCESSING'` });
       return;
     }
 
-    if (session.status === PaymentStatus.PROCESSING) {
-      HttpServer.json(res, 400, { error: `Cannot switch payment method for session in status 'PROCESSING': Cannot switch payment method while payment is in PROCESSING status` });
+    if ([PaymentStatus.SUCCESS, PaymentStatus.FAILED, PaymentStatus.EXPIRED, PaymentStatus.CANCELLED].includes(session.status)) {
+      HttpServer.json(res, 400, { error: `Cannot switch payment method for session in status '${session.status}'` });
       return;
     }
 
@@ -1568,6 +1576,21 @@ export function registerCheckoutRoutes(server, ctx) {
 
     const sourceSession = (conflictingSessionId ? ctx.sessionRepo.findById(conflictingSessionId) : null) || targetSession;
     const customerId = body?.customerId || sourceSession?.customerId || targetSession.customerId || null;
+
+    // A settled order must not be restarted. The restarted session deliberately reuses the
+    // merchant's order reference, and the unique (merchant_id, order_id) index rejects a
+    // second row for an order that already succeeded — which surfaced as a 500. Refuse with a
+    // clear conflict instead of attempting the duplicate.
+    const paidSession = [sourceSession, targetSession].find(s => s && s.status === PaymentStatus.SUCCESS);
+    if (paidSession) {
+      HttpServer.json(res, 409, {
+        error: 'ORDER_ALREADY_PAID',
+        message: 'This order has already been paid and cannot be restarted.',
+        orderId: paidSession.orderId,
+        status: PaymentStatus.SUCCESS
+      });
+      return;
+    }
 
     // 1. Identify ALL sessions on old/other devices that must be cancelled
     const sessionsToTerminate = new Map();
