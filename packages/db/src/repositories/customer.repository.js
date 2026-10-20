@@ -278,7 +278,7 @@ export class CustomerRepository {
   banCustomer(id, reason = 'FRAUDULENT_PAYMENT_INJECTION', options = {}) {
     if (!id) return null;
     const releasedAccounts = [];
-    return this.db.transaction(() => {
+    const updatedCustomer = this.db.transaction(() => {
       const now = new Date().toISOString();
       const lastDevice = options.lastDevice || options.deviceInfo || null;
       this.db.execute(
@@ -307,14 +307,21 @@ export class CustomerRepository {
         }
       }
 
-      if (options.queueEngine && typeof options.queueEngine.promoteNext === 'function') {
-        for (const accountId of releasedAccounts) {
-          options.queueEngine.promoteNext(accountId);
-        }
-      }
-
       return this.findById(id);
     });
+
+    // Queue promotions should run after successful transaction commit and be wrapped safely
+    if (options.queueEngine && typeof options.queueEngine.promoteNext === 'function') {
+      for (const accountId of releasedAccounts) {
+        try {
+          options.queueEngine.promoteNext(accountId);
+        } catch {
+          // Safely avoid unhandled errors during queue promotion
+        }
+      }
+    }
+
+    return updatedCustomer;
   }
 
   /**
