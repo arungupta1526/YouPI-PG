@@ -95,7 +95,7 @@ describe('White-Label Branding & Visual Gateway Customizer Test Suite', () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': merchantId
+        'x-merchant-id': merchantId
       },
       body: JSON.stringify({
         orderId: 'ORD-WL-CHECK-99',

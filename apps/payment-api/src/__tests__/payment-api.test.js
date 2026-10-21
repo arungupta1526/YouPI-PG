@@ -346,10 +346,16 @@ describe('Payment API End-to-End HTTP Integration Tests', () => {
     });
     const paymentId = payRes.body.paymentId;
 
-    // 3. Bind customer to payment session
-    const bindRes = await request(`/api/v1/checkout/${paymentId}/bind-customer`, {
+    // 3. Bind customer to payment session (requires token)
+    const bindFail = await request(`/api/v1/checkout/${paymentId}/bind-customer`, {
       method: 'POST',
       body: { customerId }
+    });
+    assert.equal(bindFail.status, 401);
+
+    const bindRes = await request(`/api/v1/checkout/${paymentId}/bind-customer`, {
+      method: 'POST',
+      body: { customerId, token: regRes.body.token }
     });
     assert.equal(bindRes.status, 200);
     assert.equal(bindRes.body.success, true);
@@ -372,11 +378,21 @@ describe('Payment API End-to-End HTTP Integration Tests', () => {
     });
     assert.equal(ownerState.body.customer.phoneNumber, '9111222333');
 
-    // 5. Test action trigger hook
+    // 5. Test action trigger hook (requires token)
+    const hookFail = await request(`/api/v1/checkout/${paymentId}/trigger-hook`, {
+      method: 'POST',
+      body: {
+        action: 'CANCEL_CLICKED',
+        details: { reason: 'changed_mind' }
+      }
+    });
+    assert.equal(hookFail.status, 401);
+
     const hookRes = await request(`/api/v1/checkout/${paymentId}/trigger-hook`, {
       method: 'POST',
       body: {
         action: 'CANCEL_CLICKED',
+        token: regRes.body.token,
         details: { reason: 'changed_mind' }
       }
     });
@@ -426,7 +442,7 @@ describe('Payment API End-to-End HTTP Integration Tests', () => {
     // 4. User logs in and binds customer to payment session
     const bindRes = await request(`/api/v1/checkout/${paymentId}/bind-customer`, {
       method: 'POST',
-      body: { customerId }
+      body: { customerId, token: regRes.body.token }
     });
 
     assert.equal(bindRes.status, 200);
@@ -671,13 +687,15 @@ describe('Payment API End-to-End HTTP Integration Tests', () => {
       assert.equal(parsedBody.orderId, 'WEBHOOK-TEST-ORD-1');
       assert.equal(parsedBody.amount, '450.00');
 
-      // 10. Cryptographically verify signature using the custom secret
+      // 10. Cryptographically verify signature using the custom secret and timestamp
       const sig = receivedHeaders['x-gateway-signature'].replace('sha256=', '');
-      const validSig = verifyHmac(receivedPayload, customSecret, sig);
+      const ts = receivedHeaders['x-gateway-timestamp'];
+      assert.ok(ts);
+      const validSig = verifyHmac(`${ts}.${receivedPayload}`, customSecret, sig);
       assert.equal(validSig, true);
 
       // Verify wrong secret fails
-      const invalidSig = verifyHmac(receivedPayload, 'wrong_secret_123', sig);
+      const invalidSig = verifyHmac(`${ts}.${receivedPayload}`, 'wrong_secret_123', sig);
       assert.equal(invalidSig, false);
 
       // 11. Test non-destructive update: update only businessName and verify webhook config is preserved!

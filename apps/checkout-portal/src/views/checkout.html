@@ -324,11 +324,21 @@
         });
       } catch { }
 
-      fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/trigger-hook`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, details })
-      }).catch(() => { });
+      const token = (typeof activeToken !== 'undefined' ? activeToken : null) ||
+        (typeof getPreservedIdentity === 'function' ? getPreservedIdentity()?.token : null) ||
+        localStorage.getItem('ypg_customer_token');
+
+      if (token) {
+        fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/trigger-hook`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+            'x-customer-token': token
+          },
+          body: JSON.stringify({ action, details, token })
+        }).catch(() => { });
+      }
     }
 
     // --- SAVED / REMEMBERED CUSTOMER ACCOUNT (STRICT SINGLE USER) ---

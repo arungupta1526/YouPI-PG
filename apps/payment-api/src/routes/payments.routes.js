@@ -1,7 +1,8 @@
+import crypto from 'node:crypto';
 import { HttpServer } from '../server.js';
 import { toPaise, toRupeesString, resolveRuntimeUrls, PaymentStatus, safeEqual } from '@youpi/common';
 import { isTerminalStatus, toPublicOutcome } from '@youpi/core';
-import { isPaymentOwner } from '../auth-guard.js';
+import { isPaymentOwner, isAdminRequest } from '../auth-guard.js';
 
 /**
  * Registers merchant-facing payment routes.
@@ -46,11 +47,26 @@ export function registerPaymentRoutes(server, ctx) {
       return;
     }
 
-    if (req.headers['x-merchant-key']) {
-      if (!merchant.webhookSecret || !safeEqual(req.headers['x-merchant-key'].trim(), merchant.webhookSecret)) {
+    // Authenticate payment creation: requires a merchant API key (or admin token when not presenting a key)
+    const presentedKey = (req.headers['x-merchant-key'] || req.headers['x-api-key'] || '').trim();
+    const isAdmin = isAdminRequest(req);
+
+    if (presentedKey) {
+      let isKeyValid = false;
+      if (merchant.apiKeyHash) {
+        const hash = crypto.createHash('sha256').update(presentedKey).digest('hex');
+        isKeyValid = safeEqual(hash, merchant.apiKeyHash);
+      }
+      if (!isKeyValid && merchant.webhookSecret) {
+        isKeyValid = safeEqual(presentedKey, merchant.webhookSecret);
+      }
+      if (!isKeyValid) {
         HttpServer.json(res, 401, { error: 'Invalid merchant key', code: 'INVALID_MERCHANT_KEY' });
         return;
       }
+    } else if (!isAdmin) {
+      HttpServer.json(res, 401, { error: 'Merchant API key is required.', code: 'MISSING_MERCHANT_KEY' });
+      return;
     }
 
     if (!body.orderId || !body.amount) {
@@ -75,6 +91,17 @@ export function registerPaymentRoutes(server, ctx) {
     // Check idempotency & active session state
     const existing = ctx.sessionRepo.findByOrderId(merchant.id, body.orderId);
     if (existing) {
+      // Issue #63: Return 409 when an orderId is reused with a different amount or currency
+      const reqAmountPaise = toPaise(body.amount);
+      const reqCurrency = (body.currency || 'INR').toUpperCase();
+      if (existing.amountPaise !== reqAmountPaise || existing.currency !== reqCurrency) {
+        HttpServer.json(res, 409, {
+          error: 'Order ID already exists with a different amount or currency.',
+          code: 'ORDER_AMOUNT_MISMATCH'
+        });
+        return;
+      }
+
       // If SUCCESS: order is already paid, return existing completed session
       if (existing.status === PaymentStatus.SUCCESS) {
         HttpServer.json(res, 200, {

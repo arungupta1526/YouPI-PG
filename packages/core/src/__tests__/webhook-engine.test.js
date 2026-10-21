@@ -99,9 +99,11 @@ describe('Webhook Engine Integration Tests', () => {
     assert.equal(hook.body.amount, '200.00');
     assert.equal(hook.body.amountPaise, 20000);
 
-    // Cryptographically verify signature using merchant webhookSecret
+    // Cryptographically verify signature using merchant webhookSecret and timestamp
     const rawSig = hook.headers['x-gateway-signature'].replace('sha256=', '');
-    const isValid = verifyHmac(JSON.stringify(hook.body), merchant.webhookSecret, rawSig);
+    const ts = hook.headers['x-gateway-timestamp'];
+    assert.ok(ts, 'missing x-gateway-timestamp header');
+    const isValid = verifyHmac(`${ts}.${JSON.stringify(hook.body)}`, merchant.webhookSecret, rawSig);
     assert.equal(isValid, true);
     assert.ok('utr' in hook.body);
 
@@ -151,9 +153,11 @@ describe('Webhook Engine Integration Tests', () => {
     assert.ok(hook, 'webhook not received');
     assert.equal(hook.body.utr, '412345678901');
 
-    // The signature must still cover the body that now includes the UTR.
+    // The signature must cover ${timestamp}.${body} including the UTR.
     const rawSig = hook.headers['x-gateway-signature'].replace('sha256=', '');
-    assert.equal(verifyHmac(JSON.stringify(hook.body), merchant.webhookSecret, rawSig), true);
+    const ts = hook.headers['x-gateway-timestamp'];
+    assert.ok(ts);
+    assert.equal(verifyHmac(`${ts}.${JSON.stringify(hook.body)}`, merchant.webhookSecret, rawSig), true);
 
     // The documented webhook contract must expose every field.
     for (const field of ['event', 'paymentId', 'orderId', 'amount', 'amountPaise', 'currency', 'method', 'utr', 'completedAt', 'metadata']) {
@@ -208,7 +212,9 @@ describe('Webhook Engine Integration Tests', () => {
     const retried = receivedWebhooks.filter(h => h.body && h.body.orderId === 'HOOK-ORD-FAIL').pop();
     assert.ok(retried, 'retried webhook not received');
     const retrySig = retried.headers['x-gateway-signature'].replace('sha256=', '');
-    assert.equal(verifyHmac(JSON.stringify(retried.body), merchant.webhookSecret, retrySig), true);
+    const retryTs = retried.headers['x-gateway-timestamp'];
+    assert.ok(retryTs);
+    assert.equal(verifyHmac(`${retryTs}.${JSON.stringify(retried.body)}`, merchant.webhookSecret, retrySig), true);
   });
 
   test('persists delivery failure record when merchant webhookSecret is missing', async () => {

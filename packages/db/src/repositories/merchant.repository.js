@@ -51,9 +51,14 @@ export class MerchantRepository {
       : (data.branding || '{"primaryColor":"#2563eb","appName":"YOUPI PG","logoUrl":null}');
     const now = new Date().toISOString();
 
+    const apiKey = data.apiKey || data.api_key;
+    const apiKeyHash = apiKey
+      ? crypto.createHash('sha256').update(String(apiKey).trim()).digest('hex')
+      : (data.apiKeyHash || null);
+
     const sql = `
-      INSERT INTO merchants (id, business_name, slug, contact_email, contact_phone, webhook_url, webhook_secret, branding, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO merchants (id, business_name, slug, contact_email, contact_phone, webhook_url, webhook_secret, api_key_hash, branding, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     this.db.execute(sql, [
@@ -65,6 +70,7 @@ export class MerchantRepository {
       data.webhookUrl || null,
       // Webhook HMAC key must be recoverable at signing time, so it is encrypted at rest.
       encryptAtRest(data.webhookSecret || crypto.randomBytes(32).toString('hex')),
+      apiKeyHash,
       branding,
       now,
       now
@@ -75,6 +81,14 @@ export class MerchantRepository {
 
   findById(id) {
     const row = this.db.queryOne('SELECT * FROM merchants WHERE id = ?', [id]);
+    if (!row) return null;
+    return this.mapRow(row);
+  }
+
+  findByApiKey(apiKey) {
+    if (!apiKey || typeof apiKey !== 'string') return null;
+    const hash = crypto.createHash('sha256').update(apiKey.trim()).digest('hex');
+    const row = this.db.queryOne('SELECT * FROM merchants WHERE api_key_hash = ?', [hash]);
     if (!row) return null;
     return this.mapRow(row);
   }
@@ -124,6 +138,13 @@ export class MerchantRepository {
       fields.push('webhook_secret = ?');
       params.push(encryptAtRest(updates.webhookSecret));
     }
+    if (updates.apiKey !== undefined) {
+      fields.push('api_key_hash = ?');
+      params.push(updates.apiKey ? crypto.createHash('sha256').update(String(updates.apiKey).trim()).digest('hex') : null);
+    } else if (updates.apiKeyHash !== undefined) {
+      fields.push('api_key_hash = ?');
+      params.push(updates.apiKeyHash);
+    }
     if (updates.branding !== undefined) {
       fields.push('branding = ?');
       params.push(typeof updates.branding === 'object' ? serializeBranding(updates.branding) : updates.branding);
@@ -150,6 +171,7 @@ export class MerchantRepository {
       webhookUrl: row.webhook_url,
       // Plaintext rows written before encryption existed decrypt to themselves.
       webhookSecret: decryptAtRest(row.webhook_secret),
+      apiKeyHash: row.api_key_hash || null,
       branding: deserializeBranding(row.branding),
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at)

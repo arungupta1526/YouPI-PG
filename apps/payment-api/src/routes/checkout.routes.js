@@ -662,31 +662,52 @@ export function registerCheckoutRoutes(server, ctx) {
   // POST /api/v1/checkout/:id/bind-customer
   server.post('/api/v1/checkout/:id/bind-customer', async (req, res, params) => {
     const body = await HttpServer.parseBody(req);
-    const token = body.token || body.sessionToken || ((req.headers['authorization'] || '').startsWith('Bearer ') ? req.headers['authorization'].slice(7).trim() : null);
-    const { customerId } = body;
-
-    let customer = null;
-    if (token && ctx.customerSessionRepo) {
-      const authContext = ctx.customerSessionRepo.findByToken(token);
-      if (!authContext) {
-        HttpServer.json(res, 401, { error: 'Invalid or expired customer session token.' });
-        return;
-      }
-      customer = authContext.customer;
-    } else if (customerId && ctx.customerRepo) {
-      customer = ctx.customerRepo.findById(customerId);
-    }
-
-    if (!customer) {
-      HttpServer.json(res, 400, { error: 'A valid customer session token or customerId is required.' });
-      return;
-    }
+    const token = body.token || body.sessionToken || ((req.headers['authorization'] || '').startsWith('Bearer ') ? req.headers['authorization'].slice(7).trim() : null) || req.headers['x-customer-token'];
 
     const session = ctx.sessionRepo.findById(params.id);
     if (!session) {
       HttpServer.json(res, 404, { error: `Payment session not found: ${params.id}` });
       return;
     }
+
+    const { customerId } = body;
+
+    // INVARIANT: Payment session identity is IMMUTABLE once bound!
+    // Cannot mutate or hijack an active session to another customer identity.
+    if (session.customerId) {
+      if (customerId && customerId !== session.customerId) {
+        HttpServer.json(res, 409, {
+          error: 'Payment session is already bound to another customer identity and cannot be mutated or reassigned.'
+        });
+        return;
+      }
+      if (token && ctx.customerSessionRepo) {
+        const auth = ctx.customerSessionRepo.findByToken(token);
+        if (auth?.customer?.id && auth.customer.id !== session.customerId) {
+          HttpServer.json(res, 409, {
+            error: 'Payment session is already bound to another customer identity and cannot be mutated or reassigned.'
+          });
+          return;
+        }
+      }
+    }
+
+    if (!token) {
+      HttpServer.json(res, 401, { error: 'Customer session token is required to bind customer.', code: 'CUSTOMER_SESSION_REQUIRED' });
+      return;
+    }
+
+    if (!ctx.customerSessionRepo) {
+      HttpServer.json(res, 500, { error: 'Customer session repository unavailable.' });
+      return;
+    }
+
+    const authContext = ctx.customerSessionRepo.findByToken(token);
+    if (!authContext || !authContext.customer) {
+      HttpServer.json(res, 401, { error: 'Invalid or expired customer session token.' });
+      return;
+    }
+    const customer = authContext.customer;
 
     // Device-level session binding validation
     const deviceAccess = checkSessionDeviceAccess(session, req, body, ctx);
@@ -696,15 +717,6 @@ export function registerCheckoutRoutes(server, ctx) {
     }
     if (deviceAccess.boundDeviceId && ctx.deviceRepo) {
       try { ctx.deviceRepo.associateCustomer(deviceAccess.boundDeviceId, customer.id); } catch {}
-    }
-
-    // INVARIANT: Payment session identity is IMMUTABLE once bound!
-    // Cannot mutate or hijack an active session to another customer identity.
-    if (session.customerId && session.customerId !== customer.id) {
-      HttpServer.json(res, 409, {
-        error: 'Payment session is already bound to another customer identity and cannot be mutated or reassigned.'
-      });
-      return;
     }
 
     // Check for active customer session conflict
@@ -1462,6 +1474,21 @@ export function registerCheckoutRoutes(server, ctx) {
   // POST /api/v1/checkout/:id/trigger-hook (Merchant Action & Telemetry Trigger)
   server.post('/api/v1/checkout/:id/trigger-hook', async (req, res, params) => {
     const body = await HttpServer.parseBody(req);
+    const token = body.token || body.sessionToken || ((req.headers['authorization'] || '').startsWith('Bearer ') ? req.headers['authorization'].slice(7).trim() : null) || req.headers['x-customer-token'];
+
+    if (!token) {
+      HttpServer.json(res, 401, { error: 'Customer session token is required to trigger hook.', code: 'CUSTOMER_SESSION_REQUIRED' });
+      return;
+    }
+
+    if (ctx.customerSessionRepo) {
+      const authContext = ctx.customerSessionRepo.findByToken(token);
+      if (!authContext || !authContext.customer) {
+        HttpServer.json(res, 401, { error: 'Invalid or expired customer session token.' });
+        return;
+      }
+    }
+
     const { action, details } = body;
 
     const session = ctx.sessionRepo.findById(params.id);

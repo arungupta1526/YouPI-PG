@@ -36,10 +36,11 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
 
   /** Headers the real gateway always sends with every signed delivery. */
   function gatewayHeaders(payloadString, overrides = {}) {
+    const timestamp = Date.now().toString();
     return {
-      'X-Gateway-Signature': `sha256=${generateHmac(payloadString, storeSecret)}`,
+      'X-Gateway-Signature': `sha256=${generateHmac(`${timestamp}.${payloadString}`, storeSecret)}`,
       'X-Gateway-Delivery-Id': crypto.randomUUID(),
-      'X-Gateway-Timestamp': Date.now().toString(),
+      'X-Gateway-Timestamp': timestamp,
       ...overrides
     };
   }
@@ -115,6 +116,14 @@ describe('Coin Top-Up Wallet Demo Store Integration Tests', () => {
 
   test('POST /api/webhook processes signed SUCCESS event and credits wallet coins', async () => {
     const initialCoins = storeInstance.server.walletCoins;
+    storeInstance.server.orders.set('COIN-ORD-555', {
+      orderId: 'COIN-ORD-555',
+      paymentId: 'pay_coin_test_123',
+      amountPaise: 44900,
+      coins: 550,
+      packName: 'Gamer Pack',
+      createdAt: Date.now()
+    });
 
     const payloadObj = {
       event: 'SUCCESS',

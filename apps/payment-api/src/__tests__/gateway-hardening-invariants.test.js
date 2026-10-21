@@ -12,6 +12,7 @@ import { PaymentStatus, PaymentMethod } from '@youpi/common';
 import { authHeadersFor } from '../../../../scripts/test-support.js';
 import { WebhookEngine } from '@youpi/core';
 import { PaymentSessionRepository, CustomerRepository, MerchantRepository } from '@youpi/db';
+import { YoupiPaymentClient } from '@youpi/merchant-sdk';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -524,8 +525,7 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
     // Verify HMAC signature
     const sig = receivedHook.headers['x-gateway-signature'].replace('sha256=', '');
     const ts = receivedHook.headers['x-gateway-timestamp'];
-    assert.ok(ts);
-    const expectedHmac = crypto.createHmac('sha256', secret).update(JSON.stringify(receivedHook.body)).digest('hex');
+    const expectedHmac = crypto.createHmac('sha256', secret).update(`${ts}.${JSON.stringify(receivedHook.body)}`).digest('hex');
     assert.equal(sig, expectedHmac);
   });
 
@@ -622,6 +622,213 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
     assert.equal(authRes.status, 200);
     assert.equal(authRes.body.customer.name, 'Vikram Malhotra');
     assert.equal(authRes.body.customer.email, 'vikram.malhotra@testmail.com');
+  });
+
+  test('Issue #63: POST /api/v1/payments requires valid merchant key and rejects without credentials', async () => {
+    const url = new URL('/api/v1/payments', baseUrl);
+
+    // Call without any auth headers or merchant key
+    const unauthRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({
+        amount: '100.00',
+        orderId: `UNAUTH-${Date.now()}`
+      }));
+      req.end();
+    });
+
+    assert.equal(unauthRes.status, 401);
+    assert.equal(unauthRes.body.code, 'MISSING_MERCHANT_KEY');
+
+    // Call with invalid X-Merchant-Key
+    const invalidKeyRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Merchant-Key': 'invalid_secret_key'
+        }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({
+        amount: '100.00',
+        orderId: `INVALID-KEY-${Date.now()}`
+      }));
+      req.end();
+    });
+
+    assert.equal(invalidKeyRes.status, 401);
+    assert.equal(invalidKeyRes.body.error, 'Invalid merchant key');
+
+    // Call with valid X-Merchant-Key
+    const merchant = new MerchantRepository(testDb).findById('00000000-0000-0000-0000-000000000001');
+    const validKeyRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Merchant-Key': merchant.webhookSecret
+        }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({
+        amount: '100.00',
+        orderId: `VALID-KEY-${Date.now()}`
+      }));
+      req.end();
+    });
+
+    assert.equal(validKeyRes.status, 201);
+    assert.ok(validKeyRes.body.paymentId);
+  });
+
+  test('Issue #63: POST /api/v1/payments returns 409 ORDER_AMOUNT_MISMATCH on orderId reuse with different amount', async () => {
+    const merchant = new MerchantRepository(testDb).findById('00000000-0000-0000-0000-000000000001');
+    const orderId = `ORDER-REUSE-${Date.now()}`;
+    const url = new URL('/api/v1/payments', baseUrl);
+
+    // Initial creation: 250.00
+    const createRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Merchant-Key': merchant.webhookSecret
+        }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({
+        amount: '250.00',
+        orderId,
+        currency: 'INR'
+      }));
+      req.end();
+    });
+    assert.equal(createRes.status, 250 ? 201 : 201);
+
+    // Reuse orderId with different amount: 500.00 -> must return 409
+    const mismatchRes = await new Promise((resolve, reject) => {
+      const req = http.request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Merchant-Key': merchant.webhookSecret
+        }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({
+        amount: '500.00',
+        orderId,
+        currency: 'INR'
+      }));
+      req.end();
+    });
+
+    assert.equal(mismatchRes.status, 409);
+    assert.equal(mismatchRes.body.code, 'ORDER_AMOUNT_MISMATCH');
+  });
+
+  test('Issue #63: Customer binding and trigger-hook require active customer session token', async () => {
+    const sessionRepo = apiInstance.app.context.sessionRepo;
+    const session = sessionRepo.create({
+      merchantId: '00000000-0000-0000-0000-000000000001',
+      orderId: `UNBOUND-${Date.now()}`,
+      amountPaise: 10000n
+    });
+
+    // Unauthenticated bind-customer
+    const bindUrl = new URL(`/api/v1/checkout/${session.id}/bind-customer`, baseUrl);
+    const bindRes = await new Promise((resolve, reject) => {
+      const req = http.request(bindUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({ customerId: 'attacker-chosen-customer-id' }));
+      req.end();
+    });
+
+    assert.equal(bindRes.status, 401);
+    assert.equal(bindRes.body.code, 'CUSTOMER_SESSION_REQUIRED');
+
+    // Unauthenticated trigger-hook
+    const hookUrl = new URL(`/api/v1/checkout/${session.id}/trigger-hook`, baseUrl);
+    const hookRes = await new Promise((resolve, reject) => {
+      const req = http.request(hookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      }, res => {
+        let data = '';
+        res.on('data', c => { data += c; });
+        res.on('end', () => resolve({ status: res.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.write(JSON.stringify({ action: 'CANCEL', details: {} }));
+      req.end();
+    });
+
+    assert.equal(hookRes.status, 401);
+    assert.equal(hookRes.body.code, 'CUSTOMER_SESSION_REQUIRED');
+  });
+
+  test('Issue #63: YoupiPaymentClient webhook verification signs timestamp.body and rejects stale replays', () => {
+    const client = new YoupiPaymentClient({
+      merchantKey: 'test_sec_abc123'
+    });
+
+    const payload = JSON.stringify({
+      event: 'SUCCESS',
+      orderId: 'ORDER-1001',
+      amount: '499.00',
+      utr: '123456789012'
+    });
+
+    const nowSec = Math.floor(Date.now() / 1000);
+    const validSignature = crypto.createHmac('sha256', 'test_sec_abc123')
+      .update(`${nowSec}.${payload}`)
+      .digest('hex');
+
+    // Fresh valid webhook verification
+    const verified = client.verifyWebhook(payload, `sha256=${validSignature}`, null, String(nowSec));
+    assert.equal(verified.orderId, 'ORDER-1001');
+
+    // Stale timestamp (600 seconds old, exceeding 300s window)
+    const staleSec = nowSec - 600;
+    const staleSignature = crypto.createHmac('sha256', 'test_sec_abc123')
+      .update(`${staleSec}.${payload}`)
+      .digest('hex');
+
+    assert.throws(() => {
+      client.verifyWebhook(payload, `sha256=${staleSignature}`, null, String(staleSec));
+    }, /timestamp drift exceeded validity window/);
   });
 });
 

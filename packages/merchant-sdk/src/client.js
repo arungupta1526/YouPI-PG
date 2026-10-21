@@ -11,7 +11,8 @@ export class YoupiPaymentClient {
   constructor(options = {}) {
     this.apiUrl = (options.apiUrl || process.env.BASE_PAYMENT_API_URL || 'http://localhost:6100').replace(/\/+$/, '');
     this.merchantId = options.merchantId || null;
-    this.webhookSecret = options.webhookSecret || null;
+    this.apiKey = options.apiKey || options.merchantKey || null;
+    this.webhookSecret = options.webhookSecret || this.apiKey || null;
   }
 
   /**
@@ -43,6 +44,10 @@ export class YoupiPaymentClient {
 
     if (this.merchantId) {
       headers['X-Merchant-Id'] = this.merchantId;
+    }
+    const merchantKey = this.apiKey || this.webhookSecret;
+    if (merchantKey) {
+      headers['X-Merchant-Key'] = merchantKey;
     }
     if (params.idempotencyKey) {
       headers['Idempotency-Key'] = params.idempotencyKey;
@@ -93,11 +98,12 @@ export class YoupiPaymentClient {
   async getPayment(paymentId) {
     const url = `${this.apiUrl}/api/v1/payments/${paymentId}`;
     const headers = {};
-    // Present the merchant secret so the gateway returns the merchant-private fields
+    // Present the merchant key or secret so the gateway returns the merchant-private fields
     // (metadata, verification internals, returnUrl). Without it the caller gets the
     // redacted public view, which is all an unauthenticated holder of a payment id sees.
-    if (this.webhookSecret) {
-      headers['X-Merchant-Key'] = this.webhookSecret;
+    const merchantKey = this.apiKey || this.webhookSecret;
+    if (merchantKey) {
+      headers['X-Merchant-Key'] = merchantKey;
     }
 
     const res = await fetch(url, { headers });
@@ -115,9 +121,11 @@ export class YoupiPaymentClient {
    * @param {string} rawPayloadString Raw request body text (unparsed)
    * @param {string} signatureHeader Value of 'X-Gateway-Signature' header (e.g. 'sha256=...')
    * @param {string} [customSecret] Optional override secret
+   * @param {string} [timestampHeader] Value of 'X-Gateway-Timestamp' header
+   * @param {{ toleranceSeconds?: number }} [options] Verification options
    * @returns {any} Validated parsed webhook event payload
    */
-  verifyWebhook(rawPayloadString, signatureHeader, customSecret = null) {
+  verifyWebhook(rawPayloadString, signatureHeader, customSecret = null, timestampHeader = null, options = {}) {
     const secret = customSecret || this.webhookSecret;
     if (!secret) {
       throw new Error('Webhook verification failed: webhookSecret is not configured.');
@@ -128,10 +136,26 @@ export class YoupiPaymentClient {
     }
 
     const actualSignature = signatureHeader.replace('sha256=', '');
-    const isValid = verifyHmac(rawPayloadString, secret, actualSignature);
 
-    if (!isValid) {
-      throw new Error('Webhook verification failed: signature mismatch.');
+    if (timestampHeader) {
+      let ts = Number(timestampHeader);
+      if (!isNaN(ts) && ts < 1e11) {
+        ts = ts * 1000;
+      }
+      const now = Date.now();
+      const tolerance = (options.toleranceSeconds || 300) * 1000;
+      if (isNaN(ts) || Math.abs(now - ts) > tolerance) {
+        throw new Error('Webhook verification failed: timestamp drift exceeded validity window.');
+      }
+      const isValid = verifyHmac(`${timestampHeader}.${rawPayloadString}`, secret, actualSignature);
+      if (!isValid) {
+        throw new Error('Webhook verification failed: signature mismatch.');
+      }
+    } else {
+      const isValid = verifyHmac(rawPayloadString, secret, actualSignature);
+      if (!isValid) {
+        throw new Error('Webhook verification failed: signature mismatch.');
+      }
     }
 
     return JSON.parse(rawPayloadString);

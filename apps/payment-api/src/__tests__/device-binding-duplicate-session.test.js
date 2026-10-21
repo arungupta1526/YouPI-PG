@@ -12,6 +12,7 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
   let merchantRepo;
   let sessionRepo;
   let customerRepo;
+  let customerSessionRepo;
   const merchantId = '00000000-0000-0000-0000-000000000001';
   const receivingAccountId = '00000000-0000-0000-0000-000000000002';
 
@@ -22,6 +23,7 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
     customerRepo = new CustomerRepository(testDb);
 
     apiInstance = await startPaymentApi(6201, testDb);
+    customerSessionRepo = apiInstance.app.context.customerSessionRepo;
     baseUrl = `http://localhost:${apiInstance.port}`;
   });
 
@@ -244,6 +246,7 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
       email: 'concurrent@example.com',
       mobileNumber: '+919999888877'
     });
+    const custSession = customerSessionRepo.create({ customerId: cust.id });
 
     // Create session 1
     const s1Res = await request('/api/v1/payments', {
@@ -261,7 +264,7 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
     // Bind customer to session 1
     const bind1Res = await request(`/api/v1/checkout/${s1Id}/bind-customer`, {
       method: 'POST',
-      body: { customerId: cust.id }
+      body: { customerId: cust.id, token: custSession.token }
     });
 
     // Create session 2 for same customer
@@ -280,7 +283,7 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
     // Bind customer to session 2 -> conflict detected!
     const bind2Res = await request(`/api/v1/checkout/${s2Id}/bind-customer`, {
       method: 'POST',
-      body: { customerId: cust.id }
+      body: { customerId: cust.id, token: custSession.token }
     });
 
     assert.equal(bind2Res.body.hasActiveSessionConflict, true);
@@ -333,10 +336,11 @@ describe('YOUPI PG: Device Binding & Duplicate Session Detection', () => {
     assert.ok(sessionAId);
 
     // Bind Session A to Laptop device
+    const custP64Session = customerSessionRepo.create({ customerId: custP64.id });
     const bindResA = await request(`/api/v1/checkout/${sessionAId}/bind-customer`, {
       method: 'POST',
       headers: { 'x-device-id': devLaptopId },
-      body: { customerId: custP64.id }
+      body: { customerId: custP64.id, token: custP64Session.token }
     });
     assert.equal(bindResA.status, 200);
 
