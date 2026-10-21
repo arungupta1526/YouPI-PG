@@ -1,13 +1,14 @@
 import { HttpServer } from '../server.js';
 import { toRupeesString, buildUpiUri, PaymentStatus, PaymentMethod, UPI_PROVIDERS, isInternalServiceRequest, isValidTransition } from '@youpi/common';
 import { validateSessionDeviceAccess } from '@youpi/core';
-import { isPaymentOwner } from '../auth-guard.js';
+import { isPaymentOwner, isAdminRequest } from '../auth-guard.js';
 
 /**
  * Validates device access to an active payment session.
  * Enforces:
  * 1. If session has no device binding yet, binds to requesting device if provided.
  * 2. If session is bound to Device A, Device B receives DUPLICATE_SESSION_DETECTED (HTTP 409).
+ * 3. If session is bound to Device A, requests omitting a device identifier FAIL CLOSED (HTTP 401 DEVICE_ID_REQUIRED - Issue #69).
  */
 function checkSessionDeviceAccess(session, req, body = null, ctx = null) {
   // If session is already in a terminal state, allow access so terminal status can be rendered
@@ -15,9 +16,8 @@ function checkSessionDeviceAccess(session, req, body = null, ctx = null) {
     return { allowed: true, boundDeviceId: session.deviceId, isTerminal: true };
   }
 
-  // Only a co-located service holding the shared internal token may bypass device blocking.
-  // The `X-Internal-Render` flag on its own is attacker-controlled and proves nothing.
-  if (isInternalServiceRequest(req)) {
+  // Co-located internal services holding the internal token, admin requests, or owning merchants may bypass device blocking.
+  if (isInternalServiceRequest(req) || isAdminRequest(req) || (ctx && isPaymentOwner(req, session, ctx))) {
     return { allowed: true, boundDeviceId: session.deviceId };
   }
 
@@ -56,15 +56,29 @@ function checkSessionDeviceAccess(session, req, body = null, ctx = null) {
   }
 
   // If session HAS a bound device:
-  // Allow if requesting device matches bound device OR if requesting device is omitted on same session
-  if (!requestingDeviceId || requestingDeviceId === session.deviceId) {
-    if (requestingDeviceId && ctx?.deviceRepo) {
+  // Must provide a matching device identifier. Omitting the identifier must FAIL CLOSED (Issue #69).
+  if (!requestingDeviceId) {
+    return {
+      allowed: false,
+      statusCode: 401,
+      body: {
+        error: 'DEVICE_ID_REQUIRED',
+        session_id: session.id,
+        action: 'REGISTER_DEVICE',
+        message: 'A device identifier is required to access or modify this payment session.',
+        boundDeviceId: session.deviceId
+      }
+    };
+  }
+
+  if (requestingDeviceId === session.deviceId) {
+    if (ctx?.deviceRepo) {
       ctx.deviceRepo.touch(requestingDeviceId);
     }
     return { allowed: true, boundDeviceId: session.deviceId };
   }
 
-  // Device mismatch: only reject if an explicitly DIFFERENT device ID was provided!
+  // Device mismatch:
   return {
     allowed: false,
     statusCode: 409,

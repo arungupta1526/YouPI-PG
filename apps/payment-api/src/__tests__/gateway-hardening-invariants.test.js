@@ -830,5 +830,124 @@ describe('Gateway Hardening & Invariant Protection Test Suite (#23, #25, #26, #2
       client.verifyWebhook(payload, `sha256=${staleSignature}`, null, String(staleSec));
     }, /timestamp drift exceeded validity window/);
   });
+
+  test('Issue #69: autoActivate flag is rejected with 403 AUTOACTIVATE_FORBIDDEN in non-test mode without admin token', async () => {
+    const merchant = new MerchantRepository(testDb).findById('00000000-0000-0000-0000-000000000001');
+    const prevEnv = process.env.NODE_ENV;
+    const prevAllow = process.env.ALLOW_TEST_AUTOACTIVATE;
+    try {
+      process.env.NODE_ENV = 'production';
+      delete process.env.ALLOW_TEST_AUTOACTIVATE;
+
+      const url = new URL('/api/v1/payments', baseUrl);
+      const res = await new Promise((resolve, reject) => {
+        const req = http.request(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Merchant-Key': merchant.webhookSecret
+          }
+        }, r => {
+          let data = '';
+          r.on('data', c => { data += c; });
+          r.on('end', () => resolve({ status: r.statusCode, body: JSON.parse(data) }));
+        });
+        req.on('error', reject);
+        req.write(JSON.stringify({
+          orderId: `PROD-AUTOACTIVATE-${Date.now()}`,
+          amount: '500.00',
+          autoActivate: true
+        }));
+        req.end();
+      });
+
+      assert.equal(res.status, 403);
+      assert.equal(res.body.code, 'AUTOACTIVATE_FORBIDDEN');
+    } finally {
+      process.env.NODE_ENV = prevEnv;
+      if (prevAllow !== undefined) process.env.ALLOW_TEST_AUTOACTIVATE = prevAllow;
+    }
+  });
+
+  test('Issue #69: Device-bound checkout sessions fail closed with 401 DEVICE_ID_REQUIRED when device identifier is omitted on state-changing endpoints', async () => {
+    const sessionRepo = apiInstance.app.context.sessionRepo;
+    const deviceRepo = apiInstance.app.context.deviceRepo;
+    const boundDevId = 'dev_bound_alpha_01';
+    if (deviceRepo) {
+      try {
+        deviceRepo.create({
+          id: boundDevId,
+          publicKey: 'mock_pk_alpha_01',
+          fingerprintHash: 'mock_fp_alpha_01'
+        });
+      } catch {}
+    }
+
+    const session = sessionRepo.create({
+      merchantId: '00000000-0000-0000-0000-000000000001',
+      orderId: `DEVICE-FAIL-CLOSED-${Date.now()}`,
+      amountPaise: 50000n,
+      status: PaymentStatus.ACTIVE,
+      deviceId: boundDevId
+    });
+
+    // 1. Calling /cancel without device ID fails closed (401 DEVICE_ID_REQUIRED)
+    const cancelNoDevUrl = new URL(`/api/v1/checkout/${session.id}/cancel`, baseUrl);
+    const cancelRes = await new Promise((resolve, reject) => {
+      const req = http.request(cancelNoDevUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      }, r => {
+        let data = '';
+        r.on('data', c => { data += c; });
+        r.on('end', () => resolve({ status: r.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.end();
+    });
+
+    assert.equal(cancelRes.status, 401);
+    assert.equal(cancelRes.body.error, 'DEVICE_ID_REQUIRED');
+
+    // 2. Calling /cancel with mismatched device ID is rejected (409 DUPLICATE_SESSION_DETECTED)
+    const cancelWrongDevRes = await new Promise((resolve, reject) => {
+      const req = http.request(cancelNoDevUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Device-Id': 'dev_attacker_different'
+        }
+      }, r => {
+        let data = '';
+        r.on('data', c => { data += c; });
+        r.on('end', () => resolve({ status: r.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.end();
+    });
+
+    assert.equal(cancelWrongDevRes.status, 409);
+    assert.equal(cancelWrongDevRes.body.error, 'DUPLICATE_SESSION_DETECTED');
+
+    // 3. Calling /cancel with matching bound device ID succeeds (200 OK)
+    const cancelValidDevRes = await new Promise((resolve, reject) => {
+      const req = http.request(cancelNoDevUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Device-Id': boundDevId
+        }
+      }, r => {
+        let data = '';
+        r.on('data', c => { data += c; });
+        r.on('end', () => resolve({ status: r.statusCode, body: JSON.parse(data) }));
+      });
+      req.on('error', reject);
+      req.end();
+    });
+
+    assert.equal(cancelValidDevRes.status, 200);
+    assert.equal(cancelValidDevRes.body.status, PaymentStatus.CANCELLED);
+  });
 });
 

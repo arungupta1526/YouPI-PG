@@ -1200,7 +1200,7 @@
             }, () => {
               const el = document.getElementById('codTimerText');
               if (el) el.textContent = 'Expired';
-              fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST' }).catch(() => { });
+              fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST', headers: getApiHeaders() }).catch(() => { });
               loadState();
             });
           } else if (method === 'UPI') {
@@ -1212,7 +1212,7 @@
               }, () => {
                 const el = document.getElementById('activeTimerText');
                 if (el) el.textContent = 'Expired';
-                fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST' }).catch(() => { });
+                fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST', headers: getApiHeaders() }).catch(() => { });
                 loadState();
               });
             } else if (resData.status === 'QUEUED') {
@@ -2088,7 +2088,7 @@
           }, () => {
             const el = document.getElementById('codTimerText');
             if (el) el.textContent = 'Expired';
-            fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST' }).catch(() => { });
+            fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST', headers: getApiHeaders() }).catch(() => { });
             loadState();
           }, data.expiresAt);
         } else if (currentSelectedMethod === 'CASH_COUNTER') {
@@ -2139,7 +2139,7 @@
             if (tText) tText.textContent = 'Expired';
             if (btnContinue) btnContinue.style.display = 'none';
             closeProcessingModal();
-            fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST' }).catch(() => { });
+            fetch(`${API_BASE}/api/v1/checkout/${PAYMENT_ID}/expire`, { method: 'POST', headers: getApiHeaders() }).catch(() => { });
             loadState();
           }, targetExpiry);
         }

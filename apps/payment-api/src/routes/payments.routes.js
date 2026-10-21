@@ -250,8 +250,19 @@ export function registerPaymentRoutes(server, ctx) {
     // Customer sign in or sign up in the checkout portal is mandatory before slot activation or timer start.
     // Digital UPI payments MUST ALWAYS start in status INITIATED without acquiring a concurrency slot or timer.
     // Only physical counter payments (CASH_COUNTER, CARD_COUNTER) start as ACTIVE (they do not use UPI slots).
-    // The only exception for UPI auto-activation is explicit developer test suite flag: body.autoActivate === true.
-    const isExplicitTestAutoActivate = body.autoActivate === true || body.autoActivate === 'true';
+    // UPI auto-activation is strictly restricted to test environments (NODE_ENV === 'test' or ALLOW_TEST_AUTOACTIVATE === 'true') or admin callers (Issue #69).
+    const requestedAutoActivate = body.autoActivate === true || body.autoActivate === 'true';
+    const isTestOrAdmin = (process.env.NODE_ENV === 'test' || process.env.ALLOW_TEST_AUTOACTIVATE === 'true' || isAdmin);
+
+    if (requestedAutoActivate && !isTestOrAdmin) {
+      HttpServer.json(res, 403, {
+        error: 'autoActivate is restricted to authorized test environments or administrator requests.',
+        code: 'AUTOACTIVATE_FORBIDDEN'
+      });
+      return;
+    }
+
+    const isExplicitTestAutoActivate = isTestOrAdmin && requestedAutoActivate;
     const shouldActivateNow = isCounterPayment || isExplicitTestAutoActivate;
     const initialStatus = isCounterPayment ? PaymentStatus.ACTIVE : PaymentStatus.INITIATED;
 
