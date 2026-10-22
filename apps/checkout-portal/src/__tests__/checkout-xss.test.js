@@ -311,10 +311,9 @@ describe('Checkout Portal XSS / Redirect Hardening', () => {
   });
 
   describe('merchant-admin escaping helpers', () => {
-    const view = fs.readFileSync(
-      path.join(__dirname, '../../../merchant-admin/src/views/admin.html'),
-      'utf8'
-    );
+    const adminHtmlPath = path.join(__dirname, '../../../merchant-admin/src/views/admin.html');
+    const adminJsPath = path.join(__dirname, '../../../merchant-admin/public/js/admin.js');
+    const view = (fs.existsSync(adminJsPath) ? fs.readFileSync(adminJsPath, 'utf8') : '') + '\n' + fs.readFileSync(adminHtmlPath, 'utf8');
 
     // Evaluate the real helper implementations lifted out of admin.html.
     const helpers = new Function(`

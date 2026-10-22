@@ -22,6 +22,9 @@
     "test:acceptance": "node --test scripts/production-infrastructure.test.js",
     "build:android:apk": "node scripts/build-android-apk.js",
     "sync:android-allowlist": "node scripts/sync-android-allowlist.js",
+    "build:admin:jsx": "node apps/merchant-admin/scripts/build-jsx.js",
+    "build:admin:css": "./node_modules/.bin/tailwindcss -c ./apps/merchant-admin/tailwind.config.js -i ./apps/merchant-admin/src/styles/input.css -o ./apps/merchant-admin/public/css/admin.css --minify",
+    "build:admin": "npm run build:admin:jsx && npm run build:admin:css",
     "typecheck": "tsc -b --noEmit"
   },
   "devDependencies": {
@@ -30,6 +33,9 @@
   },
   "engines": {
     "node": ">=24.0.0"
+  },
+  "overrides": {
+    "braces": "^3.0.3"
   },
   "author": "Antigravity Systems",
   "license": "Commercial"
